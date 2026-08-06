@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-surface: hsl(var(--surface));
+  --color-surface-elevated: hsl(var(--surface-elevated));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-success: hsl(var(--success));
+
+  --font-display: 'Inter Tight', sans-serif;
+  --font-sans: 'Inter Tight', sans-serif;
+  --font-serif: 'Instrument Serif', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-lift: 0 1px 2px hsl(0 0% 0% / 0.4), 0 12px 32px -12px hsl(0 0% 0% / 0.6);
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 5%;      /* #0D0D0D */
+    --surface: 0 0% 5%;
+    --surface-elevated: 0 0% 8%; /* #151515 */
+    --foreground: 0 0% 90%;     /* #E5E5E5 */
+    --muted-foreground: 0 0% 40%;
+    --border: 0 0% 20%;
+    --primary: 32 26% 54%;    /* #A58B6D */
+    --primary-foreground: 0 0% 5%;
+    --success: 142 55% 45%;
+
+    --gradient-sheen: none;
+    --glow-primary: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), hsl(var(--primary)/0.04), transparent 60%);
+  }
+
+  /* Light mode inverse variables */
+  @media (prefers-color-scheme: light) {
+    :root {
+      --background: 0 0% 98%;      
+      --surface: 0 0% 96%;
+      --surface-elevated: 0 0% 92%;
+      --foreground: 0 0% 5%;
+      --muted-foreground: 0 0% 50%;
+      --border: 0 0% 85%;
+      --primary: 32 26% 54%;
+      --primary-foreground: 0 0% 98%;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30 selection:text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tighter uppercase font-black;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+.noise-overlay {
+  display: none;
+}
