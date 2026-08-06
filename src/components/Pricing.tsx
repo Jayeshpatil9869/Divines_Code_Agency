@@ -1,2 +1,2 @@
-import { Pricing as RealPricing } from './FAQ';
+import { Pricing as RealPricing } from "./FAQ";
 export const Pricing = RealPricing;

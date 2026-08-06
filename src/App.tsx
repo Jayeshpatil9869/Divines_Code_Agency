@@ -1,40 +1,49 @@
-import { useEffect, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { registerGsapPlugins, ScrollTrigger } from "@/animations";
 
-import { Hero } from './components/Hero';
-import { Logos } from './components/Logos';
-import { Metrics } from './components/Metrics';
-import { Projects } from './components/Projects';
-import { Services } from './components/Services';
-import { About } from './components/About';
-import { Process } from './components/Process';
-import { Skills } from './components/Skills';
-import { Testimonials } from './components/Testimonials';
-import { WhyMe, Philosophy } from './components/WhyMe';
-import { Pricing } from './components/Pricing';
-import { FAQ } from './components/FAQ';
-import { Availability } from './components/Availability';
-import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
-import { Navigation } from './components/Navigation';
-import { CustomCursor } from './components/CustomCursor';
+import { Hero } from "./components/Hero";
+import { Logos } from "./components/Logos";
+import { Metrics } from "./components/Metrics";
+import { Projects } from "./components/Projects";
+import { Services } from "./components/Services";
+import { About } from "./components/About";
+import { Process } from "./components/Process";
+import { Skills } from "./components/Skills";
+import { Testimonials } from "./components/Testimonials";
+import { WhyMe, Philosophy } from "./components/WhyMe";
+import { Pricing } from "./components/Pricing";
+import { FAQ } from "./components/FAQ";
+import { Availability } from "./components/Availability";
+import { Contact } from "./components/Contact";
+import { Footer } from "./components/Footer";
+import { Navigation } from "./components/Navigation";
+import { CustomCursor } from "./components/CustomCursor";
 
 export default function App() {
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    registerGsapPlugins();
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mediaQuery.matches);
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
+    mediaQuery.addEventListener("change", handler);
+
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    return () => {
+      mediaQuery.removeEventListener("change", handler);
+      window.removeEventListener("load", onLoad);
+    };
   }, []);
 
   return (
     <div className="relative min-h-screen bg-background">
-      <div className="noise-overlay"></div>
+      <div className="noise-overlay" aria-hidden />
       {!reducedMotion && <CustomCursor />}
-      
+
       <Navigation />
 
       <main className="flex flex-col w-full overflow-hidden">

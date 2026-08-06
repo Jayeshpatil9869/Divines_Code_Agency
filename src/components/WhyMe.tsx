@@ -1,37 +1,46 @@
-import { motion } from 'framer-motion';
+import { useRef } from "react";
+import { useGsap, animateCards, animateSectionReveals } from "@/animations";
+
+const reasons = [
+  {
+    title: "Direct access",
+    desc: "You get the seniors you interviewed. Every day. No account manager in between.",
+  },
+  {
+    title: "Faster velocity",
+    desc: "Zero overhead, zero politics. We design in code when it cuts handoff time to zero.",
+  },
+  {
+    title: "Aligned incentives",
+    desc: "Agencies sell hours. We sell outcomes. If we can solve it in a day, we will.",
+  },
+];
 
 export function WhyMe() {
-  const points = [
-    { title: "Direct access", desc: "You get the senior person you interviewed. Every day. No account manager in between." },
-    { title: "Faster velocity", desc: "Zero overhead, zero internal politics. I design in code, cutting handoff time to zero." },
-    { title: "Aligned incentives", desc: "Agencies sell hours. I sell outcomes. If I can solve it in a day, I will." }
-  ];
+  const rootRef = useRef<HTMLElement>(null);
+  useGsap(rootRef, (root) => animateCards(root, '[data-gsap="card"]'), []);
 
   return (
-    <section className="w-full py-24 md:py-32 border-t border-border">
+    <section ref={rootRef} className="w-full py-24 md:py-32 bg-surface border-y border-border">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <div>
-            <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-6">Why a freelancer instead of an agency</h2>
-            <p className="text-lg text-muted-foreground font-light">
-              When you hire an agency, you're paying for their office, their bench time, and their project managers. With me, every dollar goes into the product.
-            </p>
-          </div>
-          <div className="flex flex-col gap-10">
-            {points.map((point, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col gap-2"
-              >
-                <h3 className="font-bold text-[11px] uppercase tracking-wider text-foreground">{point.title}</h3>
-                <p className="text-[11px] font-sans text-muted-foreground leading-relaxed">{point.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+        <div className="mb-16 max-w-2xl">
+          <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
+            Why a studio instead of an agency
+          </h2>
+          <p className="text-lg text-muted-foreground font-light">
+            When you hire a large agency, you pay for their office, bench time, and project managers. With us, every dollar goes into the product.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {reasons.map((r) => (
+            <div key={r.title} data-gsap="card" className="border-t border-border pt-6">
+              <h3 className="text-xl font-light italic font-serif normal-case mb-3 tracking-tight">
+                {r.title}
+              </h3>
+              <p className="text-sm text-muted-foreground font-light leading-relaxed">{r.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -39,28 +48,38 @@ export function WhyMe() {
 }
 
 export function Philosophy() {
+  const rootRef = useRef<HTMLElement>(null);
+  useGsap(rootRef, (root) => animateSectionReveals(root), []);
+
   return (
-    <section className="w-full py-32 md:py-48 bg-foreground text-background overflow-hidden relative">
-      <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center text-center">
-        <motion.h2 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[clamp(3rem,6vw,5rem)] leading-[0.85] font-black tracking-[-0.04em] uppercase max-w-4xl mb-8"
-        >
-          Good design is mostly deciding what to <span className="text-primary" style={{ WebkitTextStroke: '1px var(--color-background)', color: 'transparent' }}>leave out</span>.
-        </motion.h2>
-        
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-2xl md:text-3xl text-background/70 max-w-2xl font-serif font-light italic tracking-tight"
-        >
-          I'd rather ship four things properly than twelve things approximately.
-        </motion.p>
+    <section
+      ref={rootRef}
+      className="relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center py-28 md:py-36 bg-[#EBEBEB] text-neutral-950"
+    >
+      <div className="relative max-w-5xl mx-auto px-6 text-center">
+        <div data-gsap="reveal" className="relative inline-block">
+          <h2 className="font-tight text-[clamp(3rem,6vw,5rem)] leading-[0.85] font-black tracking-[-0.04em] uppercase text-[#0D0D0D] mb-8">
+            <span className="block">Good design is</span>
+            <span className="block">mostly deciding</span>
+            <span className="block">
+              what to{" "}
+              <span
+                className="inline-block text-transparent"
+                style={{
+                  WebkitTextStroke: "1.5px #0D0D0D",
+                  paintOrder: "stroke fill",
+                }}
+              >
+                leave out
+              </span>
+              <span className="text-[#0D0D0D]">.</span>
+            </span>
+          </h2>
+
+          <p className="mt-0 text-base md:text-xl font-serif italic font-normal normal-case tracking-normal text-neutral-700 max-w-2xl mx-auto leading-relaxed">
+            I&apos;d rather ship four things properly than twelve things approximately.
+          </p>
+        </div>
       </div>
     </section>
   );

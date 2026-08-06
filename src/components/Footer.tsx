@@ -1,12 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from "react";
+import { Magnetic } from "@/components/ui/magnetic";
+import { useGsap, animateFooter } from "@/animations";
 
 export function Footer() {
+  const rootRef = useRef<HTMLElement>(null);
   const [time, setTime] = useState("");
+
+  useGsap(rootRef, (root) => animateFooter(root), []);
 
   useEffect(() => {
     const updateTime = () => {
-      const now = new Date();
-      setTime(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }));
+      setTime(
+        new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZoneName: "short",
+        })
+      );
     };
     updateTime();
     const interval = setInterval(updateTime, 1000);
@@ -14,62 +24,93 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="w-full pt-32 pb-8 overflow-hidden bg-background relative border-t border-border">
+    <footer
+      ref={rootRef}
+      className="w-full pt-32 pb-8 overflow-hidden bg-background relative border-t border-border"
+    >
       <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none select-none flex justify-center pb-24 z-0">
-        <h2 
-          className="font-display font-bold leading-none tracking-tighter opacity-[0.03]"
-          style={{ fontSize: 'clamp(6rem, 20vw, 22rem)' }}
+        <h2
+          data-gsap="footer-item"
+          className="font-display font-bold leading-none tracking-tighter opacity-[0.04] uppercase"
+          style={{ fontSize: "clamp(4rem, 16vw, 18rem)" }}
         >
-          NAME.
+          Divine&apos;s
         </h2>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col min-h-[40vh] justify-between">
-        
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-32">
-          <div className="col-span-2 md:col-span-1">
-            <h3 className="font-display text-xl font-black tracking-tighter uppercase mb-6">NAME<span className="text-primary">.</span></h3>
-            <p className="text-[11px] text-muted-foreground max-w-[200px] font-sans">
-              Independent product designer and frontend engineer.
+          <div data-gsap="footer-item" className="col-span-2 md:col-span-1">
+            <h3 className="font-display text-xl font-black tracking-tighter uppercase mb-6">
+              Divine<span className="text-primary">&apos;</span>s
+            </h3>
+            <p className="text-[11px] text-muted-foreground max-w-[220px] font-light leading-relaxed">
+              Product design and frontend engineering for startups that ship.
             </p>
           </div>
-          
-          <div className="flex flex-col gap-4">
-            <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-4">Work</h4>
-            <a href="#work" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">Selected Projects</a>
-            <a href="#services" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">Services</a>
-            <a href="#process" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">Process</a>
-            <a href="#pricing" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">Pricing</a>
+
+          <div data-gsap="footer-item" className="flex flex-col gap-4">
+            <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-2">
+              Work
+            </h4>
+            <a href="#work" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+              Selected Projects
+            </a>
+            <a href="#services" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+              Services
+            </a>
+            <a href="#process" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+              Process
+            </a>
+            <a href="#pricing" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+              Pricing
+            </a>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-4">Connect</h4>
-            <a href="#contact" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">Start a project</a>
-            <a href="#" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">Twitter / X</a>
-            <a href="#" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">LinkedIn</a>
-            <a href="#" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">GitHub</a>
+          <div data-gsap="footer-item" className="flex flex-col gap-4">
+            <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-2">
+              Connect
+            </h4>
+            <Magnetic strength={0.15}>
+              <a href="https://twitter.com" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+                Twitter / X
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.15}>
+              <a href="https://linkedin.com" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+                LinkedIn
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.15}>
+              <a href="https://github.com" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+                GitHub
+              </a>
+            </Magnetic>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-4">Details</h4>
-            <a href="#" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">hello@example.com</a>
-            <a href="#" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">Read CV</a>
+          <div data-gsap="footer-item" className="flex flex-col gap-4">
+            <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-2">
+              Details
+            </h4>
+            <a
+              href="mailto:hello@divinescode.agency"
+              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+            >
+              hello@divinescode.agency
+            </a>
+            <a href="#contact" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+              Start a project
+            </a>
+            <span className="text-[11px] font-mono text-muted-foreground mt-2">{time}</span>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-border text-xs text-muted-foreground">
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-success"></span>
-              Available for select projects
-            </span>
-            <span className="hidden md:inline">&middot;</span>
-            <span className="font-mono uppercase tracking-wide">{time}</span>
-          </div>
-          
-          <div>
-            &copy; {new Date().getFullYear()} Name. All rights reserved.
-          </div>
+        <div
+          data-gsap="footer-item"
+          className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-8 border-t border-border text-[10px] font-mono uppercase tracking-wider text-muted-foreground"
+        >
+          <span>© {new Date().getFullYear()} Divine&apos;s Code Agency</span>
+          <span>Built to ship</span>
         </div>
       </div>
     </footer>

@@ -1,26 +1,41 @@
+import { useRef } from "react";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { Magnetic } from "@/components/ui/magnetic";
+import { useGsap, animateSectionReveals } from "@/animations";
+
 export function Availability() {
+  const rootRef = useRef<HTMLElement>(null);
+  useGsap(rootRef, (root) => animateSectionReveals(root), []);
+
   return (
-    <section className="w-full py-24 bg-primary text-primary-foreground">
-      <div className="max-w-7xl mx-auto px-6 text-center flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/10 border border-primary-foreground/20 mb-8">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75 duration-[2000ms]"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
-          </span>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-primary-foreground/90">Booking from March</span>
-        </div>
-        
-        <h2 className="text-4xl md:text-5xl font-display mb-6">Currently booking from March</h2>
-        <p className="text-lg text-primary-foreground/80 max-w-2xl mb-10">
-          One project slot open this quarter. I take on four clients a year so each gets real attention.
-        </p>
-        
-        <a 
-          href="#contact"
-          className="px-6 py-3.5 bg-background text-foreground rounded-lg font-medium transition-transform hover:scale-105"
+    <section ref={rootRef} className="w-full py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <div
+          data-gsap="reveal"
+          className="border border-border bg-surface p-10 md:p-16 relative overflow-hidden"
         >
-          Start a conversation
-        </a>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-3xl rounded-full pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+            <div>
+              <p className="text-primary text-[11px] uppercase tracking-[0.35em] font-bold mb-4">
+                Capacity
+              </p>
+              <h2 className="text-[clamp(2rem,4vw,3.5rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
+                Currently booking from March
+              </h2>
+              <p className="text-muted-foreground font-light max-w-md">
+                One project slot open this quarter. We take on four clients a year so each gets real attention.
+              </p>
+            </div>
+            <Magnetic>
+              <a href="#contact">
+                <ShimmerButton className="font-bold tracking-[0.2em] uppercase text-[11px]">
+                  Start a conversation
+                </ShimmerButton>
+              </a>
+            </Magnetic>
+          </div>
+        </div>
       </div>
     </section>
   );

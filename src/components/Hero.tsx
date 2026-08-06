@@ -1,100 +1,103 @@
-import { motion } from 'framer-motion';
+import { useRef } from "react";
+import { Spotlight } from "@/components/ui/spotlight";
+import { BackgroundBeams } from "@/components/ui/background-beams";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { Magnetic } from "@/components/ui/magnetic";
+import { useGsap, animateHero } from "@/animations";
 
 export function Hero() {
-  const headline = "I design and build the products people actually finish using.";
-  
-  return (
-    <section className="relative w-full min-h-[92dvh] flex flex-col justify-center px-6 pt-[18vh] pb-12 overflow-hidden max-w-7xl mx-auto">
-      {/* Background radial glow */}
-      <div 
-        className="absolute top-1/2 left-[30%] -translate-y-1/2 w-[900px] h-[900px] pointer-events-none"
-        style={{
-          background: 'radial-gradient(50% 50% at 50% 50%, hsl(var(--primary)/0.04) 0%, transparent 100%)',
-          filter: 'blur(40px)'
-        }}
-      />
+  const rootRef = useRef<HTMLElement>(null);
+  useGsap(rootRef, (root) => animateHero(root), []);
 
-      <div className="grid grid-cols-4 md:grid-cols-12 gap-6 relative z-10">
-        
-        {/* Availability Chip */}
-        <div className="col-span-4 md:col-span-12 flex justify-start mb-8 md:mb-0 md:absolute md:-top-12 md:left-0">
-          <div className="inline-flex items-center gap-2">
-            <span className="text-primary text-[12px] uppercase tracking-[0.4em] font-bold">Available March</span>
+  return (
+    <section
+      ref={rootRef}
+      className="relative w-full min-h-[100dvh] flex flex-col justify-center px-6 pt-[18vh] pb-16 overflow-hidden"
+    >
+      <div data-gsap="hero-bg" className="absolute inset-0 pointer-events-none">
+        <Spotlight className="-top-40 left-0 md:left-40 md:-top-20" fill="hsl(32 28% 55%)" />
+        <BackgroundBeams className="opacity-70" />
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
+        <div className="mb-10 md:mb-14">
+          <p
+            data-gsap="hero-eyebrow"
+            className="text-primary text-[11px] md:text-[12px] uppercase tracking-[0.45em] font-bold mb-6"
+          >
+            Available for Q2 partnerships
+          </p>
+          <h1 className="text-[clamp(3.5rem,12vw,9rem)] leading-[0.82] font-black tracking-[-0.05em] uppercase">
+            <span data-gsap="hero-line" className="block text-foreground">
+              Divine&apos;s
+            </span>
+            <span data-gsap="hero-line" className="block text-foreground/90">
+              Code Agency
+            </span>
+          </h1>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+          <div className="md:col-span-7">
+            <p
+              data-gsap="hero-sub"
+              className="max-w-xl text-lg md:text-xl text-muted-foreground leading-relaxed font-light"
+            >
+              We design and engineer product experiences founders finish shipping — zero-to-one through Series B.
+            </p>
+          </div>
+
+          <div className="md:col-span-5 flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4 md:justify-end">
+            <div data-gsap="hero-cta">
+              <Magnetic strength={0.3}>
+                <a href="#contact">
+                  <ShimmerButton className="w-full sm:w-auto font-bold tracking-[0.2em] uppercase text-[11px]">
+                    Start a project →
+                  </ShimmerButton>
+                </a>
+              </Magnetic>
+            </div>
+            <div data-gsap="hero-cta">
+              <Magnetic strength={0.25}>
+                <a
+                  href="#work"
+                  className="inline-flex items-center justify-center px-8 py-4 border border-border text-foreground font-bold tracking-[0.2em] uppercase text-[11px] hover:border-foreground/40 transition-colors"
+                >
+                  See selected work
+                </a>
+              </Magnetic>
+            </div>
           </div>
         </div>
 
-        {/* Headline */}
-        <div className="col-span-4 md:col-span-10 lg:col-span-9 flex flex-col gap-6 relative mt-12 md:mt-0">
-          <h1 className="text-[clamp(3rem,8vw,7.5rem)] leading-[0.85] font-black tracking-[-0.04em] uppercase mb-4">
-            <motion.span className="block" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>I design & build</motion.span>
-            <motion.span className="block" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>the products people</motion.span>
-            <motion.span className="block text-transparent" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} style={{ WebkitTextStroke: '1px var(--color-muted-foreground)' }}>actually finish using.</motion.span>
-          </h1>
-          
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="max-w-lg text-lg text-muted-foreground leading-relaxed font-light mt-2"
-          >
-            Independent product designer and frontend engineer. Ten years, embedded with SaaS teams from zero-to-one through Series B.
-          </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-4"
-          >
-            {/* Primary CTA wrapped in magnetic-like effect */}
-            <motion.a 
-              href="#contact"
-              whileHover={{ scale: 1.02 }}
-              className="px-8 py-4 bg-primary text-primary-foreground font-bold tracking-widest uppercase text-xs transition-all hover:brightness-110 rounded-none"
-            >
-              Start a project &rarr;
-            </motion.a>
-            <a 
-              href="#work"
-              className="px-8 py-4 bg-transparent border border-border text-foreground font-bold tracking-widest uppercase text-xs transition-colors hover:border-foreground/40 rounded-none"
-            >
-              See selected work
-            </a>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="mt-8 pt-8 border-t border-border flex flex-wrap items-center gap-x-8 gap-y-4"
-          >
-            <div className="flex gap-6 items-center opacity-40 hover:opacity-100 transition-opacity duration-300 grayscale">
-              <div className="font-display text-xl font-bold">Acme Corp</div>
-              <div className="font-display text-xl italic">GlobalTech</div>
-              <div className="font-display text-xl font-medium tracking-tighter">Nexus</div>
-            </div>
-            <div className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground ml-auto hidden sm:block">
-              32 products shipped &middot; avg. engagement 7 months
-            </div>
-          </motion.div>
+        <div
+          data-gsap="hero-meta"
+          className="mt-16 pt-8 border-t border-border flex flex-wrap items-center gap-x-10 gap-y-3"
+        >
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
+            40+ products shipped · avg engagement 6 months
+          </span>
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground/60 hidden sm:inline">
+            Design · Frontend · Systems
+          </span>
         </div>
-
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[1px] h-[40px] bg-border overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
+      <div
+        data-gsap="hero-scroll"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+        aria-hidden
       >
-        <motion.div 
-          className="w-full h-full bg-foreground"
-          initial={{ y: '-100%' }}
-          animate={{ y: '100%' }}
-          transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-        />
-      </motion.div>
+        <span className="text-[9px] font-mono uppercase tracking-[0.3em] text-muted-foreground">
+          Scroll
+        </span>
+        <div className="w-px h-10 bg-border relative overflow-hidden">
+          <span
+            data-gsap="scroll-dot"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary"
+          />
+        </div>
+      </div>
     </section>
   );
 }

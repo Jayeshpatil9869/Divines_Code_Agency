@@ -1,41 +1,42 @@
-import { motion } from 'framer-motion';
+import { useRef } from "react";
+import { Marquee } from "@/components/ui/marquee";
+import { useGsap, animateSectionReveals } from "@/animations";
+
+const brands = [
+  "Nimbus",
+  "Arc Labs",
+  "PulsePay",
+  "Vertex",
+  "Northwind",
+  "Helix",
+  "Orbit",
+  "Cascade",
+];
 
 export function Logos() {
-  const companies = [
-    "Linear", "Stripe", "Vercel", "Raycast", "Arc", "Figma", "Notion", "Cron"
-  ];
+  const rootRef = useRef<HTMLElement>(null);
+  useGsap(rootRef, (root) => animateSectionReveals(root), []);
 
   return (
-    <section className="w-full py-16 md:py-24 border-t border-border overflow-hidden bg-surface/30">
-      <div className="max-w-7xl mx-auto px-6 mb-8">
-        <h2 className="text-sm text-muted-foreground font-medium">Trusted by teams shipping something serious</h2>
+    <section ref={rootRef} className="w-full py-16 md:py-20 border-y border-border overflow-hidden">
+      <div data-gsap="reveal" className="max-w-7xl mx-auto px-6 mb-10">
+        <h2 className="text-[11px] uppercase tracking-[0.3em] font-bold text-muted-foreground">
+          Trusted by teams shipping something serious
+        </h2>
       </div>
-      
-      <div className="relative flex overflow-hidden whitespace-nowrap">
-        {/* We use two identical blocks to loop seamlessly */}
-        <motion.div 
-          className="flex gap-16 px-8 items-center"
-          animate={{ x: ["0%", "-100%"] }}
-          transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-        >
-          {companies.map((company, i) => (
-            <div key={i} className="font-display text-3xl md:text-4xl opacity-30 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-              {company}
-            </div>
-          ))}
-        </motion.div>
-        <motion.div 
-          className="flex gap-16 px-8 items-center"
-          animate={{ x: ["0%", "-100%"] }}
-          transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-        >
-          {companies.map((company, i) => (
-            <div key={`copy-${i}`} className="font-display text-3xl md:text-4xl opacity-30 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-              {company}
-            </div>
-          ))}
-        </motion.div>
-      </div>
+
+      <Marquee pauseOnHover className="[--duration:35s]">
+        {brands.map((brand) => (
+          <div
+            key={brand}
+            className="flex items-center justify-center px-8 py-2 opacity-40 hover:opacity-100 transition-opacity grayscale"
+          >
+            <span className="font-display text-2xl md:text-3xl font-black tracking-tighter uppercase whitespace-nowrap">
+              {brand}
+            </span>
+          </div>
+        ))}
+      </Marquee>
     </section>
   );
 }

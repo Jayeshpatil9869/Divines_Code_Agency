@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* Local Geist fonts from the `geist` npm package (copied to src/assets/fonts) */
+@font-face {
+  font-family: "Geist Sans";
+  src: url("./assets/fonts/GeistSans-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("./assets/fonts/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-background: hsl(var(--background));
   --color-surface: hsl(var(--surface));
@@ -11,43 +28,64 @@
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-success: hsl(var(--success));
 
-  --font-display: 'Inter Tight', sans-serif;
-  --font-sans: 'Inter Tight', sans-serif;
-  --font-serif: 'Instrument Serif', serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-tight: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --shadow-lift: 0 1px 2px hsl(0 0% 0% / 0.4), 0 12px 32px -12px hsl(0 0% 0% / 0.6);
+
+  --animate-marquee: marquee var(--duration) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-vertical {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-100% - var(--gap))); }
+}
+
+@keyframes shimmer-slide {
+  to { transform: translate(calc(100cqw - 100%), 0); }
+}
+
+@keyframes spin-around {
+  0% { transform: translateZ(0) rotate(0); }
+  15%, 35% { transform: translateZ(0) rotate(90deg); }
+  65%, 85% { transform: translateZ(0) rotate(270deg); }
+  100% { transform: translateZ(0) rotate(360deg); }
+}
+
+@keyframes spotlight {
+  0% { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
+  100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
+}
+
+@keyframes text-shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: -200% center; }
 }
 
 @layer base {
   :root {
-    --background: 0 0% 5%;      /* #0D0D0D */
+    --background: 0 0% 4%;
     --surface: 0 0% 5%;
-    --surface-elevated: 0 0% 8%; /* #151515 */
-    --foreground: 0 0% 90%;     /* #E5E5E5 */
-    --muted-foreground: 0 0% 40%;
-    --border: 0 0% 20%;
-    --primary: 32 26% 54%;    /* #A58B6D */
+    --surface-elevated: 0 0% 8%;
+    --foreground: 0 0% 92%;
+    --muted-foreground: 0 0% 45%;
+    --border: 0 0% 16%;
+    --primary: 32 28% 55%;
     --primary-foreground: 0 0% 5%;
     --success: 142 55% 45%;
-
-    --gradient-sheen: none;
-    --glow-primary: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), hsl(var(--primary)/0.04), transparent 60%);
-  }
-
-  /* Light mode inverse variables */
-  @media (prefers-color-scheme: light) {
-    :root {
-      --background: 0 0% 98%;      
-      --surface: 0 0% 96%;
-      --surface-elevated: 0 0% 92%;
-      --foreground: 0 0% 5%;
-      --muted-foreground: 0 0% 50%;
-      --border: 0 0% 85%;
-      --primary: 32 26% 54%;
-      --primary-foreground: 0 0% 98%;
-    }
+    --glow-primary: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), hsl(var(--primary)/0.08), transparent 55%);
   }
 
   body {
@@ -68,21 +106,28 @@
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground));
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: hsl(var(--background)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground)); }
+
+.animate-spotlight {
+  animation: spotlight 2s ease 0.75s 1 forwards;
 }
 
 .noise-overlay {
-  display: none;
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hide system cursor when GSAP custom cursor is active (desktop) */
+@media (min-width: 768px) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
 }

@@ -1,67 +1,73 @@
-import { useRef } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { useRef } from "react";
+import { useGsap, animateProcess } from "@/animations";
+
+const stages = [
+  {
+    num: "01",
+    title: "Discovery",
+    desc: "Business goals, technical constraints, and user needs — aligned before a single screen.",
+  },
+  {
+    num: "02",
+    title: "Architecture",
+    desc: "Flows, data models, and structural skeleton. Design decisions that survive scale.",
+  },
+  {
+    num: "03",
+    title: "Design",
+    desc: "Visual language and high-fidelity components. Opinionated, not decorative.",
+  },
+  {
+    num: "04",
+    title: "Build",
+    desc: "Clean, performant, accessible React. We design in code when it saves weeks.",
+  },
+  {
+    num: "05",
+    title: "Handover",
+    desc: "Your team can maintain and extend the work. Docs, tokens, and clear ownership.",
+  },
+];
 
 export function Process() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start center", "end center"]
-  });
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  const steps = [
-    { num: "01", title: "Discovery", desc: "Understanding the business goals, technical constraints, and user needs.", deliverable: "Project Brief" },
-    { num: "02", title: "Architecture", desc: "Mapping out flows, data models, and the structural skeleton.", deliverable: "Wireframes" },
-    { num: "03", title: "Design", desc: "Creating the visual language and high-fidelity interface components.", deliverable: "Figma Prototype" },
-    { num: "04", title: "Build", desc: "Translating design into clean, performant, and accessible code.", deliverable: "Production Code" },
-    { num: "05", title: "Handover", desc: "Ensuring your team can maintain and extend the work safely.", deliverable: "Documentation" }
-  ];
+  const rootRef = useRef<HTMLElement>(null);
+  useGsap(rootRef, (root) => animateProcess(root), []);
 
   return (
-    <section id="process" className="w-full py-24 md:py-32 overflow-hidden" ref={containerRef}>
+    <section id="process" ref={rootRef} className="w-full py-24 md:py-32 border-t border-border">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16 md:mb-24">
-          <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">A predictable way to work</h2>
-          <p className="text-lg text-muted-foreground font-light">Five stages, fixed checkpoints, no surprise invoices.</p>
+        <div className="mb-16">
+          <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
+            A predictable way to work
+          </h2>
+          <p className="text-lg text-muted-foreground font-light">
+            Five stages, fixed checkpoints, no surprise invoices.
+          </p>
         </div>
 
         <div className="relative">
-          {/* Connector Line Desktop */}
-          <div className="hidden md:block absolute top-[24px] left-0 right-0 h-[1px] bg-border z-0">
-            <motion.div 
-              className="h-full bg-primary origin-left"
-              style={{ scaleX }}
-            />
-          </div>
-
-          {/* Connector Line Mobile */}
-          <div className="md:hidden absolute top-0 bottom-0 left-[24px] w-[1px] bg-border z-0">
-            <motion.div 
-              className="w-full bg-primary origin-top"
-              style={{ scaleY: scaleX }}
-            />
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-12 md:gap-6 relative z-10">
-            {steps.map((step, i) => (
-              <div key={i} className="flex-1 flex md:flex-col gap-6 md:gap-8 group">
-                <div className="flex flex-col items-center md:items-start shrink-0">
-                  <div className="w-12 h-12 rounded-none bg-background border border-border flex items-center justify-center font-mono text-sm group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-colors relative z-10 font-bold">
-                    {step.num}
-                  </div>
+          <div
+            data-gsap="process-line"
+            className="absolute left-[19px] top-0 bottom-0 w-px bg-primary/40 hidden md:block origin-top"
+          />
+          <div className="flex flex-col gap-0">
+            {stages.map((stage) => (
+              <div
+                key={stage.num}
+                data-gsap="process-step"
+                className="relative md:pl-16 py-8 border-b border-border last:border-0 data-[active=true]:[&_h3]:text-primary transition-colors"
+              >
+                <div className="hidden md:flex absolute left-0 top-10 w-10 h-10 items-center justify-center bg-background border border-border text-[10px] font-mono text-primary z-10">
+                  {stage.num}
                 </div>
-                <div>
-                  <h3 className="text-2xl font-light italic tracking-tight font-serif mb-2">{step.title}</h3>
-                  <p className="text-[11px] text-muted-foreground mb-6 min-h-[60px] font-sans pr-4">{step.desc}</p>
-                  <span className="text-[9px] font-mono uppercase tracking-wider px-2 py-1 bg-background border border-border rounded-none text-muted-foreground">
-                    {step.deliverable}
-                  </span>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-baseline">
+                  <span className="md:hidden text-[10px] font-mono text-primary mb-2">{stage.num}</span>
+                  <h3 className="md:col-span-4 text-2xl font-light italic font-serif normal-case tracking-tight transition-colors duration-500">
+                    {stage.title}
+                  </h3>
+                  <p className="md:col-span-8 text-muted-foreground font-light leading-relaxed">
+                    {stage.desc}
+                  </p>
                 </div>
               </div>
             ))}
