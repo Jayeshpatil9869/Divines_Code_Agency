@@ -24,7 +24,8 @@ export function Availability() {
                 Currently booking from March
               </h2>
               <p className="text-muted-foreground font-light max-w-md">
-                One project slot open this quarter. We take on four clients a year so each gets real attention.
+                One project slot open this quarter. We take on four clients a
+                year so each gets real attention.
               </p>
             </div>
             <Magnetic>

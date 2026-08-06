@@ -21,7 +21,7 @@ export function Skills() {
   useGsap(rootRef, (root) => animateCards(root, '[data-gsap="card"]'), []);
 
   return (
-    <section ref={rootRef} className="w-full py-24 md:py-32 bg-surface">
+    <section id="skills" ref={rootRef} className="w-full py-24 md:py-32 bg-surface">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase">

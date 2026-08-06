@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export function TextShimmer({
@@ -7,14 +8,14 @@ export function TextShimmer({
   className,
   duration = 2.5,
 }: {
-  children: string;
+  children: ReactNode;
   className?: string;
   duration?: number;
 }) {
   return (
     <span
       className={cn(
-        "inline-block bg-[linear-gradient(90deg,#737373_0%,#E5E5E5_40%,#A58B6D_50%,#E5E5E5_60%,#737373_100%)] bg-[length:200%_auto] bg-clip-text text-transparent",
+        "bg-[linear-gradient(90deg,#000_0%,#fff_35%,var(--shimmer-color)_50%,#fff_65%,#000_100%)] bg-[length:200%_auto] bg-clip-text text-transparent",
         className
       )}
       style={{

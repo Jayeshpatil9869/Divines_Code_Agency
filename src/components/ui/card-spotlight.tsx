@@ -35,7 +35,7 @@ export function CardSpotlight({
     <div
       className={cn(
         "group/spotlight relative overflow-hidden border border-border bg-surface",
-        className
+        className,
       )}
       onMouseMove={handleMouseMove}
     >

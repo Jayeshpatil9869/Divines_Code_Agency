@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateCards, animateSectionReveals } from "@/animations";
 
 const reasons = [
@@ -27,8 +28,10 @@ export function WhyMe() {
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
             Why a studio instead of an agency
           </h2>
-          <p className="text-lg text-muted-foreground font-light">
-            When you hire a large agency, you pay for their office, bench time, and project managers. With us, every dollar goes into the product.
+          <p className="text-lg font-light">
+            <TextShimmer duration={3}>
+              When you hire a large agency, you pay for their office, bench time, and project managers. With us, every dollar goes into the product.
+            </TextShimmer>
           </p>
         </div>
 
@@ -54,11 +57,11 @@ export function Philosophy() {
   return (
     <section
       ref={rootRef}
-      className="relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center py-28 md:py-36 bg-[#EBEBEB] text-neutral-950"
+      className="relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center py-28 md:py-36 bg-white text-black"
     >
       <div className="relative max-w-5xl mx-auto px-6 text-center">
         <div data-gsap="reveal" className="relative inline-block">
-          <h2 className="font-tight text-[clamp(3rem,6vw,5rem)] leading-[0.85] font-black tracking-[-0.04em] uppercase text-[#0D0D0D] mb-8">
+          <h2 className="font-tight text-[clamp(3rem,6vw,5rem)] leading-[0.85] font-black tracking-[-0.04em] uppercase text-black mb-8">
             <span className="block">Good design is</span>
             <span className="block">mostly deciding</span>
             <span className="block">
@@ -66,17 +69,17 @@ export function Philosophy() {
               <span
                 className="inline-block text-transparent"
                 style={{
-                  WebkitTextStroke: "1.5px #0D0D0D",
+                  WebkitTextStroke: "1.5px #000",
                   paintOrder: "stroke fill",
                 }}
               >
                 leave out
               </span>
-              <span className="text-[#0D0D0D]">.</span>
+              <span className="text-black">.</span>
             </span>
           </h2>
 
-          <p className="mt-0 text-base md:text-xl font-serif italic font-normal normal-case tracking-normal text-neutral-700 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-0 text-base md:text-xl font-serif italic font-normal normal-case tracking-normal text-black/70 max-w-2xl mx-auto leading-relaxed">
             I&apos;d rather ship four things properly than twelve things approximately.
           </p>
         </div>

@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateProcess } from "@/animations";
 
 const stages = [
@@ -40,8 +41,10 @@ export function Process() {
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
             A predictable way to work
           </h2>
-          <p className="text-lg text-muted-foreground font-light">
-            Five stages, fixed checkpoints, no surprise invoices.
+          <p className="text-lg font-light">
+            <TextShimmer duration={3}>
+              Five stages, fixed checkpoints, no surprise invoices.
+            </TextShimmer>
           </p>
         </div>
 

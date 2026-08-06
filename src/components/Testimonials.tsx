@@ -63,8 +63,12 @@ export function Testimonials() {
               &ldquo;{t.quote}&rdquo;
             </p>
             <div>
-              <div className="text-[11px] uppercase tracking-[0.2em] font-bold">{t.name}</div>
-              <div className="text-[11px] text-muted-foreground mt-1">{t.role}</div>
+              <div className="text-[11px] uppercase tracking-[0.2em] font-bold">
+                {t.name}
+              </div>
+              <div className="text-[11px] text-muted-foreground mt-1">
+                {t.role}
+              </div>
             </div>
           </div>
         ))}

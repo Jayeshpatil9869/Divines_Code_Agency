@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import MusicPortfolio, { type MusicProject } from "@/components/ui/music-portfolio";
 import "@/components/ui/music-portfolio.css";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateSectionReveals } from "@/animations";
 
 /** Selected work mapped into the music-portfolio row schema */
@@ -100,8 +101,10 @@ export function Projects() {
             <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
               Selected work
             </h2>
-            <p className="text-lg text-muted-foreground font-light max-w-md">
-              Hover a row — image and scramble reveal the case study.
+            <p className="text-lg font-light max-w-md">
+              <TextShimmer duration={3}>
+                Hover a row — image and scramble reveal the case study.
+              </TextShimmer>
             </p>
           </div>
           <a

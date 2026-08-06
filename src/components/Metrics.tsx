@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateMetrics } from "@/animations";
 
 const metrics = [
@@ -19,8 +20,10 @@ export function Metrics() {
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
             The work, in numbers
           </h2>
-          <p className="text-lg text-muted-foreground font-light mb-16 max-w-lg">
-            Measured 90 days post-launch, verified with each client.
+          <p className="text-lg font-light mb-16 max-w-lg">
+            <TextShimmer duration={3}>
+              Measured 90 days post-launch, verified with each client.
+            </TextShimmer>
           </p>
         </div>
 

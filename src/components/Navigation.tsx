@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Magnetic } from "@/components/ui/magnetic";
@@ -8,21 +7,42 @@ import { useGsap, animateNavReveal, animateMobileMenu, gsap } from "@/animations
 export function Navigation() {
   const rootRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const scrolledRef = useRef(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
 
   useGsap(rootRef, (root) => animateNavReveal(root), []);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const y = window.scrollY;
+      const next = y > 80;
+      if (next !== scrolledRef.current) {
+        scrolledRef.current = next;
+        setScrolled(next);
+      }
+
+      const bar = progressRef.current;
+      if (bar) {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+        bar.style.transform = `scaleX(${p})`;
+      }
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useLayoutEffect(() => {
@@ -72,9 +92,10 @@ export function Navigation() {
           )}
         >
           {scrolled && (
-            <motion.div
-              className="absolute top-0 left-0 right-0 h-[2px] bg-primary origin-left"
-              style={{ scaleX }}
+            <div
+              ref={progressRef}
+              className="absolute top-0 left-0 right-0 h-[2px] bg-primary origin-left will-change-transform"
+              style={{ transform: "scaleX(0)" }}
             />
           )}
 

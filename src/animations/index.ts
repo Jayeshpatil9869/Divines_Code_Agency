@@ -9,3 +9,4 @@ export {
   animateFooter,
 } from "./sections";
 export { animateMetrics, animateProcess, animateProjects } from "./metrics";
+export { bindFooterSpotlight } from "./footerSpotlight";

@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateCards } from "@/animations";
 
 const services = [
@@ -8,13 +9,23 @@ const services = [
     num: "01",
     title: "0-to-1 Product Design",
     desc: "Raw ideas and messy constraints into structured, buildable interfaces ready for engineering.",
-    deliverables: ["User flows", "High-fidelity UI", "Interactive prototype", "Handoff specs"],
+    deliverables: [
+      "User flows",
+      "High-fidelity UI",
+      "Interactive prototype",
+      "Handoff specs",
+    ],
   },
   {
     num: "02",
     title: "Frontend Architecture",
     desc: "Foundations for scalable React apps — routing, state, and component boundaries that last.",
-    deliverables: ["App shell", "Design tokens", "Component library", "Perf budgets"],
+    deliverables: [
+      "App shell",
+      "Design tokens",
+      "Component library",
+      "Perf budgets",
+    ],
   },
   {
     num: "03",
@@ -26,7 +37,12 @@ const services = [
     num: "04",
     title: "Growth & Optimization",
     desc: "Find where users drop off and fix the friction. Focused on activation and retention.",
-    deliverables: ["Funnel audit", "Experiment plan", "Ship cycles", "Impact report"],
+    deliverables: [
+      "Funnel audit",
+      "Experiment plan",
+      "Ship cycles",
+      "Impact report",
+    ],
   },
 ];
 
@@ -35,21 +51,28 @@ export function Services() {
   useGsap(rootRef, (root) => animateCards(root, '[data-gsap="card"]'), []);
 
   return (
-    <section id="services" ref={rootRef} className="w-full py-24 md:py-32 bg-surface">
+    <section
+      id="services"
+      ref={rootRef}
+      className="w-full py-24 md:py-32 bg-surface"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
             How we can help
           </h2>
-          <p className="text-lg text-muted-foreground font-light max-w-lg">
-            Most engagements fall into one of these. If yours doesn&apos;t, ask anyway.
+          <p className="text-lg font-light max-w-lg">
+            <TextShimmer duration={3}>
+              Most engagements fall into one of these. If yours doesn&apos;t, ask
+              anyway.
+            </TextShimmer>
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {services.map((s, i) => (
             <div key={s.num} data-gsap="card">
-              <ServiceCard {...s} highlight={i === 1} />
+              <ServiceCard {...s} index={i} />
             </div>
           ))}
         </div>
@@ -63,13 +86,13 @@ function ServiceCard({
   title,
   desc,
   deliverables,
-  highlight,
+  index,
 }: {
   num: string;
   title: string;
   desc: string;
   deliverables: string[];
-  highlight?: boolean;
+  index: number;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -79,14 +102,22 @@ function ServiceCard({
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
     >
-      {highlight && <BorderBeam size={50} duration={9} delay={1} />}
+      <BorderBeam
+        size={55}
+        duration={8 + index}
+        delay={index * 1.8}
+        initialOffset={index * 22}
+        borderWidth={1.5}
+      />
       <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-4">
         Service {num}
       </div>
       <h3 className="text-2xl md:text-3xl font-light italic tracking-tight font-serif mb-3 normal-case">
         {title}
       </h3>
-      <p className="text-[13px] text-muted-foreground leading-relaxed font-light">{desc}</p>
+      <p className="text-[13px] text-muted-foreground leading-relaxed font-light">
+        {desc}
+      </p>
       <AnimatePresence>
         {hovered && (
           <motion.div

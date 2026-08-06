@@ -18,24 +18,31 @@
 }
 
 @theme {
-  --color-background: hsl(var(--background));
-  --color-surface: hsl(var(--surface));
-  --color-surface-elevated: hsl(var(--surface-elevated));
-  --color-foreground: hsl(var(--foreground));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-border: hsl(var(--border));
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-success: hsl(var(--success));
+  /* Strict 4-color system: black, white, shimmer, bg (bronze) */
+  --color-white: #fff;
+  --color-black: #000;
+  --color-shimmer: #e8d5b5;
+  --color-bg: hsl(32 28% 55%);
+
+  --color-background: #000;
+  --color-surface: #000;
+  --color-surface-elevated: #000;
+  --color-foreground: #fff;
+  --color-muted-foreground: color-mix(in srgb, #fff 55%, #000);
+  --color-border: color-mix(in srgb, #fff 18%, #000);
+  --color-primary: hsl(32 28% 55%);
+  --color-primary-foreground: #000;
+  --color-success: #e8d5b5;
 
   --font-display: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
   --font-tight: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-caveat: "Caveat Brush", cursive;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-lift: 0 1px 2px hsl(0 0% 0% / 0.4), 0 12px 32px -12px hsl(0 0% 0% / 0.6);
+  --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -12px rgb(0 0 0 / 0.6);
 
   --animate-marquee: marquee var(--duration) linear infinite;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
@@ -76,16 +83,27 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --surface: 0 0% 5%;
-    --surface-elevated: 0 0% 8%;
-    --foreground: 0 0% 92%;
-    --muted-foreground: 0 0% 45%;
-    --border: 0 0% 16%;
+    --font-cavet: "Caveat Brush", cursive;
+
+    --color-white: #fff;
+    --color-black: #000;
+    --shimmer-color: #e8d5b5;
+    --bg: hsl(32 28% 55%);
+
+    --background: 0 0% 0%;
+    --surface: 0 0% 0%;
+    --surface-elevated: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --muted-foreground: 0 0% 55%;
+    --border: 0 0% 18%;
     --primary: 32 28% 55%;
-    --primary-foreground: 0 0% 5%;
-    --success: 142 55% 45%;
-    --glow-primary: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), hsl(var(--primary)/0.08), transparent 55%);
+    --primary-foreground: 0 0% 0%;
+    --success: 36 45% 80%;
+    --glow-primary: radial-gradient(
+      600px circle at var(--x, 50%) var(--y, 50%),
+      hsl(32 28% 55% / 0.12),
+      transparent 55%
+    );
   }
 
   body {
@@ -107,9 +125,9 @@
 }
 
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: hsl(var(--background)); }
-::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground)); }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #fff 22%, #000); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--shimmer-color); }
 
 .animate-spotlight {
   animation: spotlight 2s ease 0.75s 1 forwards;
@@ -120,8 +138,12 @@
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.028;
+  contain: strict;
+  transform: translateZ(0);
+  /* Lighter static grain — fewer octaves = cheaper composite under Lenis */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
 }
 
 /* Hide system cursor when GSAP custom cursor is active (desktop) */
@@ -129,5 +151,69 @@
   html.has-custom-cursor,
   html.has-custom-cursor * {
     cursor: none !important;
+  }
+}
+
+/* Footer spotlight / mask text reveal (motion driven by GSAP) */
+.footer-spot {
+  --footer-spot-r: 0px;
+  --x: 50%;
+  --y: 50%;
+  position: relative;
+  display: inline-block;
+  line-height: 0.82;
+  padding: 0;
+  cursor: default;
+  outline: none;
+}
+
+.footer-spot:focus-visible {
+  outline: 2px solid var(--bg);
+  outline-offset: 10px;
+  border-radius: 4px;
+}
+
+.footer-spot__base {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, #fff 22%, transparent);
+  paint-order: stroke fill;
+}
+
+.footer-spot__beam {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  display: block;
+  opacity: 0;
+  background-image:
+    linear-gradient(
+      135deg,
+      var(--shimmer-color) 0%,
+      var(--bg) 45%,
+      #000 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-mask-image: radial-gradient(
+    circle var(--footer-spot-r) at var(--x) var(--y),
+    #000 38%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--footer-spot-r) at var(--x) var(--y),
+    #000 38%,
+    transparent 100%
+  );
+  pointer-events: none;
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-spot__beam {
+    opacity: 1;
+    --footer-spot-r: 60em;
   }
 }

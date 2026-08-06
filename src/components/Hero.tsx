@@ -3,6 +3,7 @@ import { Spotlight } from "@/components/ui/spotlight";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { Magnetic } from "@/components/ui/magnetic";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateHero } from "@/animations";
 
 export function Hero() {
@@ -41,9 +42,11 @@ export function Hero() {
           <div className="md:col-span-7">
             <p
               data-gsap="hero-sub"
-              className="max-w-xl text-lg md:text-xl text-muted-foreground leading-relaxed font-light"
+              className="max-w-xl text-lg md:text-xl leading-relaxed font-light"
             >
-              We design and engineer product experiences founders finish shipping — zero-to-one through Series B.
+              <TextShimmer duration={3}>
+                We design and engineer product experiences founders finish shipping — zero-to-one through Series B.
+              </TextShimmer>
             </p>
           </div>
 

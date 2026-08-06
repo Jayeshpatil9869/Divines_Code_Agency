@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { registerGsapPlugins, ScrollTrigger } from "@/animations";
+import { registerGsapPlugins } from "@/animations";
+import { useLenis } from "@/hooks/useLenis";
 
 import { Hero } from "./components/Hero";
 import { Logos } from "./components/Logos";
@@ -22,6 +23,8 @@ import { CustomCursor } from "./components/CustomCursor";
 export default function App() {
   const [reducedMotion, setReducedMotion] = useState(false);
 
+  useLenis();
+
   useEffect(() => {
     registerGsapPlugins();
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -29,13 +32,8 @@ export default function App() {
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mediaQuery.addEventListener("change", handler);
 
-    const onLoad = () => ScrollTrigger.refresh();
-    window.addEventListener("load", onLoad);
-    requestAnimationFrame(() => ScrollTrigger.refresh());
-
     return () => {
       mediaQuery.removeEventListener("change", handler);
-      window.removeEventListener("load", onLoad);
     };
   }, []);
 
@@ -46,7 +44,7 @@ export default function App() {
 
       <Navigation />
 
-      <main className="flex flex-col w-full overflow-hidden">
+      <main className="relative z-10 flex flex-col w-full overflow-x-hidden">
         <Hero />
         <Logos />
         <Metrics />

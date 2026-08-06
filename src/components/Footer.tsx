@@ -1,12 +1,19 @@
 import { useEffect, useState, useRef } from "react";
 import { Magnetic } from "@/components/ui/magnetic";
-import { useGsap, animateFooter } from "@/animations";
+import { useGsap, animateFooter, bindFooterSpotlight } from "@/animations";
 
 export function Footer() {
   const rootRef = useRef<HTMLElement>(null);
+  const spotRef = useRef<HTMLDivElement>(null);
   const [time, setTime] = useState("");
 
   useGsap(rootRef, (root) => animateFooter(root), []);
+
+  useEffect(() => {
+    const el = spotRef.current;
+    if (!el) return;
+    return bindFooterSpotlight(el);
+  }, []);
 
   useEffect(() => {
     const updateTime = () => {
@@ -26,20 +33,10 @@ export function Footer() {
   return (
     <footer
       ref={rootRef}
-      className="w-full pt-32 pb-8 overflow-hidden bg-background relative border-t border-border"
+      className="w-full pt-12 md:pt-16 pb-6 overflow-hidden bg-background relative border-t border-border"
     >
-      <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none select-none flex justify-center pb-24 z-0">
-        <h2
-          data-gsap="footer-item"
-          className="font-display font-bold leading-none tracking-tighter opacity-[0.04] uppercase"
-          style={{ fontSize: "clamp(4rem, 16vw, 18rem)" }}
-        >
-          Divine&apos;s
-        </h2>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col min-h-[40vh] justify-between">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-32">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col justify-between">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-6 md:mb-8">
           <div data-gsap="footer-item" className="col-span-2 md:col-span-1">
             <h3 className="font-display text-xl font-black tracking-tighter uppercase mb-6">
               Divine<span className="text-primary">&apos;</span>s
@@ -104,10 +101,32 @@ export function Footer() {
             <span className="text-[11px] font-mono text-muted-foreground mt-2">{time}</span>
           </div>
         </div>
+      </div>
 
+      {/* Full-bleed wordmark — outside max-width so it can span the viewport */}
+      <div
+        data-gsap="footer-item"
+        className="relative z-10 w-full flex justify-center mb-4 md:mb-5 overflow-hidden leading-none"
+      >
+        <div
+          ref={spotRef}
+          tabIndex={0}
+          role="img"
+          aria-label="Divine's"
+          className="footer-spot font-display font-black uppercase tracking-[-0.07em]"
+          style={{ fontSize: "clamp(5rem, 20vw, 22rem)" }}
+        >
+          <span className="footer-spot__beam" aria-hidden>
+            Divine&apos;s
+          </span>
+          <span className="footer-spot__base">Divine&apos;s</span>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div
           data-gsap="footer-item"
-          className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-8 border-t border-border text-[10px] font-mono uppercase tracking-wider text-muted-foreground"
+          className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t border-border text-[10px] font-mono uppercase tracking-wider text-muted-foreground"
         >
           <span>© {new Date().getFullYear()} Divine&apos;s Code Agency</span>
           <span>Built to ship</span>

@@ -8,11 +8,11 @@
 }
 
 .music-portfolio {
-  --mp-accent: hsl(var(--primary));
-  --mp-fg: hsl(var(--foreground));
-  --mp-muted: hsl(var(--muted-foreground));
-  --mp-bg: hsl(var(--background));
-  --mp-border: hsl(var(--border));
+  --mp-accent: var(--bg);
+  --mp-fg: var(--color-white);
+  --mp-muted: color-mix(in srgb, #fff 55%, #000);
+  --mp-bg: var(--color-black);
+  --mp-border: color-mix(in srgb, #fff 18%, #000);
   --mp-font: var(--font-mono), ui-monospace, monospace;
 
   position: relative;

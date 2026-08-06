@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Magnetic } from "@/components/ui/magnetic";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateCards, animateSectionReveals } from "@/animations";
 
 const engagements = [
@@ -40,21 +41,29 @@ export function Pricing() {
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
             Straightforward engagements
           </h2>
-          <p className="text-lg text-muted-foreground font-light">
-            Fixed scope, fixed price, or a monthly retainer. No hourly billing — it punishes efficiency.
+          <p className="text-lg font-light">
+            <TextShimmer duration={3}>
+              Fixed scope, fixed price, or a monthly retainer. No hourly billing — it punishes efficiency.
+            </TextShimmer>
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {engagements.map((eng) => (
+          {engagements.map((eng, i) => (
             <div
               key={eng.title}
               data-gsap="card"
-              className={`relative flex flex-col p-8 border border-border bg-surface min-h-[360px] ${
+              className={`relative overflow-hidden flex flex-col p-8 border border-border bg-surface min-h-[360px] ${
                 eng.popular ? "bg-surface-elevated" : ""
               }`}
             >
-              {eng.popular && <BorderBeam size={70} duration={8} />}
+              <BorderBeam
+                size={70}
+                duration={8 + i}
+                delay={i * 2.2}
+                initialOffset={i * 28}
+                borderWidth={1.5}
+              />
               {eng.popular && (
                 <span className="absolute top-4 right-4 text-[9px] font-mono uppercase tracking-widest text-primary">
                   Most booked
@@ -112,7 +121,7 @@ export function FAQ() {
   useGsap(rootRef, (root) => animateSectionReveals(root), []);
 
   return (
-    <section ref={rootRef} className="w-full py-24 md:py-32 border-t border-border">
+    <section id="faq" ref={rootRef} className="w-full py-24 md:py-32 border-t border-border">
       <div className="max-w-3xl mx-auto px-6">
         <div data-gsap="reveal" className="mb-12">
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">

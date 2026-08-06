@@ -4,11 +4,13 @@ import { useGsap, animateSectionReveals, animateParallax } from "@/animations";
 
 export function About() {
   const rootRef = useRef<HTMLElement>(null);
-  useGsap(rootRef, (root) => {
+  useGsap(
+    rootRef,
+    (root) => {
       animateSectionReveals(root);
       animateParallax(root);
     },
-    []
+    [],
   );
 
   return (
@@ -34,13 +36,17 @@ export function About() {
             </h2>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed font-light">
               <p>
-                Divine&apos;s Code Agency sits in the room where design and engineering argue — and makes both sides ship.
+                Divine&apos;s Code Agency sits in the room where design and
+                engineering argue — and makes both sides ship.
               </p>
               <p>
-                We don&apos;t decorate products. We make complex systems legible: interfaces that hold up in production, not just in Figma.
+                We don&apos;t decorate products. We make complex systems
+                legible: interfaces that hold up in production, not just in
+                Figma.
               </p>
               <p>
-                Small roster. Senior people. Direct communication. Fast iteration. No account managers between you and the work.
+                Small roster. Senior people. Direct communication. Fast
+                iteration. No account managers between you and the work.
               </p>
             </div>
             <div className="mt-10">

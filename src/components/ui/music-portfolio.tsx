@@ -7,6 +7,7 @@ import {
   type CSSProperties,
 } from "react";
 import { gsap } from "gsap";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 export type MusicProject = {
   id: number | string;
@@ -314,6 +315,9 @@ export default function MusicPortfolio({
       className={`music-portfolio${isIdle ? " is-idle" : ""}${activeIndex !== -1 ? " has-active" : ""} ${className}`}
       style={style}
     >
+      <div className="pointer-events-none absolute inset-0 z-20" aria-hidden>
+        <BorderBeam size={90} duration={12} delay={0} borderWidth={1.5} />
+      </div>
       <div
         ref={backgroundRef}
         className="music-portfolio__bg"
