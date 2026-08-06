@@ -22,7 +22,7 @@ export function Footer() {
           hour: "2-digit",
           minute: "2-digit",
           timeZoneName: "short",
-        })
+        }),
       );
     };
     updateTime();
@@ -50,16 +50,28 @@ export function Footer() {
             <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-2">
               Work
             </h4>
-            <a href="#work" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+            <a
+              href="#work"
+              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+            >
               Selected Projects
             </a>
-            <a href="#services" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+            <a
+              href="#services"
+              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+            >
               Services
             </a>
-            <a href="#process" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+            <a
+              href="#process"
+              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+            >
               Process
             </a>
-            <a href="#pricing" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+            <a
+              href="#pricing"
+              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+            >
               Pricing
             </a>
           </div>
@@ -69,17 +81,26 @@ export function Footer() {
               Connect
             </h4>
             <Magnetic strength={0.15}>
-              <a href="https://twitter.com" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+              <a
+                href="https://twitter.com"
+                className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+              >
                 Twitter / X
               </a>
             </Magnetic>
             <Magnetic strength={0.15}>
-              <a href="https://linkedin.com" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+              <a
+                href="https://linkedin.com"
+                className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+              >
                 LinkedIn
               </a>
             </Magnetic>
             <Magnetic strength={0.15}>
-              <a href="https://github.com" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+              <a
+                href="https://github.com"
+                className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+              >
                 GitHub
               </a>
             </Magnetic>
@@ -95,10 +116,15 @@ export function Footer() {
             >
               hello@divinescode.agency
             </a>
-            <a href="#contact" className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors">
+            <a
+              href="#contact"
+              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+            >
               Start a project
             </a>
-            <span className="text-[11px] font-mono text-muted-foreground mt-2">{time}</span>
+            <span className="text-[11px] font-mono text-muted-foreground mt-2">
+              {time}
+            </span>
           </div>
         </div>
       </div>
