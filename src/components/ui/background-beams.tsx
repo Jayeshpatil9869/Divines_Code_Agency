@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
+const BEAM = "#E8D5B5";
+
 export function BackgroundBeams({ className }: { className?: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(true);
@@ -20,34 +22,52 @@ export function BackgroundBeams({ className }: { className?: string }) {
 
   const paths = [
     "M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875",
+    "M-373 -197C-373 -197 -305 208 159 335C623 462 691 867 691 867",
+    "M-366 -205C-366 -205 -298 200 166 327C630 454 698 859 698 859",
     "M-359 -213C-359 -213 -291 192 173 319C637 446 705 851 705 851",
+    "M-352 -221C-352 -221 -284 184 180 311C644 438 712 843 712 843",
+    "M-345 -229C-345 -229 -277 176 187 303C651 430 719 835 719 835",
     "M-338 -237C-338 -237 -270 168 194 295C658 422 726 827 726 827",
-    "M-317 -261C-317 -261 -249 144 215 271C679 398 747 803 747 803",
+    "M-331 -245C-331 -245 -263 160 201 287C665 414 733 819 733 819",
   ];
 
   return (
     <div
       ref={rootRef}
       className={cn(
-        "pointer-events-none absolute inset-0 overflow-hidden [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]",
+        "pointer-events-none absolute inset-0 overflow-hidden",
+        // Soft edge fade — keep beams readable across most of the hero
+        "[mask-image:radial-gradient(ellipse_80%_70%_at_20%_80%,black_10%,black_55%,transparent_100%)]",
         className
       )}
     >
       <svg
-        className="absolute h-full w-full"
+        className="absolute inset-0 h-full w-full"
         width="100%"
         height="100%"
         viewBox="0 0 696 316"
         fill="none"
+        preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
       >
+        {/* Always-visible base strokes */}
+        {paths.map((path, i) => (
+          <path
+            key={`base-${i}`}
+            d={path}
+            stroke={BEAM}
+            strokeOpacity={0.18}
+            strokeWidth="0.2"
+          />
+        ))}
+        {/* Animated shimmer beams */}
         {paths.map((path, i) => (
           <path
             key={`path-${i}`}
             d={path}
             stroke={`url(#beam-grad-${i})`}
-            strokeOpacity="0.4"
-            strokeWidth="0.5"
+            strokeOpacity="0.85"
+            strokeWidth="0.2"
           />
         ))}
         <defs>
@@ -61,20 +81,22 @@ export function BackgroundBeams({ className }: { className?: string }) {
               y2="0%"
             >
               <stop offset="0%" stopColor="transparent" />
-              <stop offset="50%" stopColor="hsl(32 28% 55%)" stopOpacity="0.8" />
+              <stop offset="40%" stopColor={BEAM} stopOpacity="0.35" />
+              <stop offset="50%" stopColor={BEAM} stopOpacity="1" />
+              <stop offset="60%" stopColor={BEAM} stopOpacity="0.35" />
               <stop offset="100%" stopColor="transparent" />
               {active && (
                 <>
                   <animate
                     attributeName="x1"
                     values="-100%;100%"
-                    dur={`${7 + i * 0.5}s`}
+                    dur={`${5.5 + (i % 8) * 0.4}s`}
                     repeatCount="indefinite"
                   />
                   <animate
                     attributeName="x2"
                     values="0%;200%"
-                    dur={`${7 + i * 0.5}s`}
+                    dur={`${5.5 + (i % 8) * 0.4}s`}
                     repeatCount="indefinite"
                   />
                 </>
@@ -105,12 +127,12 @@ function BeamParticles({ active }: { active: boolean }) {
     if (!ctx) return;
 
     let raf = 0;
-    const particles = Array.from({ length: 10 }, () => ({
+    const particles = Array.from({ length: 18 }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      r: Math.random() * 1.1 + 0.35,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.4 + 0.45,
     }));
 
     const resize = () => {
@@ -133,7 +155,7 @@ function BeamParticles({ active }: { active: boolean }) {
         if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = "hsla(32, 28%, 55%, 0.35)";
+        ctx.fillStyle = "hsla(36, 45%, 78%, 0.55)";
         ctx.fill();
       }
       raf = requestAnimationFrame(draw);
@@ -150,7 +172,7 @@ function BeamParticles({ active }: { active: boolean }) {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 h-full w-full opacity-60"
+      className="absolute inset-0 h-full w-full opacity-80"
       style={{ visibility: active ? "visible" : "hidden" }}
     />
   );

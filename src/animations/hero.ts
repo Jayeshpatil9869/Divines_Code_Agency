@@ -10,6 +10,7 @@ export function animateHero(root: HTMLElement) {
   const lines = qsa(root, '[data-gsap="hero-line"]');
   const sub = qs(root, '[data-gsap="hero-sub"]');
   const ctas = qsa(root, '[data-gsap="hero-cta"]');
+  const video = qs(root, '[data-gsap="hero-video"]');
   const meta = qs(root, '[data-gsap="hero-meta"]');
   const scroll = qs(root, '[data-gsap="hero-scroll"]');
   const beams = qs(root, '[data-gsap="hero-bg"]');
@@ -48,6 +49,15 @@ export function animateHero(root: HTMLElement) {
   if (sub) {
     gsap.set(sub, { opacity: 0, y: 20 });
     tl.to(sub, { opacity: 1, y: 0, duration: DURATION.base }, "-=0.55");
+  }
+
+  if (video) {
+    gsap.set(video, { opacity: 0, y: 28, scale: 0.98 });
+    tl.to(
+      video,
+      { opacity: 1, y: 0, scale: 1, duration: DURATION.base, ease: EASE.expo },
+      "-=0.5"
+    );
   }
 
   if (ctas.length) {

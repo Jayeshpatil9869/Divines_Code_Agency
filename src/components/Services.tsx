@@ -1,8 +1,7 @@
-import { useState, useRef } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useRef } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { TextShimmer } from "@/components/ui/text-shimmer";
-import { useGsap, animateCards } from "@/animations";
+import { useGsap, animateCards, gsap, EASE } from "@/animations";
 
 const services = [
   {
@@ -94,13 +93,100 @@ function ServiceCard({
   deliverables: string[];
   index: number;
 }) {
-  const [hovered, setHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const openRef = useRef(false);
+
+  const expand = () => {
+    if (openRef.current) return;
+    openRef.current = true;
+    const panel = panelRef.current;
+    const card = cardRef.current;
+    if (!panel) return;
+
+    gsap.killTweensOf(panel);
+    const tags = panel.querySelectorAll<HTMLElement>("[data-service-tag]");
+
+    gsap.set(panel, { height: "auto", opacity: 1 });
+    const fullH = panel.offsetHeight;
+    gsap.fromTo(
+      panel,
+      { height: 0, opacity: 0 },
+      {
+        height: fullH,
+        opacity: 1,
+        duration: 0.5,
+        ease: EASE.expo,
+        overwrite: "auto",
+        onComplete: () => gsap.set(panel, { height: "auto" }),
+      }
+    );
+
+    gsap.fromTo(
+      tags,
+      { y: 10, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.35,
+        stagger: 0.05,
+        delay: 0.12,
+        ease: EASE.out,
+        overwrite: "auto",
+      }
+    );
+
+    if (card) {
+      gsap.to(card, {
+        backgroundColor: "rgba(0,0,0,1)",
+        duration: 0.35,
+        ease: EASE.soft,
+        overwrite: "auto",
+      });
+    }
+  };
+
+  const collapse = () => {
+    if (!openRef.current) return;
+    openRef.current = false;
+    const panel = panelRef.current;
+    const card = cardRef.current;
+    if (!panel) return;
+
+    gsap.killTweensOf(panel);
+    const tags = panel.querySelectorAll<HTMLElement>("[data-service-tag]");
+    gsap.to(tags, { opacity: 0, y: 6, duration: 0.2, stagger: 0.02, ease: EASE.soft });
+
+    gsap.set(panel, { height: panel.offsetHeight });
+    gsap.to(panel, {
+      height: 0,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power2.inOut",
+      overwrite: "auto",
+    });
+
+    if (card) {
+      gsap.to(card, {
+        backgroundColor: "rgba(0,0,0,1)",
+        duration: 0.3,
+        ease: EASE.soft,
+        overwrite: "auto",
+      });
+    }
+  };
 
   return (
-    <motion.div
-      className="relative flex flex-col p-6 md:p-8 bg-background border border-border overflow-hidden group hover:bg-surface-elevated transition-colors h-full"
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
+    <div
+      ref={cardRef}
+      className="relative flex flex-col p-6 md:p-8 bg-background border border-border overflow-hidden h-full"
+      onMouseEnter={expand}
+      onMouseLeave={collapse}
+      onFocus={expand}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) collapse();
+      }}
+      tabIndex={0}
     >
       <BorderBeam
         size={55}
@@ -118,28 +204,25 @@ function ServiceCard({
       <p className="text-[13px] text-muted-foreground leading-relaxed font-light">
         {desc}
       </p>
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="pt-6 mt-6 border-t border-border flex flex-wrap gap-2">
-              {deliverables.map((d) => (
-                <span
-                  key={d}
-                  className="text-[9px] uppercase tracking-wider px-2 py-1 bg-surface text-muted-foreground border border-border font-mono"
-                >
-                  {d}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+
+      <div
+        ref={panelRef}
+        className="overflow-hidden"
+        style={{ height: 0, opacity: 0 }}
+        aria-hidden={!openRef.current}
+      >
+        <div className="pt-6 mt-6 border-t border-border flex flex-wrap gap-2">
+          {deliverables.map((d) => (
+            <span
+              key={d}
+              data-service-tag
+              className="text-[9px] uppercase tracking-wider px-2 py-1 bg-surface text-muted-foreground border border-border font-mono"
+            >
+              {d}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

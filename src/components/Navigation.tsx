@@ -2,7 +2,8 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Magnetic } from "@/components/ui/magnetic";
-import { useGsap, animateNavReveal, animateMobileMenu, gsap } from "@/animations";
+import { TextShimmer } from "@/components/ui/text-shimmer";
+import { useGsap, animateNavReveal, animateMobileMenu } from "@/animations";
 
 export function Navigation() {
   const rootRef = useRef<HTMLElement>(null);
@@ -110,15 +111,7 @@ export function Navigation() {
           <nav className="hidden md:flex items-center gap-8">
             {links.map((link) => (
               <Magnetic key={link.label} strength={0.2}>
-                <a
-                  href={link.href}
-                  data-gsap="nav-link"
-                  className="text-[11px] uppercase tracking-[0.2em] font-medium opacity-60 hover:opacity-100 text-foreground transition-opacity"
-                  onMouseEnter={(e) => gsap.to(e.currentTarget, { opacity: 1, duration: 0.2 })}
-                  onMouseLeave={(e) => gsap.to(e.currentTarget, { opacity: 0.6, duration: 0.25 })}
-                >
-                  {link.label}
-                </a>
+                <NavShimmerLink href={link.href} label={link.label} />
               </Magnetic>
             ))}
             <Magnetic strength={0.25}>
@@ -170,5 +163,28 @@ export function Navigation() {
         </div>
       )}
     </>
+  );
+}
+
+function NavShimmerLink({ href, label }: { href: string; label: string }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <a
+      href={href}
+      data-gsap="nav-link"
+      className={cn(
+        "text-[11px] uppercase tracking-[0.2em] font-medium transition-opacity",
+        hovered ? "opacity-100" : "opacity-60 text-foreground"
+      )}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {hovered ? (
+        <TextShimmer duration={1.6}>{label}</TextShimmer>
+      ) : (
+        label
+      )}
+    </a>
   );
 }

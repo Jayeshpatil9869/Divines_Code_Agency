@@ -1,4 +1,4 @@
-export { registerGsapPlugins, prefersReducedMotion, gsap, ScrollTrigger, EASE, DURATION } from "./utils";
+export { registerGsapPlugins, prefersReducedMotion, gsap, ScrollTrigger, Flip, EASE, DURATION } from "./utils";
 export { useGsap } from "./hooks";
 export { animateHero } from "./hero";
 export { animateNavReveal, animateMobileMenu } from "./nav";
@@ -10,3 +10,7 @@ export {
 } from "./sections";
 export { animateMetrics, animateProcess, animateProjects } from "./metrics";
 export { bindFooterSpotlight } from "./footerSpotlight";
+export { expandHeroVideo, collapseHeroVideo } from "./heroVideo";
+export type { HeroVideoFlipEls } from "./heroVideo";
+export { bindLightSectionBackground } from "./sectionTheme";
+export { animatePhilosophy } from "./philosophy";

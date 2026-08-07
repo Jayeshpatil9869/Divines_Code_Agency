@@ -1,11 +1,12 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Flip } from "gsap/Flip";
 
 let registered = false;
 
 export function registerGsapPlugins() {
   if (registered || typeof window === "undefined") return;
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, Flip);
   registered = true;
 }
 
@@ -19,6 +20,7 @@ export const EASE = {
   out: "power3.out",
   inOut: "power2.inOut",
   expo: "expo.out",
+  expoInOut: "expo.inOut",
   soft: "power2.out",
 } as const;
 
@@ -69,4 +71,4 @@ export function qs<T extends Element = HTMLElement>(
   return root.querySelector<T>(selector);
 }
 
-export { gsap, ScrollTrigger };
+export { gsap, ScrollTrigger, Flip };

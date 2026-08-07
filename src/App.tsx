@@ -9,7 +9,6 @@ import { Projects } from "./components/Projects";
 import { Services } from "./components/Services";
 import { About } from "./components/About";
 import { Process } from "./components/Process";
-import { Skills } from "./components/Skills";
 import { Testimonials } from "./components/Testimonials";
 import { WhyMe, Philosophy } from "./components/WhyMe";
 import { Pricing } from "./components/Pricing";
@@ -52,7 +51,6 @@ export default function App() {
         <Services />
         <About />
         <Process />
-        <Skills />
         <Testimonials />
         <WhyMe />
         <Philosophy />

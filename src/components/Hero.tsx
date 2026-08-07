@@ -4,6 +4,8 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { Magnetic } from "@/components/ui/magnetic";
 import { TextShimmer } from "@/components/ui/text-shimmer";
+import { HeroVideo } from "@/components/HeroVideo";
+import { StringLine } from "@/components/ui/string-line";
 import { useGsap, animateHero } from "@/animations";
 
 export function Hero() {
@@ -21,21 +23,35 @@ export function Hero() {
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="mb-10 md:mb-14">
+        <div className="relative mb-10 md:mb-14">
           <p
             data-gsap="hero-eyebrow"
             className="text-primary text-[11px] md:text-[12px] uppercase tracking-[0.45em] font-bold mb-6"
           >
             Available for Q2 partnerships
           </p>
-          <h1 className="text-[clamp(3.5rem,12vw,9rem)] leading-[0.82] font-black tracking-[-0.05em] uppercase">
-            <span data-gsap="hero-line" className="block text-foreground">
-              Divine&apos;s
-            </span>
-            <span data-gsap="hero-line" className="block text-foreground/90">
-              Code Agency
-            </span>
-          </h1>
+
+          <div className="relative">
+            <h1 className="font-black tracking-[-0.05em] uppercase md:pr-[min(42%,26rem)]">
+              <span
+                data-gsap="hero-line"
+                className="block text-foreground text-[clamp(3.5rem,12vw,7rem)] leading-[0.82]"
+              >
+                Divine&apos;s
+              </span>
+              <span
+                data-gsap="hero-line"
+                className="block text-foreground/90 text-[clamp(2rem,6.5vw,8.5rem)] leading-[0.9] mt-1 md:mt-2"
+              >
+                Code Agency
+              </span>
+            </h1>
+
+            {/* Red-box zone: right of headline, aligned with Divine's */}
+            <div className="mt-8 md:mt-0 md:absolute md:top-0 md:right-0 w-full md:w-[min(42%,28.125rem)] z-20">
+              <HeroVideo heroRef={rootRef} className="max-w-none ml-0" />
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
@@ -73,32 +89,33 @@ export function Hero() {
           </div>
         </div>
 
-        <div
-          data-gsap="hero-meta"
-          className="mt-16 pt-8 border-t border-border flex flex-wrap items-center gap-x-10 gap-y-3"
-        >
-          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
-            40+ products shipped · avg engagement 6 months
-          </span>
-          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground/60 hidden sm:inline">
-            Design · Frontend · Systems
-          </span>
-        </div>
-      </div>
+        <div data-gsap="hero-meta" className="mt-16">
+          <StringLine className="mb-2" stroke="color-mix(in srgb, #fff 55%, #000)" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 items-end gap-y-4">
+            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground sm:justify-self-start pb-1">
+              40+ products shipped · avg engagement 6 months
+            </span>
 
-      <div
-        data-gsap="hero-scroll"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
-        aria-hidden
-      >
-        <span className="text-[9px] font-mono uppercase tracking-[0.3em] text-muted-foreground">
-          Scroll
-        </span>
-        <div className="w-px h-10 bg-border relative overflow-hidden">
-          <span
-            data-gsap="scroll-dot"
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary"
-          />
+            <div
+              data-gsap="hero-scroll"
+              className="flex flex-col items-center gap-2 pointer-events-none justify-self-center"
+              aria-hidden
+            >
+              <span className="text-[9px] font-mono uppercase tracking-[0.3em] text-muted-foreground">
+                Scroll
+              </span>
+              <div className="w-px h-10 bg-border relative overflow-hidden">
+                <span
+                  data-gsap="scroll-dot"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary"
+                />
+              </div>
+            </div>
+
+            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground/60 hidden sm:inline sm:justify-self-end pb-1 text-right">
+              Design · Frontend · Systems
+            </span>
+          </div>
         </div>
       </div>
     </section>

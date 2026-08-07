@@ -1,6 +1,11 @@
 import { useRef } from "react";
 import { TextShimmer } from "@/components/ui/text-shimmer";
-import { useGsap, animateCards, animateSectionReveals } from "@/animations";
+import {
+  useGsap,
+  animateCards,
+  animatePhilosophy,
+} from "@/animations";
+
 
 const reasons = [
   {
@@ -52,19 +57,26 @@ export function WhyMe() {
 
 export function Philosophy() {
   const rootRef = useRef<HTMLElement>(null);
-  useGsap(rootRef, (root) => animateSectionReveals(root), []);
+  useGsap(rootRef, (root) => animatePhilosophy(root), []);
 
   return (
     <section
       ref={rootRef}
-      className="relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center py-28 md:py-36 bg-white text-black"
+      className="relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center py-28 md:py-36 text-black overflow-x-hidden"
     >
       <div className="relative max-w-5xl mx-auto px-6 text-center">
-        <div data-gsap="reveal" className="relative inline-block">
+        <div className="relative inline-block">
           <h2 className="font-tight text-[clamp(3rem,6vw,5rem)] leading-[0.85] font-black tracking-[-0.04em] uppercase text-black mb-8">
-            <span className="block">Good design is</span>
-            <span className="block">mostly deciding</span>
-            <span className="block">
+            <span data-gsap="phil-line-top" className="block will-change-transform">
+              Good design is
+            </span>
+            <span data-gsap="phil-line-mid" className="block">
+              mostly deciding
+            </span>
+            <span
+              data-gsap="phil-line-bot"
+              className="block will-change-transform"
+            >
               what to{" "}
               <span
                 className="inline-block text-transparent"
@@ -79,7 +91,10 @@ export function Philosophy() {
             </span>
           </h2>
 
-          <p className="mt-0 text-base md:text-xl font-serif italic font-normal normal-case tracking-normal text-black/70 max-w-2xl mx-auto leading-relaxed">
+          <p
+            data-gsap="reveal"
+            className="mt-0 text-base md:text-xl font-serif italic font-normal normal-case tracking-normal text-black/70 max-w-2xl mx-auto leading-relaxed"
+          >
             I&apos;d rather ship four things properly than twelve things approximately.
           </p>
         </div>
