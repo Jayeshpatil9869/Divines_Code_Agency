@@ -25,7 +25,7 @@ export function Logos() {
       bindLightSectionBackground(root);
       animateSectionReveals(root);
     },
-    []
+    [],
   );
 
   return (
