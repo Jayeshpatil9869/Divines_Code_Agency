@@ -155,7 +155,27 @@ export function Footer() {
           className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t border-border text-[10px] font-mono uppercase tracking-wider text-muted-foreground"
         >
           <span>© {new Date().getFullYear()} Divine&apos;s Code Agency</span>
-          <span>Built to ship</span>
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 normal-case tracking-normal">
+            <span>Made with ❤️ for your brand</span>
+            <span aria-hidden>·</span>
+            <a
+              href="https://jayeshbpatil.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              jayeshbpatil.com
+            </a>
+            <span aria-hidden>·</span>
+            <a
+              href="https://mahendranagpure.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              mahendranagpure.com
+            </a>
+          </p>
         </div>
       </div>
     </footer>
