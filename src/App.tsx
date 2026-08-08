@@ -21,12 +21,9 @@ import { Navigation } from "./components/Navigation";
 import { CustomCursor } from "./components/CustomCursor";
 
 const INTRO_GREETINGS = [
-  { text: "Quiet." },
-  { text: "Sharp." },
-  { text: "Crafted." },
-  { text: "Considered." },
-  { text: "Ship." },
-  { text: "Ready." },
+  { text: "Think." },
+  { text: "Create." },
+  { text: "Differently." },
 ];
 
 export default function App() {

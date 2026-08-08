@@ -63,6 +63,15 @@ function destroyLenis() {
  */
 export function useLenis() {
   useEffect(() => {
+    // Always land on the hero after refresh / remount (ignore browser scroll restore + hash).
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+
     if (prefersReducedMotion()) return;
 
     subscribers += 1;
@@ -70,7 +79,12 @@ export function useLenis() {
       lenisSingleton = createLenis();
     }
 
-    const onLoad = () => ScrollTrigger.refresh();
+    lenisSingleton.scrollTo(0, { immediate: true });
+
+    const onLoad = () => {
+      lenisSingleton?.scrollTo(0, { immediate: true });
+      ScrollTrigger.refresh();
+    };
     window.addEventListener("load", onLoad, { once: true });
 
     return () => {
