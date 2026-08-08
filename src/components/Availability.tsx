@@ -28,9 +28,9 @@ export function Availability() {
                 year so each gets real attention.
               </p>
             </div>
-            <Magnetic>
-              <a href="#contact">
-                <ShimmerButton className="font-bold tracking-[0.2em] uppercase text-[11px]">
+            <Magnetic className="block w-full md:inline-block md:w-auto">
+              <a href="#contact" className="block w-full md:w-auto">
+                <ShimmerButton className="w-full md:w-auto font-bold tracking-[0.2em] uppercase text-[11px]">
                   Start a conversation
                 </ShimmerButton>
               </a>

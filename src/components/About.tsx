@@ -1,6 +1,9 @@
 import { useRef } from "react";
 import { TextShimmer } from "@/components/ui/text-shimmer";
+import { RevealWaveImage } from "@/components/ui/reveal-wave-image";
 import { useGsap, animateSectionReveals, animateParallax } from "@/animations";
+
+const TEAM_IMAGE = "/images/studio.png";
 
 export function About() {
   const rootRef = useRef<HTMLElement>(null);
@@ -22,11 +25,26 @@ export function About() {
               data-gsap="parallax"
               className="relative aspect-square md:aspect-[4/5] overflow-hidden bg-surface border border-border"
             >
+              {/* Mobile: static image (cheaper). Desktop: wave reveal canvas. */}
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800&h=1000"
-                alt="Divine's Code Agency team at work"
-                className="w-full h-full object-cover grayscale-[25%] opacity-90 will-change-transform"
+                src={TEAM_IMAGE}
+                alt="Divine's Code Agency studio"
+                className="absolute inset-0 h-full w-full object-cover md:hidden grayscale-[20%] opacity-90"
               />
+              <div className="absolute inset-0 hidden md:block">
+                <RevealWaveImage
+                  src={TEAM_IMAGE}
+                  alt="Divine's Code Agency studio"
+                  className="h-full w-full"
+                  waveSpeed={0.25}
+                  waveFrequency={0.85}
+                  waveAmplitude={0.45}
+                  revealRadius={0.42}
+                  revealSoftness={0.85}
+                  pixelSize={2.5}
+                  mouseRadius={0.35}
+                />
+              </div>
             </div>
           </div>
 

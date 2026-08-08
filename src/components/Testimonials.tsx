@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateSectionReveals } from "@/animations";
@@ -36,9 +36,42 @@ const testimonials = [
   },
 ];
 
+function TestimonialCard({
+  quote,
+  name,
+  role,
+}: {
+  quote: string;
+  name: string;
+  role: string;
+}) {
+  return (
+    <div className="w-[320px] md:w-[420px] shrink-0 p-8 border border-border bg-surface flex flex-col justify-between min-h-[280px]">
+      <p className="text-base md:text-lg font-light leading-relaxed text-foreground/90 mb-8">
+        &ldquo;{quote}&rdquo;
+      </p>
+      <div>
+        <div className="text-[11px] uppercase tracking-[0.2em] font-bold">
+          {name}
+        </div>
+        <div className="text-[11px] text-muted-foreground mt-1">{role}</div>
+      </div>
+    </div>
+  );
+}
+
 export function Testimonials() {
   const rootRef = useRef<HTMLElement>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
   useGsap(rootRef, (root) => animateSectionReveals(root), []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   return (
     <section ref={rootRef} className="w-full py-24 md:py-32 overflow-hidden">
@@ -53,26 +86,21 @@ export function Testimonials() {
         </div>
       </div>
 
-      <InfiniteSlider gap={24} duration={45}>
-        {testimonials.map((t) => (
-          <div
-            key={t.name}
-            className="w-[320px] md:w-[420px] shrink-0 p-8 border border-border bg-surface flex flex-col justify-between min-h-[280px]"
-          >
-            <p className="text-base md:text-lg font-light leading-relaxed text-foreground/90 mb-8">
-              &ldquo;{t.quote}&rdquo;
-            </p>
-            <div>
-              <div className="text-[11px] uppercase tracking-[0.2em] font-bold">
-                {t.name}
-              </div>
-              <div className="text-[11px] text-muted-foreground mt-1">
-                {t.role}
-              </div>
+      {reducedMotion ? (
+        <div className="flex gap-6 overflow-x-auto px-6 pb-2 snap-x snap-mandatory">
+          {testimonials.map((t) => (
+            <div key={t.name} className="snap-start">
+              <TestimonialCard {...t} />
             </div>
-          </div>
-        ))}
-      </InfiniteSlider>
+          ))}
+        </div>
+      ) : (
+        <InfiniteSlider gap={24} duration={45}>
+          {testimonials.map((t) => (
+            <TestimonialCard key={t.name} {...t} />
+          ))}
+        </InfiniteSlider>
+      )}
     </section>
   );
 }

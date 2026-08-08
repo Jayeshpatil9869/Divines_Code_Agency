@@ -14,3 +14,6 @@ export { expandHeroVideo, collapseHeroVideo } from "./heroVideo";
 export type { HeroVideoFlipEls } from "./heroVideo";
 export { bindLightSectionBackground } from "./sectionTheme";
 export { animatePhilosophy } from "./philosophy";
+export { animateLogos } from "./logos";
+export { animatePricing } from "./pricing";
+export { animateFaq, expandFaqPanel, collapseFaqPanel, setFaqPanelState, FAQ_COLORS } from "./faq";

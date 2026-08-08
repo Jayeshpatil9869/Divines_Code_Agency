@@ -17,6 +17,8 @@ export type MusicProject = {
   label: string;
   year: string;
   image: string;
+  /** Optional live demo / case study URL */
+  url?: string;
 };
 
 type Config = {
@@ -112,12 +114,13 @@ type ProjectItemProps = {
   index: number;
   onMouseEnter: (index: number, image: string) => void;
   onMouseLeave: () => void;
+  onActivate: (index: number, image: string) => void;
   isActive: boolean;
 };
 
 const ProjectItem = forwardRef<HTMLLIElement, ProjectItemProps>(
   function ProjectItem(
-    { project, index, onMouseEnter, onMouseLeave, isActive },
+    { project, index, onMouseEnter, onMouseLeave, onActivate, isActive },
     ref
   ) {
     const textRefs = {
@@ -148,6 +151,16 @@ const ProjectItem = forwardRef<HTMLLIElement, ProjectItemProps>(
         className={`music-portfolio__item${isActive ? " is-active" : ""}`}
         onMouseEnter={() => onMouseEnter(index, project.image)}
         onMouseLeave={onMouseLeave}
+        onClick={() => onActivate(index, project.image)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onActivate(index, project.image);
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-pressed={isActive}
         data-image={project.image}
       >
         <span ref={textRefs.artist} className="music-portfolio__cell artist">
@@ -290,11 +303,33 @@ export default function MusicPortfolio({
     debounceRef.current = setTimeout(() => {}, 50);
   }, []);
 
+  const handleProjectActivate = useCallback(
+    (index: number, imageUrl: string) => {
+      // Second tap/click on active row → open live demo when available
+      if (activeIndex === index) {
+        const href = PROJECTS_DATA[index]?.url;
+        if (href) {
+          window.open(href, "_blank", "noopener,noreferrer");
+          return;
+        }
+        setActiveIndex(-1);
+        if (backgroundRef.current) backgroundRef.current.style.opacity = "0";
+        startIdleTimer();
+        return;
+      }
+      handleProjectMouseEnter(index, imageUrl);
+    },
+    [activeIndex, handleProjectMouseEnter, startIdleTimer, PROJECTS_DATA]
+  );
+
   const handleContainerMouseLeave = useCallback(() => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    setActiveIndex(-1);
-    if (backgroundRef.current) backgroundRef.current.style.opacity = "0";
-    startIdleTimer();
+    // Only clear on mouse leave when fine pointer (hover devices)
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      setActiveIndex(-1);
+      if (backgroundRef.current) backgroundRef.current.style.opacity = "0";
+      startIdleTimer();
+    }
   }, [startIdleTimer]);
 
   useEffect(() => {
@@ -340,6 +375,7 @@ export default function MusicPortfolio({
               index={index}
               onMouseEnter={handleProjectMouseEnter}
               onMouseLeave={handleProjectMouseLeave}
+              onActivate={handleProjectActivate}
               isActive={activeIndex === index}
               ref={(el) => {
                 projectItemsRef.current[index] = el;

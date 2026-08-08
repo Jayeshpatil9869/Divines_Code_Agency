@@ -14,7 +14,7 @@ export function BackgroundBeams({ className }: { className?: string }) {
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => setActive(entry.isIntersecting),
-      { rootMargin: "10% 0px", threshold: 0 }
+      { rootMargin: "10% 0px", threshold: 0 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -38,7 +38,7 @@ export function BackgroundBeams({ className }: { className?: string }) {
         "pointer-events-none absolute inset-0 overflow-hidden",
         // Soft edge fade — keep beams readable across most of the hero
         "[mask-image:radial-gradient(ellipse_80%_70%_at_20%_80%,black_10%,black_55%,transparent_100%)]",
-        className
+        className,
       )}
     >
       <svg

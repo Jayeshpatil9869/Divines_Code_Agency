@@ -4,8 +4,9 @@ import { cn } from "@/lib/utils";
 import { Magnetic } from "@/components/ui/magnetic";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateNavReveal, animateMobileMenu } from "@/animations";
+import { getLenis } from "@/hooks/useLenis";
 
-export function Navigation() {
+export function Navigation({ introReady = true }: { introReady?: boolean }) {
   const rootRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -13,7 +14,14 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useGsap(rootRef, (root) => animateNavReveal(root), []);
+  useGsap(
+    rootRef,
+    (root) => {
+      if (!introReady) return;
+      animateNavReveal(root);
+    },
+    [introReady]
+  );
 
   useEffect(() => {
     let ticking = false;
@@ -45,6 +53,20 @@ export function Navigation() {
     update();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Lock page scroll while mobile menu is open
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const html = document.documentElement;
+    const prevOverflow = html.style.overflow;
+    html.style.overflow = "hidden";
+    const lenis = getLenis();
+    lenis?.stop();
+    return () => {
+      html.style.overflow = prevOverflow;
+      lenis?.start();
+    };
+  }, [mobileMenuOpen]);
 
   useLayoutEffect(() => {
     const panel = panelRef.current;
@@ -81,10 +103,12 @@ export function Navigation() {
         ref={rootRef}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 pointer-events-none px-6 py-6 flex justify-center",
-          scrolled ? "pt-6" : "pt-8"
+          scrolled ? "pt-6" : "pt-8",
+          !introReady && "[&_[data-gsap]]:opacity-0"
         )}
       >
         <div
+          data-gsap="nav-shell"
           className={cn(
             "flex items-center justify-between pointer-events-auto transition-all duration-300 relative overflow-hidden",
             scrolled
@@ -126,12 +150,12 @@ export function Navigation() {
           </nav>
 
           <button
-            className="md:hidden p-2"
+            className="md:hidden inline-flex items-center justify-center min-h-11 min-w-11 p-2"
             onClick={() => (mobileMenuOpen ? closeMenu() : setMobileMenuOpen(true))}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </header>

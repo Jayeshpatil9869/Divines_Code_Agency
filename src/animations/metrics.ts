@@ -95,6 +95,44 @@ export function animateProcess(root: HTMLElement) {
       });
     });
   });
+
+  // Dual-layer vertical cover hover (desktop / fine pointer only)
+  mm.add(
+    "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    () => {
+      const steps = qsa(root, '[data-gsap="process-step"]');
+      const cleanups: Array<() => void> = [];
+
+      steps.forEach((step) => {
+        const box1 = qs(step, '[data-gsap="process-box1"]');
+        const box2 = qs(step, '[data-gsap="process-box2"]');
+        if (!box1 || !box2) return;
+
+        // Park cover above; resting layer visible
+        gsap.set(box1, { y: "-100%" });
+        gsap.set(box2, { y: "0%" });
+
+        const onEnter = () => {
+          gsap.to(box1, { y: "0%", duration: 0.6, ease: "power2.out", overwrite: "auto" });
+          gsap.to(box2, { y: "100%", duration: 0.6, ease: "power2.out", overwrite: "auto" });
+        };
+
+        const onLeave = () => {
+          gsap.to(box1, { y: "-100%", duration: 0.6, ease: "power2.out", overwrite: "auto" });
+          gsap.to(box2, { y: "0%", duration: 0.6, ease: "power2.out", overwrite: "auto" });
+        };
+
+        step.addEventListener("mouseenter", onEnter);
+        step.addEventListener("mouseleave", onLeave);
+        cleanups.push(() => {
+          step.removeEventListener("mouseenter", onEnter);
+          step.removeEventListener("mouseleave", onLeave);
+        });
+      });
+
+      return () => cleanups.forEach((fn) => fn());
+    }
+  );
 }
 
 export function animateProjects(root: HTMLElement) {

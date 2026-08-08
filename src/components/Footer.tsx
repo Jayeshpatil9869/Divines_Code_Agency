@@ -112,7 +112,7 @@ export function Footer() {
             </h4>
             <a
               href="mailto:hello@divinescode.agency"
-              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors break-all"
             >
               hello@divinescode.agency
             </a>

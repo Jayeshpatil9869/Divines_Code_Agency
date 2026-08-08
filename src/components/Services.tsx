@@ -176,17 +176,37 @@ function ServiceCard({
     }
   };
 
+  const toggle = () => {
+    if (openRef.current) collapse();
+    else expand();
+  };
+
+  const isFinePointer = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
   return (
     <div
       ref={cardRef}
-      className="relative flex flex-col p-6 md:p-8 bg-background border border-border overflow-hidden h-full"
-      onMouseEnter={expand}
-      onMouseLeave={collapse}
+      className="relative flex flex-col p-6 md:p-8 bg-background border border-border overflow-hidden h-full cursor-pointer"
+      onMouseEnter={() => {
+        if (isFinePointer()) expand();
+      }}
+      onMouseLeave={() => {
+        if (isFinePointer()) collapse();
+      }}
+      onClick={(e) => {
+        if (isFinePointer()) return;
+        if ((e.target as HTMLElement).closest("a")) return;
+        toggle();
+      }}
       onFocus={expand}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) collapse();
       }}
       tabIndex={0}
+      role="button"
+      aria-expanded={openRef.current}
     >
       <BorderBeam
         size={55}

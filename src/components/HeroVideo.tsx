@@ -101,11 +101,18 @@ export function HeroVideo({ heroRef, className }: HeroVideoProps) {
     };
 
     const onScrollIntent = () => closeVideo();
+    const onTouchMove = (e: TouchEvent) => {
+      const frame = frameRef.current;
+      const t = e.target as Node | null;
+      // Allow scrubbing native controls inside the expanded frame
+      if (frame && t && frame.contains(t)) return;
+      closeVideo();
+    };
 
     window.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onPointerDown, true);
     window.addEventListener("wheel", onScrollIntent, { passive: true });
-    window.addEventListener("touchmove", onScrollIntent, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
     window.addEventListener("scroll", onScrollIntent, { passive: true });
 
     const lenis = getLenis();
@@ -115,7 +122,7 @@ export function HeroVideo({ heroRef, className }: HeroVideoProps) {
       window.removeEventListener("keydown", onKey);
       document.removeEventListener("pointerdown", onPointerDown, true);
       window.removeEventListener("wheel", onScrollIntent);
-      window.removeEventListener("touchmove", onScrollIntent);
+      window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("scroll", onScrollIntent);
       lenis?.off("scroll", onScrollIntent);
     };

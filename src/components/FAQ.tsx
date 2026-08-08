@@ -1,101 +1,15 @@
-import { useRef } from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BorderBeam } from "@/components/ui/border-beam";
-import { Magnetic } from "@/components/ui/magnetic";
+import { useLayoutEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { TextShimmer } from "@/components/ui/text-shimmer";
-import { useGsap, animateCards, animateSectionReveals } from "@/animations";
-
-const engagements = [
-  {
-    title: "Design Sprint",
-    duration: "2–3 weeks",
-    cadence: "Daily syncs",
-    desc: "Rough idea to high-fidelity interactive prototype — for funding or internal buy-in.",
-    price: "From $8k",
-  },
-  {
-    title: "0-to-1 Build",
-    duration: "8–12 weeks",
-    cadence: "Weekly reviews",
-    desc: "Full product design and frontend engineering. Blank canvas to production-ready codebase.",
-    price: "From $25k",
-    popular: true,
-  },
-  {
-    title: "Growth Retainer",
-    duration: "3+ months",
-    cadence: "Async + bi-weekly",
-    desc: "Ongoing partnership to optimize funnels, audit UX, and ship high-impact frontend.",
-    price: "$6k / month",
-  },
-];
-
-export function Pricing() {
-  const rootRef = useRef<HTMLElement>(null);
-  useGsap(rootRef, (root) => animateCards(root, '[data-gsap="card"]'), []);
-
-  return (
-    <section id="pricing" ref={rootRef} className="w-full py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
-            Straightforward engagements
-          </h2>
-          <p className="text-lg font-light">
-            <TextShimmer duration={3}>
-              Fixed scope, fixed price, or a monthly retainer. No hourly billing — it punishes efficiency.
-            </TextShimmer>
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {engagements.map((eng, i) => (
-            <div
-              key={eng.title}
-              data-gsap="card"
-              className={`relative overflow-hidden flex flex-col p-8 border border-border bg-surface min-h-[360px] ${
-                eng.popular ? "bg-surface-elevated" : ""
-              }`}
-            >
-              <BorderBeam
-                size={70}
-                duration={8 + i}
-                delay={i * 2.2}
-                initialOffset={i * 28}
-                borderWidth={1.5}
-              />
-              {eng.popular && (
-                <span className="absolute top-4 right-4 text-[9px] font-mono uppercase tracking-widest text-primary">
-                  Most booked
-                </span>
-              )}
-              <h3 className="text-2xl font-light italic font-serif normal-case mb-2 tracking-tight">
-                {eng.title}
-              </h3>
-              <div className="flex gap-4 text-[10px] font-mono uppercase tracking-wider text-muted-foreground mb-6">
-                <span>{eng.duration}</span>
-                <span>·</span>
-                <span>{eng.cadence}</span>
-              </div>
-              <p className="text-sm text-muted-foreground font-light leading-relaxed flex-1 mb-8">
-                {eng.desc}
-              </p>
-              <div className="text-2xl font-black tracking-tight mb-6">{eng.price}</div>
-              <Magnetic>
-                <a
-                  href="#contact"
-                  className="inline-flex text-[11px] uppercase tracking-[0.2em] font-bold border-b border-border pb-1 hover:border-primary hover:text-primary transition-colors"
-                >
-                  Inquire →
-                </a>
-              </Magnetic>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+import { Magnetic } from "@/components/ui/magnetic";
+import {
+  useGsap,
+  animateFaq,
+  expandFaqPanel,
+  collapseFaqPanel,
+  setFaqPanelState,
+  prefersReducedMotion,
+} from "@/animations";
 
 const faqs = [
   {
@@ -118,28 +32,171 @@ const faqs = [
 
 export function FAQ() {
   const rootRef = useRef<HTMLElement>(null);
-  useGsap(rootRef, (root) => animateSectionReveals(root), []);
+  const [openIndex, setOpenIndex] = useState(0);
+
+  useGsap(rootRef, (root) => animateFaq(root), []);
 
   return (
-    <section id="faq" ref={rootRef} className="w-full py-24 md:py-32 border-t border-border">
-      <div className="max-w-3xl mx-auto px-6">
-        <div data-gsap="reveal" className="mb-12">
-          <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
-            Questions we get asked
-          </h2>
-        </div>
+    <section
+      id="faq"
+      ref={rootRef}
+      className="relative w-full py-24 md:py-32 lg:min-h-[100svh] lg:flex lg:items-center border-t border-border overflow-hidden"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-[-10%] top-1/2 -translate-y-1/2 w-[min(70vw,28rem)] h-88 rounded-full bg-primary/10 blur-3xl"
+      />
 
-        <div data-gsap="reveal">
-          <Accordion type="single" collapsible defaultValue="item-0" className="w-full">
+      <div className="max-w-7xl mx-auto w-full px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 lg:items-center">
+          <div data-gsap="faq-header" className="lg:col-span-4 lg:self-center">
+            <p className="text-[11px] font-mono uppercase tracking-[0.35em] text-primary mb-4">
+              FAQ
+            </p>
+            <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-5">
+              Questions we get asked
+            </h2>
+            <p className="text-base md:text-lg font-light text-muted-foreground leading-relaxed mb-8 max-w-sm">
+              <TextShimmer duration={3}>
+                Straight answers. No sales fog. If yours isn’t here, ask anyway.
+              </TextShimmer>
+            </p>
+            <Magnetic strength={0.25}>
+              <a
+                href="#contact"
+                className="inline-flex text-[11px] uppercase tracking-[0.2em] font-bold border-b border-white/25 pb-1 hover:border-primary hover:text-primary transition-colors"
+              >
+                Ask a question →
+              </a>
+            </Magnetic>
+          </div>
+
+          <div className="lg:col-span-8 w-full flex flex-col justify-center gap-3 lg:self-center">
             {faqs.map((faq, i) => (
-              <AccordionItem key={faq.q} value={`item-${i}`}>
-                <AccordionTrigger className="text-[13px] md:text-sm">{faq.q}</AccordionTrigger>
-                <AccordionContent>{faq.a}</AccordionContent>
-              </AccordionItem>
+              <FaqItem
+                key={faq.q}
+                index={i}
+                question={faq.q}
+                answer={faq.a}
+                open={openIndex === i}
+                onToggle={() => setOpenIndex((prev) => (prev === i ? -1 : i))}
+              />
             ))}
-          </Accordion>
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function FaqItem({
+  index,
+  question,
+  answer,
+  open,
+  onToggle,
+}: {
+  index: number;
+  question: string;
+  answer: string;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const itemRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLSpanElement>(null);
+  const iconRef = useRef<SVGSVGElement>(null);
+  const openRef = useRef(open);
+  const mountedRef = useRef(false);
+  const panelId = `faq-panel-${index}`;
+
+  useLayoutEffect(() => {
+    const item = itemRef.current;
+    const panel = panelRef.current;
+    const body = bodyRef.current;
+    if (!item || !panel || !body) return;
+
+    const els = {
+      item,
+      panel,
+      body,
+      title: titleRef.current,
+      icon: iconRef.current,
+    };
+
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      setFaqPanelState(els, open);
+      openRef.current = open;
+      return;
+    }
+
+    if (openRef.current === open) return;
+
+    if (prefersReducedMotion()) {
+      setFaqPanelState(els, open);
+      openRef.current = open;
+      return;
+    }
+
+    if (open) {
+      expandFaqPanel(els);
+    } else {
+      collapseFaqPanel(els);
+    }
+
+    openRef.current = open;
+  }, [open]);
+
+  return (
+    <div
+      ref={itemRef}
+      data-gsap="faq-item"
+      data-state={open ? "open" : "closed"}
+      className="overflow-hidden border border-white/12 bg-black/60 will-change-[border-color,background-color]"
+    >
+      <h3>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={onToggle}
+          className="flex w-full items-center justify-between gap-4 px-5 md:px-6 py-5 md:py-6 text-left text-[13px] md:text-[15px] font-medium uppercase tracking-[0.14em]"
+        >
+          <span className="flex items-start gap-4 md:gap-5 pr-2">
+            <span className="text-[10px] font-mono tracking-[0.2em] text-primary pt-0.5 shrink-0">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span ref={titleRef} className="leading-snug text-white/75">
+              {question}
+            </span>
+          </span>
+          <ChevronDown
+            ref={iconRef}
+            className="h-4 w-4 shrink-0 text-white/35"
+            aria-hidden
+          />
+        </button>
+      </h3>
+
+      <div
+        id={panelId}
+        ref={panelRef}
+        role="region"
+        className="overflow-hidden"
+        style={{ height: 0 }}
+      >
+        <div
+          ref={bodyRef}
+          className="px-5 md:px-6 pb-5 md:pb-6 text-[14px] md:text-[15px] leading-relaxed font-light"
+          style={{ color: "rgba(255,255,255,0.58)" }}
+        >
+          <div className="pl-9 md:pl-12 border-l border-primary/40 ml-1">
+            <p className="pl-4">{answer}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

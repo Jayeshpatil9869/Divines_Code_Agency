@@ -1,8 +1,18 @@
-import { gsap, EASE, DURATION, qs, qsa, splitWords, prefersReducedMotion } from "./utils";
+import { gsap, qs, qsa, prefersReducedMotion } from "./utils";
 
+/**
+ * Hero fade-reveal — matches reference choreography:
+ * headline up → media up (overlap) → meta from the side (overlap).
+ * Runs when ArcReveal curtain starts lifting.
+ */
 export function animateHero(root: HTMLElement) {
   if (prefersReducedMotion()) {
-    gsap.set(qsa(root, "[data-gsap]"), { opacity: 1, y: 0, clearProps: "transform" });
+    gsap.set(qsa(root, "[data-gsap]"), {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      clearProps: "transform",
+    });
     return;
   }
 
@@ -14,76 +24,66 @@ export function animateHero(root: HTMLElement) {
   const meta = qs(root, '[data-gsap="hero-meta"]');
   const scroll = qs(root, '[data-gsap="hero-scroll"]');
   const beams = qs(root, '[data-gsap="hero-bg"]');
+  const content = qs(root, '[data-gsap="hero-content"]') ?? root;
 
-  const tl = gsap.timeline({ defaults: { ease: EASE.out } });
+  // Content shell visible; children drive the reveal.
+  gsap.set(content, { opacity: 1 });
 
-  if (beams) {
-    gsap.fromTo(
-      beams,
-      { opacity: 0.35 },
-      { opacity: 0.7, duration: 2.2, ease: EASE.soft }
-    );
-  }
+  const headline = [eyebrow, ...lines, sub].filter(Boolean);
+  const media = [video, ...ctas].filter(Boolean);
 
-  if (eyebrow) {
-    gsap.set(eyebrow, { opacity: 0, y: 12 });
-    tl.to(eyebrow, { opacity: 1, y: 0, duration: DURATION.fast }, 0.15);
-  }
+  gsap.set(
+    qsa(root, "[data-gsap]").filter((el) => el.getAttribute("data-gsap") !== "hero-content"),
+    { opacity: 0 }
+  );
 
-  lines.forEach((line, i) => {
-    const words = splitWords(line);
-    gsap.set(words, { yPercent: 110, opacity: 0 });
-    tl.to(
-      words,
-      {
-        yPercent: 0,
-        opacity: 1,
-        duration: DURATION.slow,
-        stagger: 0.04,
-        ease: EASE.expo,
-      },
-      0.25 + i * 0.12
-    );
+  const tl = gsap.timeline({
+    defaults: { ease: "power2.out" },
   });
 
-  if (sub) {
-    gsap.set(sub, { opacity: 0, y: 20 });
-    tl.to(sub, { opacity: 1, y: 0, duration: DURATION.base }, "-=0.55");
+  if (beams) {
+    tl.fromTo(beams, { opacity: 0 }, { opacity: 0.7, duration: 0.7 }, 0);
   }
 
-  if (video) {
-    gsap.set(video, { opacity: 0, y: 28, scale: 0.98 });
+  // Left copy — like `.popup h1` (fade + rise)
+  if (headline.length) {
+    gsap.set(headline, { y: 50, opacity: 0 });
     tl.to(
-      video,
-      { opacity: 1, y: 0, scale: 1, duration: DURATION.base, ease: EASE.expo },
-      "-=0.5"
+      headline,
+      { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 },
+      0.08
     );
   }
 
-  if (ctas.length) {
-    gsap.set(ctas, { opacity: 0, y: 24 });
+  // Right media + CTAs — like `.rightCtn .text h1` (larger y, heavy overlap)
+  if (media.length) {
+    gsap.set(media, { y: 160, opacity: 0 });
     tl.to(
-      ctas,
-      { opacity: 1, y: 0, duration: DURATION.base, stagger: 0.1 },
-      "-=0.4"
+      media,
+      { y: 0, opacity: 1, duration: 0.85, stagger: 0.1 },
+      "-=0.55"
     );
   }
 
+  // Bottom bar — like `.mDiv` (slide in from left, overlap)
   if (meta) {
-    gsap.set(meta, { opacity: 0, y: 12 });
-    tl.to(meta, { opacity: 1, y: 0, duration: DURATION.fast }, "-=0.25");
+    gsap.set(meta, { x: -60, opacity: 0 });
+    tl.to(meta, { x: 0, opacity: 1, duration: 0.75 }, "-=0.55");
   }
 
   if (scroll) {
-    gsap.set(scroll, { opacity: 0 });
-    tl.to(scroll, { opacity: 1, duration: DURATION.fast }, "-=0.1");
-    gsap.to(scroll.querySelector("[data-gsap='scroll-dot']"), {
-      y: 10,
-      opacity: 0.35,
-      duration: 1.1,
-      ease: "power1.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
+    // Nested under meta; ensure visible + idle pulse
+    gsap.set(scroll, { opacity: 1 });
+    const dot = scroll.querySelector("[data-gsap='scroll-dot']");
+    if (dot) {
+      gsap.to(dot, {
+        y: 10,
+        opacity: 0.35,
+        duration: 1.1,
+        ease: "power1.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateProcess } from "@/animations";
+import { cn } from "@/lib/utils";
 
 const stages = [
   {
@@ -30,6 +31,57 @@ const stages = [
   },
 ];
 
+type Stage = (typeof stages)[number];
+
+function StageRowContent({
+  stage,
+  inverted = false,
+}: {
+  stage: Stage;
+  inverted?: boolean;
+}) {
+  return (
+    <>
+      <div
+        className={cn(
+          "hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center border text-[10px] font-mono z-10",
+          inverted
+            ? "bg-primary border-primary-foreground/25 text-primary-foreground"
+            : "bg-background border-border text-primary"
+        )}
+      >
+        {stage.num}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-baseline">
+        <span
+          className={cn(
+            "md:hidden text-[10px] font-mono mb-2",
+            inverted ? "text-primary-foreground/70" : "text-primary"
+          )}
+        >
+          {stage.num}
+        </span>
+        <h3
+          className={cn(
+            "md:col-span-4 text-2xl font-light italic font-serif normal-case tracking-tight",
+            inverted ? "text-primary-foreground" : "text-foreground"
+          )}
+        >
+          {stage.title}
+        </h3>
+        <p
+          className={cn(
+            "md:col-span-8 font-light leading-relaxed",
+            inverted ? "text-primary-foreground/75" : "text-muted-foreground"
+          )}
+        >
+          {stage.desc}
+        </p>
+      </div>
+    </>
+  );
+}
+
 export function Process() {
   const rootRef = useRef<HTMLElement>(null);
   useGsap(rootRef, (root) => animateProcess(root), []);
@@ -51,26 +103,38 @@ export function Process() {
         <div className="relative">
           <div
             data-gsap="process-line"
-            className="absolute left-[19px] top-0 bottom-0 w-px bg-primary/40 hidden md:block origin-top"
+            className="absolute left-[19px] top-0 bottom-0 w-px bg-primary/40 hidden md:block origin-top z-20 pointer-events-none"
           />
-          <div className="flex flex-col gap-0">
+          <div className="flex flex-col gap-3 md:gap-0">
             {stages.map((stage) => (
               <div
                 key={stage.num}
                 data-gsap="process-step"
-                className="relative md:pl-16 py-8 border-b border-border last:border-0 data-[active=true]:[&_h3]:text-primary transition-colors"
+                className="relative overflow-hidden cursor-pointer max-md:mx-3 max-md:rounded-md max-md:border max-md:border-border md:mx-0 md:border-b md:border-border md:last:border-0 md:rounded-none"
               >
-                <div className="hidden md:flex absolute left-0 top-10 w-10 h-10 items-center justify-center bg-background border border-border text-[10px] font-mono text-primary z-10">
-                  {stage.num}
+                {/* Invisible sizer — keeps row height stable while both layers are absolute */}
+                <div
+                  className="invisible pointer-events-none px-5 py-7 sm:px-6 md:px-0 md:pl-16 md:py-8"
+                  aria-hidden
+                >
+                  <StageRowContent stage={stage} />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-baseline">
-                  <span className="md:hidden text-[10px] font-mono text-primary mb-2">{stage.num}</span>
-                  <h3 className="md:col-span-4 text-2xl font-light italic font-serif normal-case tracking-tight transition-colors duration-500">
-                    {stage.title}
-                  </h3>
-                  <p className="md:col-span-8 text-muted-foreground font-light leading-relaxed">
-                    {stage.desc}
-                  </p>
+
+                {/* Resting layer (box2) */}
+                <div
+                  data-gsap="process-box2"
+                  className="absolute inset-0 z-0 px-5 py-7 sm:px-6 md:px-0 md:pl-16 md:py-8 bg-background"
+                >
+                  <StageRowContent stage={stage} />
+                </div>
+
+                {/* Hover cover (box1) — slides down from above */}
+                <div
+                  data-gsap="process-box1"
+                  className="absolute inset-0 z-10 px-5 py-7 sm:px-6 md:px-0 md:pl-16 md:py-8 bg-primary -translate-y-full"
+                  aria-hidden
+                >
+                  <StageRowContent stage={stage} inverted />
                 </div>
               </div>
             ))}

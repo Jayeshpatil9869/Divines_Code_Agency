@@ -62,7 +62,7 @@ export function Philosophy() {
   return (
     <section
       ref={rootRef}
-      className="relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center py-28 md:py-36 text-black overflow-x-hidden"
+      className="relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center justify-center py-28 md:py-36 bg-white text-black overflow-x-hidden"
     >
       <div className="relative max-w-5xl mx-auto px-6 text-center">
         <div className="relative inline-block">

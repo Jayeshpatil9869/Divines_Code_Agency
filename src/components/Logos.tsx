@@ -1,10 +1,6 @@
 import { useRef } from "react";
 import { LogoScroller } from "@/components/ui/logo-scroller";
-import {
-  useGsap,
-  animateSectionReveals,
-  bindLightSectionBackground,
-} from "@/animations";
+import { useGsap, animateLogos, animateSectionReveals } from "@/animations";
 
 const brands = [
   "Nimbus",
@@ -22,7 +18,7 @@ export function Logos() {
   useGsap(
     rootRef,
     (root) => {
-      bindLightSectionBackground(root);
+      animateLogos(root);
       animateSectionReveals(root);
     },
     [],
@@ -31,10 +27,10 @@ export function Logos() {
   return (
     <section
       ref={rootRef}
-      className="w-full py-16 md:py-20 overflow-hidden text-black border-y border-black/10"
+      className="w-full py-16 md:py-20 overflow-hidden bg-white text-black border-y border-black/10"
     >
       <div data-gsap="reveal">
-        <LogoScroller logos={brands} speed="35s" />
+        <LogoScroller logos={brands} scrollLinked />
       </div>
     </section>
   );

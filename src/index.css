@@ -247,10 +247,13 @@
 .scroller-track {
   display: flex;
   width: max-content;
+}
+
+.scroller-track.animate-scroll {
   animation: scroll var(--scroll-duration, 40s) linear infinite;
 }
 
-.scroller-mask:hover .scroller-track {
+.scroller-mask:hover .scroller-track.animate-scroll {
   animation-play-state: paused;
 }
 
@@ -279,7 +282,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroller-track {
+  .scroller-track.animate-scroll {
     animation: none;
   }
 }

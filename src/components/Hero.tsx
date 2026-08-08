@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { cn } from "@/lib/utils";
 import { Spotlight } from "@/components/ui/spotlight";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
@@ -8,21 +9,37 @@ import { HeroVideo } from "@/components/HeroVideo";
 import { StringLine } from "@/components/ui/string-line";
 import { useGsap, animateHero } from "@/animations";
 
-export function Hero() {
+type HeroProps = {
+  /** When false, hero stays hidden; GSAP entrance runs only after the preloader. */
+  introReady?: boolean;
+};
+
+export function Hero({ introReady = true }: HeroProps) {
   const rootRef = useRef<HTMLElement>(null);
-  useGsap(rootRef, (root) => animateHero(root), []);
+  useGsap(
+    rootRef,
+    (root) => {
+      if (!introReady) return;
+      animateHero(root);
+    },
+    [introReady]
+  );
 
   return (
     <section
+      id="hero"
       ref={rootRef}
-      className="relative w-full min-h-[100dvh] flex flex-col justify-center px-6 pt-[18vh] pb-16 overflow-hidden"
+      className={cn(
+        "relative w-full min-h-[100dvh] flex flex-col justify-center px-6 pt-24 sm:pt-[14vh] md:pt-[18vh] pb-16 overflow-hidden",
+        !introReady && "[&_[data-gsap]]:opacity-0"
+      )}
     >
       <div data-gsap="hero-bg" className="absolute inset-0 pointer-events-none">
         <Spotlight className="-top-40 left-0 md:left-40 md:-top-20" fill="hsl(32 28% 55%)" />
         <BackgroundBeams className="opacity-70" />
       </div>
 
-      <div className="max-w-7xl mx-auto w-full relative z-10">
+      <div data-gsap="hero-content" className="max-w-7xl mx-auto w-full relative z-10">
         <div className="relative mb-10 md:mb-14">
           <p
             data-gsap="hero-eyebrow"
@@ -35,7 +52,7 @@ export function Hero() {
             <h1 className="font-black tracking-[-0.05em] uppercase md:pr-[min(42%,26rem)]">
               <span
                 data-gsap="hero-line"
-                className="block text-foreground text-[clamp(3.5rem,12vw,7rem)] leading-[0.82]"
+                className="block text-foreground text-[clamp(2rem,6.5vw,8.5rem)] leading-[0.82]"
               >
                 Divine&apos;s
               </span>
@@ -47,9 +64,11 @@ export function Hero() {
               </span>
             </h1>
 
-            {/* Red-box zone: right of headline, aligned with Divine's */}
-            <div className="mt-8 md:mt-0 md:absolute md:top-0 md:right-0 w-full md:w-[min(42%,28.125rem)] z-20">
+            <div className="mt-8 md:mt-0 md:absolute md:top-0 md:right-0 w-full md:w-[min(42%,28.125rem)] z-20 flex flex-col gap-5">
               <HeroVideo heroRef={rootRef} className="max-w-none ml-0" />
+              <div className="hidden md:flex flex-col lg:flex-row gap-1 w-full">
+                <HeroCtas />
+              </div>
             </div>
           </div>
         </div>
@@ -66,31 +85,13 @@ export function Hero() {
             </p>
           </div>
 
-          <div className="md:col-span-5 flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4 md:justify-end">
-            <div data-gsap="hero-cta">
-              <Magnetic strength={0.3}>
-                <a href="#contact">
-                  <ShimmerButton className="w-full sm:w-auto font-bold tracking-[0.2em] uppercase text-[11px]">
-                    Start a project →
-                  </ShimmerButton>
-                </a>
-              </Magnetic>
-            </div>
-            <div data-gsap="hero-cta">
-              <Magnetic strength={0.25}>
-                <a
-                  href="#work"
-                  className="inline-flex items-center justify-center px-8 py-4 border border-border text-foreground font-bold tracking-[0.2em] uppercase text-[11px] hover:border-foreground/40 transition-colors"
-                >
-                  See selected work
-                </a>
-              </Magnetic>
-            </div>
+          <div className="md:hidden flex flex-col sm:flex-row gap-4 w-full">
+            <HeroCtas />
           </div>
         </div>
 
         <div data-gsap="hero-meta" className="mt-16">
-          <StringLine className="mb-2" stroke="color-mix(in srgb, #fff 55%, #000)" />
+          <StringLine className="mb-2" stroke="color-mix(in srgb, #fff 55%, #000)" volume={0.7} />
           <div className="grid grid-cols-1 sm:grid-cols-3 items-end gap-y-4">
             <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground sm:justify-self-start pb-1">
               40+ products shipped · avg engagement 6 months
@@ -119,5 +120,31 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+function HeroCtas() {
+  return (
+    <>
+      <div data-gsap="hero-cta" className="w-full sm:w-auto flex-1">
+        <Magnetic strength={0.3}>
+          <a href="#contact" className="block w-full">
+            <ShimmerButton className="w-full font-bold tracking-[0.2em] uppercase text-[11px]">
+              Start a project →
+            </ShimmerButton>
+          </a>
+        </Magnetic>
+      </div>
+      <div data-gsap="hero-cta" className="w-full sm:w-auto flex-1">
+        <Magnetic strength={0.25}>
+          <a
+            href="#work"
+            className="inline-flex w-full items-center justify-center px-8 py-4 border border-border text-foreground font-bold tracking-[0.2em] uppercase text-[11px] hover:border-foreground/40 transition-colors"
+          >
+            See selected work
+          </a>
+        </Magnetic>
+      </div>
+    </>
   );
 }

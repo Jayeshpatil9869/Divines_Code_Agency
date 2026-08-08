@@ -8,68 +8,68 @@ import { useGsap, animateSectionReveals } from "@/animations";
 const projectsData: MusicProject[] = [
   {
     id: 1,
-    artist: "PulsePay",
-    album: "Fintech Onboarding",
+    artist: "Riyansh",
+    album: "Ayurvedic Store",
     category: "Product",
-    label: "UX · React",
+    label: "E-commerce",
     year: "2025",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1600",
+    image: "/images/projects/riyansh.png",
+    url: "https://riyanshamrit.com/",
   },
   {
     id: 2,
-    artist: "Arc Labs",
-    album: "DevTools CLI",
-    category: "Strategy",
-    label: "TypeScript",
-    year: "2024",
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1600",
+    artist: "Gravitatee",
+    album: "Masala Brand Site",
+    category: "Brand",
+    label: "E-commerce · UI",
+    year: "2025",
+    image: "/images/projects/gravitatee.png",
+    url: "https://gravitatee.com/",
   },
   {
     id: 3,
-    artist: "Helix Health",
-    album: "Healthcare Portal",
-    category: "Systems",
-    label: "Architecture",
-    year: "2024",
-    image:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1600",
+    artist: "Tell Star",
+    album: "IT Networks Site",
+    category: "Brand",
+    label: "React · Marketing",
+    year: "2025",
+    image: "/images/projects/tellstar.png",
+    url: "https://tellstar.in/",
   },
   {
     id: 4,
-    artist: "Northwind",
-    album: "Growth Dashboard",
+    artist: "Outpost",
+    album: "Design Studio",
     category: "Design",
-    label: "Next.js · UI",
+    label: "Motion · Brand",
     year: "2024",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1600",
+    image: "/images/projects/outpost.png",
+    url: "https://jayeshpatil9869.github.io/Outpost-Project/",
   },
   {
     id: 5,
-    artist: "Cascade",
-    album: "Design System",
-    category: "Systems",
-    label: "Tokens · React",
-    year: "2023",
-    image:
-      "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&q=80&w=1600",
+    artist: "Rethink",
+    album: "Creative Studio",
+    category: "Design",
+    label: "3D · Webflow",
+    year: "2024",
+    image: "/images/projects/rethink.png",
+    url: "https://jayeshpatil9869.github.io/Rethink/",
   },
   {
     id: 6,
-    artist: "Vertex",
-    album: "Launch Site",
-    category: "Brand",
-    label: "Vite · Motion",
-    year: "2023",
-    image:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1600",
+    artist: "AnimeVerse",
+    album: "Digital Artbook",
+    category: "Product",
+    label: "React · Motion",
+    year: "2024",
+    image: "/images/projects/animeverse.png",
+    url: "https://jayeshpatil9869.github.io/Anime/",
   },
 ];
 
 const config = {
-  timeZone: "America/New_York",
+  timeZone: "Asia/Kolkata",
   timeUpdateInterval: 1000,
   idleDelay: 4000,
 };
@@ -81,8 +81,8 @@ const socialLinks = {
 };
 
 const location = {
-  latitude: "40.7128° N",
-  longitude: "74.0060° W",
+  latitude: "19.9975° N",
+  longitude: "73.7898° E",
   display: true,
 };
 
@@ -103,7 +103,7 @@ export function Projects() {
             </h2>
             <p className="text-lg font-light max-w-md">
               <TextShimmer duration={3}>
-                Hover a row — image and scramble reveal the case study.
+                Hover or tap a row to preview — tap again to open the live demo.
               </TextShimmer>
             </p>
           </div>
