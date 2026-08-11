@@ -43,24 +43,27 @@ export async function sendContactMail(
     };
   }
 
-  const gmailUser = process.env.GMAIL_USER ?? "";
-  const gmailAppPassword = process.env.GMAIL_APP_PASSWORD ?? "";
-  const contactTo = process.env.CONTACT_TO ?? "divinescode@gmail.com";
+  const gmailUser = (process.env.GMAIL_USER ?? "").trim();
+  const gmailAppPassword = (process.env.GMAIL_APP_PASSWORD ?? "").replace(/\s+/g, "");
+  const contactTo = (process.env.CONTACT_TO ?? "divinescode@gmail.com").trim();
 
   if (!gmailUser || !gmailAppPassword) {
-    console.error("Missing GMAIL_USER or GMAIL_APP_PASSWORD");
+    console.error("Missing GMAIL_USER or GMAIL_APP_PASSWORD in environment");
     return {
       ok: false,
       status: 500,
-      error: "Email is not configured on the server yet.",
+      error:
+        "Email is not configured. Add GMAIL_USER and GMAIL_APP_PASSWORD in Vercel env vars.",
     };
   }
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: gmailUser,
-      pass: gmailAppPassword.replace(/\s+/g, ""),
+      pass: gmailAppPassword,
     },
   });
 
@@ -90,11 +93,13 @@ export async function sendContactMail(
 
     return { ok: true, status: 200, error: null };
   } catch (err) {
-    console.error("Nodemailer send failed:", err);
+    const detail = err instanceof Error ? err.message : String(err);
+    console.error("Nodemailer send failed:", detail);
     return {
       ok: false,
       status: 502,
-      error: "Could not send your message. Please try again or email us directly.",
+      error:
+        "Could not send your message. Please try again or email us directly.",
     };
   }
 }
