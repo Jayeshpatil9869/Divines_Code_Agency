@@ -6,7 +6,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Divine's Code Agency — website design and development with clear packages from ₹9,999. Modern UI, frontend builds, and optional Website Care." />
+
+    <title>Divine's Code Agency — Website Design &amp; Development</title>
+    <meta name="description" content="Website design and development with clear packages from ₹9,999. Modern UI, frontend builds, and optional Website Care. Founded by Jayesh Patil &amp; Mahendra Nagpure." />
+    <link rel="canonical" href="https://divinescode.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Divine's Code" />
+    <meta property="og:title" content="Divine's Code Agency — Website Design &amp; Development" />
+    <meta property="og:description" content="Website design and development with clear packages from ₹9,999. Modern UI, frontend builds, and optional Website Care. Founded by Jayesh Patil &amp; Mahendra Nagpure." />
+    <meta property="og:url" content="https://divinescode.com/" />
+    <meta property="og:image" content="https://divinescode.com/android-chrome-512x512.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Divine's Code Agency — Website Design &amp; Development" />
+    <meta name="twitter:description" content="Website design and development with clear packages from ₹9,999. Modern UI, frontend builds, and optional Website Care. Founded by Jayesh Patil &amp; Mahendra Nagpure." />
+    <meta name="twitter:image" content="https://divinescode.com/android-chrome-512x512.png" />
+
     <meta name="theme-color" content="#000000" />
     <meta name="msapplication-TileColor" content="#000000" />
 
@@ -18,10 +34,86 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <title>Divine's Code Agency</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://divinescode.com/#organization",
+          "name": "Divine's Code",
+          "alternateName": "Divines Code",
+          "url": "https://divinescode.com/",
+          "logo": "https://divinescode.com/android-chrome-512x512.png",
+          "image": "https://divinescode.com/android-chrome-512x512.png",
+          "description": "Website design, development, and optional care — clear packages that help businesses launch and grow online.",
+          "email": "divinescode@gmail.com",
+          "founder": [
+            { "@id": "https://jayeshbpatil.com/#person" },
+            { "@id": "https://mahendranagpure.com/#person" }
+          ],
+          "member": [
+            { "@id": "https://jayeshbpatil.com/#person" },
+            { "@id": "https://mahendranagpure.com/#person" }
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/company/divines-code/",
+            "https://github.com/Jayeshpatil9869/divines_code_website",
+            "https://jayeshbpatil.com/",
+            "https://mahendranagpure.com/"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://divinescode.com/#website",
+          "url": "https://divinescode.com/",
+          "name": "Divine's Code",
+          "description": "Website design, development, and optional care — clear packages that help businesses launch and grow online.",
+          "publisher": { "@id": "https://divinescode.com/#organization" },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://jayeshbpatil.com/#person",
+          "name": "Jayesh Patil",
+          "url": "https://jayeshbpatil.com/",
+          "jobTitle": "MERN Stack Developer & Founder at Divine's Code",
+          "worksFor": { "@id": "https://divinescode.com/#organization" },
+          "colleague": { "@id": "https://mahendranagpure.com/#person" },
+          "sameAs": [
+            "https://divinescode.com/",
+            "https://mahendranagpure.com/",
+            "https://github.com/Jayeshpatil9869",
+            "https://dev.to/jayesh_patil",
+            "https://www.linkedin.com/in/jayesh-patil01/"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://mahendranagpure.com/#person",
+          "name": "Mahendra Nagpure",
+          "alternateName": "Mahendra Vinod Nagpure",
+          "url": "https://mahendranagpure.com/",
+          "jobTitle": "Full Stack Developer & Co-Creator at Divine's Code",
+          "worksFor": { "@id": "https://divinescode.com/#organization" },
+          "colleague": { "@id": "https://jayeshbpatil.com/#person" },
+          "sameAs": [
+            "https://divinescode.com/",
+            "https://jayeshbpatil.com/",
+            "https://github.com/mahendra111111"
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Crawlable HTML shell (replaced by React on hydrate) -->
+      <h1>Divine's Code Agency — Website Design &amp; Development</h1>
+      <p>Website design and development with clear packages from ₹9,999. Modern UI, frontend builds, and optional Website Care.</p>
+      <p>Crafted by <a href="https://jayeshbpatil.com/">Jayesh Patil</a> and <a href="https://mahendranagpure.com/">Mahendra Nagpure</a> — Founders of Divine's Code.</p>
+    </div>
     <script>
       // Pin scroll at hero before React boots (beats browser scroll restoration).
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
