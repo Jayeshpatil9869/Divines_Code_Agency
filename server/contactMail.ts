@@ -7,9 +7,12 @@ export type ContactPayload = {
   phone?: unknown;
 };
 
-export type ContactResult =
-  | { ok: true }
-  | { ok: false; status: number; error: string };
+/** Flat shape so Vercel/API typecheck never needs discriminant narrowing. */
+export type ContactResult = {
+  ok: boolean;
+  status: number;
+  error: string | null;
+};
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
@@ -85,7 +88,7 @@ export async function sendContactMail(
         .join("\n"),
     });
 
-    return { ok: true };
+    return { ok: true, status: 200, error: null };
   } catch (err) {
     console.error("Nodemailer send failed:", err);
     return {

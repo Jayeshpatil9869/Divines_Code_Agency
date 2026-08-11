@@ -14,8 +14,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const result = await sendContactMail(req.body ?? {});
-  if (result.ok === false) {
-    res.status(result.status).json({ ok: false, error: result.error });
+  if (!result.ok) {
+    res.status(result.status).json({
+      ok: false,
+      error: result.error ?? "Could not send your message.",
+    });
     return;
   }
 
