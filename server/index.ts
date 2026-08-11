@@ -15,7 +15,7 @@ app.get("/api/health", (_req, res) => {
 
 app.post("/api/contact", async (req, res) => {
   const result = await sendContactMail(req.body ?? {});
-  if (!result.ok) {
+  if (result.ok === false) {
     res.status(result.status).json({ ok: false, error: result.error });
     return;
   }
