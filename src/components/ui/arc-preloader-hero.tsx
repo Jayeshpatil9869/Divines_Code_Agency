@@ -80,7 +80,6 @@ export function ArcRevealHero({
 
   const [phase, setPhase] = React.useState<Phase>("intro");
   const [index, setIndex] = React.useState(0);
-  const [mounted, setMounted] = React.useState(false);
   const onCompleteRef = React.useRef(onComplete);
   onCompleteRef.current = onComplete;
   const completedRef = React.useRef(false);
@@ -94,8 +93,9 @@ export function ArcRevealHero({
     return `M 0 ${edge} Q 50 ${control} 100 ${edge} L 100 110 L 0 110 Z`;
   });
 
-  React.useEffect(() => {
-    setMounted(true);
+  // Drop the static HTML boot cover as soon as this preloader paints.
+  React.useLayoutEffect(() => {
+    document.getElementById("boot-curtain")?.remove();
   }, []);
 
   // Honor reduced-motion + optional once-per-session skip.
@@ -179,61 +179,62 @@ export function ArcRevealHero({
   const showOverlay = phase !== "done";
   const current = greetings[Math.min(index, greetings.length - 1)];
 
-  // Portal keeps the curtain above fixed nav/cursor; stay mounted for exit fade.
-  const overlay = mounted
-    ? createPortal(
-        <AnimatePresence>
-          {showOverlay && (
-            <motion.div
-              key="arc-reveal-overlay"
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-              className={cn(
-                "pointer-events-auto fixed inset-0 z-9999 h-dvh w-full overflow-hidden bg-white",
-                introClassName,
-              )}
-              style={{ backgroundColor: "#fff" }}
-              aria-hidden={phase !== "intro"}
-            >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                  {phase === "intro" && current && (
-                    <motion.span
-                      key={`${index}-${current.text}`}
-                      lang={current.lang}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                      className={cn(
-                        "select-none px-6 text-center font-display text-5xl font-black uppercase tracking-[-0.04em] text-black sm:text-6xl md:text-7xl",
-                        greetingClassName,
-                      )}
-                    >
-                      {current.text}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <svg
-                className="pointer-events-none absolute inset-0 h-full w-full"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-                aria-hidden
+  // Portal keeps the curtain above fixed nav/cursor (CSR: body exists on first paint).
+  const overlay =
+    typeof document !== "undefined"
+      ? createPortal(
+          <AnimatePresence>
+            {showOverlay && (
+              <motion.div
+                key="arc-reveal-overlay"
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+                className={cn(
+                  "pointer-events-auto fixed inset-0 z-9999 h-dvh w-full overflow-hidden bg-white",
+                  introClassName,
+                )}
+                style={{ backgroundColor: "#fff" }}
+                aria-hidden={phase !== "intro"}
               >
-                <motion.path
-                  d={arcPath}
-                  style={{ fill: "var(--color-background, #000)" }}
-                />
-              </svg>
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body,
-      )
-    : null;
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    {phase === "intro" && current && (
+                      <motion.span
+                        key={`${index}-${current.text}`}
+                        lang={current.lang}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                        className={cn(
+                          "select-none px-6 text-center font-display text-5xl font-black uppercase tracking-[-0.04em] text-black sm:text-6xl md:text-7xl",
+                          greetingClassName,
+                        )}
+                      >
+                        {current.text}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <svg
+                  className="pointer-events-none absolute inset-0 h-full w-full"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  aria-hidden
+                >
+                  <motion.path
+                    d={arcPath}
+                    style={{ fill: "var(--color-background, #000)" }}
+                  />
+                </svg>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
+        )
+      : null;
 
   return (
     <div
