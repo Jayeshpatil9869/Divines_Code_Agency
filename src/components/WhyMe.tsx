@@ -9,16 +9,16 @@ import {
 
 const reasons = [
   {
-    title: "Direct access",
-    desc: "You get the seniors you interviewed. Every day. No account manager in between.",
+    title: "Clear packages",
+    desc: "Starter, Modern, or Premium — scope and price up front. Custom work gets a custom quote.",
   },
   {
-    title: "Faster velocity",
-    desc: "Zero overhead, zero politics. We design in code when it cuts handoff time to zero.",
+    title: "Direct communication",
+    desc: "You talk to the people building the site. Call, WhatsApp, or email — we reply within one business day.",
   },
   {
-    title: "Aligned incentives",
-    desc: "Agencies sell hours. We sell outcomes. If we can solve it in a day, we will.",
+    title: "Built to launch",
+    desc: "Responsive design, modern UI, SEO foundation, deployment, and SSL — not a Figma-only handoff.",
   },
 ];
 
@@ -31,11 +31,11 @@ export function WhyMe() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16 max-w-2xl">
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
-            Why a studio instead of an agency
+            Why Divine&apos;s
           </h2>
           <p className="text-lg font-light">
             <TextShimmer duration={3}>
-              When you hire a large agency, you pay for their office, bench time, and project managers. With us, every dollar goes into the product.
+              A small team that designs and builds websites — clear packages, honest pricing, and every rupee goes into your site.
             </TextShimmer>
           </p>
         </div>
@@ -95,7 +95,7 @@ export function Philosophy() {
             data-gsap="reveal"
             className="mt-0 text-base md:text-xl font-serif italic font-normal normal-case tracking-normal text-black/70 max-w-2xl mx-auto leading-relaxed"
           >
-            I&apos;d rather ship four things properly than twelve things approximately.
+            We&apos;d rather ship four things properly than twelve things approximately.
           </p>
         </div>
       </div>

@@ -33,6 +33,7 @@ export function animateMetrics(root: HTMLElement) {
       if (num) {
         const target = Number(num.getAttribute("data-count") || "0");
         const suffix = num.getAttribute("data-suffix") || "";
+        const prefix = num.getAttribute("data-prefix") || "";
         const proxy = { val: 0 };
         ScrollTrigger.create({
           trigger: card,
@@ -44,7 +45,10 @@ export function animateMetrics(root: HTMLElement) {
               duration: 1.4,
               ease: EASE.out,
               onUpdate: () => {
-                num.textContent = `${Math.round(proxy.val)}${suffix}`;
+                const n = Math.round(proxy.val);
+                const formatted =
+                  n >= 1000 ? n.toLocaleString("en-IN") : String(n);
+                num.textContent = `${prefix}${formatted}${suffix}`;
               },
             });
           },

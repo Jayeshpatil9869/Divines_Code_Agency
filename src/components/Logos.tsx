@@ -1,17 +1,7 @@
 import { useRef } from "react";
 import { LogoScroller } from "@/components/ui/logo-scroller";
 import { useGsap, animateLogos, animateSectionReveals } from "@/animations";
-
-const brands = [
-  "Nimbus",
-  "Arc Labs",
-  "PulsePay",
-  "Vertex",
-  "Northwind",
-  "Helix",
-  "Orbit",
-  "Cascade",
-];
+import { projectBrandNames } from "@/data/projects";
 
 export function Logos() {
   const rootRef = useRef<HTMLElement>(null);
@@ -30,7 +20,7 @@ export function Logos() {
       className="w-full py-16 md:py-20 overflow-hidden bg-white text-black border-y border-black/10"
     >
       <div data-gsap="reveal">
-        <LogoScroller logos={brands} scrollLinked />
+        <LogoScroller logos={projectBrandNames} scrollLinked />
       </div>
     </section>
   );

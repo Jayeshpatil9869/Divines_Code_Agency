@@ -21,11 +21,11 @@ export function Availability() {
                 Capacity
               </p>
               <h2 className="text-[clamp(2rem,4vw,3.5rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
-                Currently booking from March
+                Open for new website builds
               </h2>
               <p className="text-muted-foreground font-light max-w-md">
-                One project slot open this quarter. We take on four clients a
-                year so each gets real attention.
+                Clear packages, direct communication. Tell us what you need and
+                we&apos;ll reply within one business day.
               </p>
             </div>
             <Magnetic className="block w-full md:inline-block md:w-auto">

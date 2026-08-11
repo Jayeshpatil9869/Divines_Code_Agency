@@ -45,7 +45,7 @@ export function Hero({ introReady = true }: HeroProps) {
             data-gsap="hero-eyebrow"
             className="text-primary text-[11px] md:text-[12px] uppercase tracking-[0.45em] font-bold mb-6"
           >
-            Available for Q2 partnerships
+            Available for new website projects
           </p>
 
           <div className="relative">
@@ -80,7 +80,7 @@ export function Hero({ introReady = true }: HeroProps) {
               className="max-w-xl text-lg md:text-xl leading-relaxed font-light"
             >
               <TextShimmer duration={3}>
-                We design and engineer product experiences founders finish shipping — zero-to-one through Series B.
+                We design and build websites for businesses — clear packages, modern UI, and a site you can actually launch.
               </TextShimmer>
             </p>
           </div>
@@ -94,7 +94,7 @@ export function Hero({ introReady = true }: HeroProps) {
           <StringLine className="mb-2" stroke="color-mix(in srgb, #fff 55%, #000)" volume={0.7} />
           <div className="grid grid-cols-1 sm:grid-cols-3 items-end gap-y-4">
             <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground sm:justify-self-start pb-1">
-              40+ products shipped · avg engagement 6 months
+              Starter from ₹9,999 · Modern · Premium
             </span>
 
             <div
@@ -114,7 +114,7 @@ export function Hero({ introReady = true }: HeroProps) {
             </div>
 
             <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground/60 hidden sm:inline sm:justify-self-end pb-1 text-right">
-              Design · Frontend · Systems
+              Design · Frontend · Care
             </span>
           </div>
         </div>

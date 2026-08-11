@@ -28,9 +28,8 @@ type Config = {
 };
 
 type SocialLinks = {
-  spotify?: string;
   email?: string;
-  x?: string;
+  linkedin?: string;
 };
 
 type LocationInfo = {
@@ -395,18 +394,16 @@ export default function MusicPortfolio({
           {SOCIAL_LINKS.email && (
             <a href={SOCIAL_LINKS.email}>Email</a>
           )}
-          {SOCIAL_LINKS.email && SOCIAL_LINKS.x && <span aria-hidden> · </span>}
-          {SOCIAL_LINKS.x && (
-            <a href={SOCIAL_LINKS.x} target="_blank" rel="noopener noreferrer">
-              X
-            </a>
-          )}
-          {(SOCIAL_LINKS.email || SOCIAL_LINKS.x) && SOCIAL_LINKS.spotify && (
+          {SOCIAL_LINKS.email && SOCIAL_LINKS.linkedin && (
             <span aria-hidden> · </span>
           )}
-          {SOCIAL_LINKS.spotify && (
-            <a href={SOCIAL_LINKS.spotify} target="_blank" rel="noopener noreferrer">
-              GitHub
+          {SOCIAL_LINKS.linkedin && (
+            <a
+              href={SOCIAL_LINKS.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
             </a>
           )}
         </nav>

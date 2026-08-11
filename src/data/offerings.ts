@@ -177,7 +177,7 @@ export const serviceOfferings: ServiceOffering[] = [
 export const additionalCosts: AddOnNote[] = [
   {
     title: "Domain",
-    detail: "Client pays separately (GoDaddy, Namecheap, Google Domains, etc.)",
+    detail: "Client pays separately (GoDaddy, Namecheap, Hostinger, etc.)",
   },
   {
     title: "Hosting / Infrastructure",

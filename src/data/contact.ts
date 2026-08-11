@@ -15,4 +15,4 @@ export const CONTACT_LINKEDIN =
 export const COMPANY_TAGLINE = "Where Innovation Meets Digital Success";
 
 export const COMPANY_BLURB =
-  "Web design, development, SEO, and digital growth — creative systems that help brands ship and scale.";
+  "Website design, development, and optional care — clear packages that help businesses launch and grow online.";

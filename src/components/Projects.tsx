@@ -3,71 +3,19 @@ import MusicPortfolio, { type MusicProject } from "@/components/ui/music-portfol
 import "@/components/ui/music-portfolio.css";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateSectionReveals } from "@/animations";
-import { CONTACT_EMAIL } from "@/data/contact";
+import { CONTACT_EMAIL, CONTACT_LINKEDIN } from "@/data/contact";
+import { projects } from "@/data/projects";
 
-/** Selected work mapped into the music-portfolio row schema */
-const projectsData: MusicProject[] = [
-  {
-    id: 1,
-    artist: "Riyansh",
-    album: "Ayurvedic Store",
-    category: "Product",
-    label: "E-commerce",
-    year: "2025",
-    image: "/images/projects/riyansh.png",
-    url: "https://riyanshamrit.com/",
-  },
-  {
-    id: 2,
-    artist: "Gravitatee",
-    album: "Masala Brand Site",
-    category: "Brand",
-    label: "E-commerce · UI",
-    year: "2025",
-    image: "/images/projects/gravitatee.png",
-    url: "https://gravitatee.com/",
-  },
-  {
-    id: 3,
-    artist: "Tell Star",
-    album: "IT Networks Site",
-    category: "Brand",
-    label: "React · Marketing",
-    year: "2025",
-    image: "/images/projects/tellstar.png",
-    url: "https://tellstar.in/",
-  },
-  {
-    id: 4,
-    artist: "Outpost",
-    album: "Design Studio",
-    category: "Design",
-    label: "Motion · Brand",
-    year: "2024",
-    image: "/images/projects/outpost.png",
-    url: "https://jayeshpatil9869.github.io/Outpost-Project/",
-  },
-  {
-    id: 5,
-    artist: "Rethink",
-    album: "Creative Studio",
-    category: "Design",
-    label: "3D · Webflow",
-    year: "2024",
-    image: "/images/projects/rethink.png",
-    url: "https://jayeshpatil9869.github.io/Rethink/",
-  },
-  {
-    id: 6,
-    artist: "AnimeVerse",
-    album: "Digital Artbook",
-    category: "Product",
-    label: "React · Motion",
-    year: "2024",
-    image: "/images/projects/animeverse.png",
-    url: "https://jayeshpatil9869.github.io/Anime/",
-  },
-];
+const projectsData: MusicProject[] = projects.map((p) => ({
+  id: p.id,
+  artist: p.name,
+  album: p.blurb,
+  category: p.category,
+  label: p.label,
+  year: p.year,
+  image: p.image,
+  url: p.url,
+}));
 
 const config = {
   timeZone: "Asia/Kolkata",
@@ -77,8 +25,7 @@ const config = {
 
 const socialLinks = {
   email: `mailto:${CONTACT_EMAIL}`,
-  x: "https://x.com",
-  spotify: "https://github.com",
+  linkedin: CONTACT_LINKEDIN,
 };
 
 const location = {

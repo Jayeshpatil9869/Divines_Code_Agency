@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Magnetic } from "@/components/ui/magnetic";
 import { useGsap, animateFooter, bindFooterSpotlight } from "@/animations";
 import {
+  CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_E164,
   CONTACT_WHATSAPP,
@@ -92,16 +93,6 @@ export function Footer() {
             </h4>
             <Magnetic strength={0.18}>
               <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={footerLinkClass}
-              >
-                Twitter / X
-              </a>
-            </Magnetic>
-            <Magnetic strength={0.18}>
-              <a
                 href={CONTACT_LINKEDIN}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -111,13 +102,8 @@ export function Footer() {
               </a>
             </Magnetic>
             <Magnetic strength={0.18}>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={footerLinkClass}
-              >
-                GitHub
+              <a href={`mailto:${CONTACT_EMAIL}`} className={footerLinkClass}>
+                {CONTACT_EMAIL}
               </a>
             </Magnetic>
           </div>

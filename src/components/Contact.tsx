@@ -105,11 +105,11 @@ export function Contact() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="flex flex-col gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" required placeholder="Alex Rivera" />
+              <Input id="name" name="name" required placeholder="Priya Sharma" />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" required placeholder="alex@company.com" />
+              <Input id="email" name="email" type="email" required placeholder="priya@business.com" />
             </div>
           </div>
 
@@ -120,7 +120,7 @@ export function Contact() {
               name="message"
               required
               rows={4}
-              placeholder="A short note on the product, timeline, and what success looks like."
+              placeholder="A short note on the site you need, timeline, and what success looks like."
             />
           </div>
 

@@ -12,7 +12,7 @@ const stages = [
   {
     num: "02",
     title: "Architecture",
-    desc: "Flows, data models, and structural skeleton. Design decisions that survive scale.",
+    desc: "Flows, information architecture, and structural skeleton. Design decisions that stay maintainable.",
   },
   {
     num: "03",
