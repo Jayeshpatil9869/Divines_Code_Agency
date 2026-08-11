@@ -104,7 +104,7 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 pointer-events-none px-6 py-6 flex justify-center",
           scrolled ? "pt-6" : "pt-8",
-          !introReady && "[&_[data-gsap]]:opacity-0"
+          !introReady && "**:data-gsap:opacity-0"
         )}
       >
         <div
@@ -112,14 +112,14 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
           className={cn(
             "flex items-center justify-between pointer-events-auto transition-all duration-300 relative overflow-hidden",
             scrolled
-              ? "w-full max-w-[720px] px-6 py-3 bg-background/70 backdrop-blur-xl border-b border-border rounded-full"
+              ? "w-full max-w-180 px-6 py-3 bg-background/70 backdrop-blur-xl border-b border-border rounded-full"
               : "w-full max-w-7xl px-0 bg-transparent border-transparent rounded-none"
           )}
         >
           {scrolled && (
             <div
               ref={progressRef}
-              className="absolute top-0 left-0 right-0 h-[2px] bg-primary origin-left will-change-transform"
+              className="absolute top-0 left-0 right-0 h-0.5 bg-primary origin-left will-change-transform"
               style={{ transform: "scaleX(0)" }}
             />
           )}

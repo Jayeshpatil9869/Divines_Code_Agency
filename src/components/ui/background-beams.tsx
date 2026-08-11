@@ -37,7 +37,7 @@ export function BackgroundBeams({ className }: { className?: string }) {
       className={cn(
         "pointer-events-none absolute inset-0 overflow-hidden",
         // Soft edge fade — keep beams readable across most of the hero
-        "[mask-image:radial-gradient(ellipse_80%_70%_at_20%_80%,black_10%,black_55%,transparent_100%)]",
+        "mask-[radial-gradient(ellipse_80%_70%_at_20%_80%,black_10%,black_55%,transparent_100%)]",
         className,
       )}
     >

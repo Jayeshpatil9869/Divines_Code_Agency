@@ -3,6 +3,7 @@ import MusicPortfolio, { type MusicProject } from "@/components/ui/music-portfol
 import "@/components/ui/music-portfolio.css";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateSectionReveals } from "@/animations";
+import { CONTACT_EMAIL } from "@/data/contact";
 
 /** Selected work mapped into the music-portfolio row schema */
 const projectsData: MusicProject[] = [
@@ -75,7 +76,7 @@ const config = {
 };
 
 const socialLinks = {
-  email: "mailto:hello@divinescode.agency",
+  email: `mailto:${CONTACT_EMAIL}`,
   x: "https://x.com",
   spotify: "https://github.com",
 };

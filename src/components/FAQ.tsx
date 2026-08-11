@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { Magnetic } from "@/components/ui/magnetic";
@@ -9,38 +9,146 @@ import {
   collapseFaqPanel,
   setFaqPanelState,
   prefersReducedMotion,
+  gsap,
 } from "@/animations";
 
 const faqs = [
   {
-    q: "Do you build the backend too?",
-    a: "We specialize in product design and frontend engineering (React, TypeScript). We wire BaaS like Supabase or Firebase. For complex custom Node/Python backends, we collaborate with your engineers or a trusted partner.",
+    q: "What's included in the website package price?",
+    a: "Design, development, animations in scope, SEO foundation, deployment, and SSL setup. Domain registration and hosting/infrastructure are not included — you pay those providers directly.",
   },
   {
-    q: "How do you handle timezones?",
-    a: "Core overlap windows are agreed upfront. Async updates land daily. Live reviews happen in your preferred morning or evening slot.",
+    q: "Is ₹999/month for hosting?",
+    a: "No. Website Care is optional support — updates, small fixes, and priority help. Hosting and domain remain your recurring third-party costs.",
   },
   {
-    q: "Can we hire you full-time later?",
-    a: "Occasionally we convert to fractional or embedded roles after a successful project. We don't compete with your hiring — we help you ship until the team is ready.",
+    q: "What if I need e-commerce or a web app?",
+    a: "That's Custom — scoped and quoted separately. Starter, Modern, and Premium cover marketing and business websites; custom functionality gets its own brief.",
   },
   {
     q: "What if we don't like the design?",
-    a: "Checkpoints are built in. If direction is wrong early, we course-correct before build. Fixed-scope work includes defined revision rounds.",
+    a: "Checkpoints are built in. If direction is wrong early, we course-correct before build. Fixed-scope packages include defined revision rounds.",
   },
 ];
+
+const AUTO_MS = 4500;
 
 export function FAQ() {
   const rootRef = useRef<HTMLElement>(null);
   const [openIndex, setOpenIndex] = useState(0);
+  const [inView, setInView] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [timerKey, setTimerKey] = useState(0);
+
+  const remainingRef = useRef(AUTO_MS);
+  const cycleRef = useRef(`${openIndex}-${timerKey}`);
+  const timeoutRef = useRef<number | null>(null);
+  const beamTweenRef = useRef<gsap.core.Tween | null>(null);
 
   useGsap(rootRef, (root) => animateFaq(root), []);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) =>
+        setInView(entry.isIntersecting && entry.intersectionRatio > 0.35),
+      { threshold: [0, 0.35, 0.6] }
+    );
+    io.observe(root);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const cycle = `${openIndex}-${timerKey}`;
+    const cycleChanged = cycleRef.current !== cycle;
+    if (cycleChanged) {
+      cycleRef.current = cycle;
+      remainingRef.current = AUTO_MS;
+      beamTweenRef.current?.kill();
+      beamTweenRef.current = null;
+      rootRef.current?.querySelectorAll<HTMLElement>("[data-faq-beam]").forEach((el) => {
+        if (el.getAttribute("data-faq-beam") !== String(openIndex)) {
+          gsap.set(el, { scaleY: 0 });
+        }
+      });
+    }
+
+    const clearTimer = () => {
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+
+    const reduced = prefersReducedMotion();
+    const canRun = inView && !reduced && !paused;
+
+    if (!canRun) {
+      clearTimer();
+      const tween = beamTweenRef.current;
+      if (tween && paused) {
+        tween.pause();
+        remainingRef.current = Math.max(0, (1 - tween.progress()) * AUTO_MS);
+      }
+      return clearTimer;
+    }
+
+    const beam = rootRef.current?.querySelector<HTMLElement>(
+      `[data-faq-beam="${openIndex}"]`
+    );
+
+    if (beam) {
+      beamTweenRef.current?.kill();
+      const startProgress = 1 - remainingRef.current / AUTO_MS;
+      gsap.set(beam, {
+        scaleY: Math.min(1, Math.max(0, startProgress)),
+        transformOrigin: "top center",
+      });
+      beamTweenRef.current = gsap.to(beam, {
+        scaleY: 1,
+        duration: Math.max(0.05, remainingRef.current / 1000),
+        ease: "none",
+      });
+    }
+
+    const startedAt = performance.now();
+    const wait = remainingRef.current;
+    const activeCycle = cycle;
+
+    timeoutRef.current = window.setTimeout(() => {
+      if (cycleRef.current !== activeCycle) return;
+      remainingRef.current = AUTO_MS;
+      setOpenIndex((prev) => {
+        const current = prev < 0 ? 0 : prev;
+        return (current + 1) % faqs.length;
+      });
+    }, wait);
+
+    return () => {
+      // Only bank remaining time when pausing the same cycle (hover),
+      // not when advancing to the next item.
+      if (cycleRef.current === activeCycle) {
+        const elapsed = performance.now() - startedAt;
+        remainingRef.current = Math.max(0, wait - elapsed);
+        beamTweenRef.current?.pause();
+      }
+      clearTimer();
+    };
+  }, [inView, paused, openIndex, timerKey]);
+
+  const selectItem = (i: number) => {
+    remainingRef.current = AUTO_MS;
+    setOpenIndex(i);
+    setTimerKey((k) => k + 1);
+  };
 
   return (
     <section
       id="faq"
       ref={rootRef}
-      className="relative w-full py-24 md:py-32 lg:min-h-[100svh] lg:flex lg:items-center border-t border-border overflow-hidden"
+      className="relative w-full py-24 md:py-32 lg:min-h-svh lg:flex lg:items-center border-t border-border overflow-hidden"
     >
       <div
         aria-hidden
@@ -71,7 +179,17 @@ export function FAQ() {
             </Magnetic>
           </div>
 
-          <div className="lg:col-span-8 w-full flex flex-col justify-center gap-3 lg:self-center">
+          <div
+            className="lg:col-span-8 w-full flex flex-col justify-center gap-3 lg:self-center"
+            onPointerEnter={() => setPaused(true)}
+            onPointerLeave={() => setPaused(false)}
+            onFocusCapture={() => setPaused(true)}
+            onBlurCapture={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                setPaused(false);
+              }
+            }}
+          >
             {faqs.map((faq, i) => (
               <FaqItem
                 key={faq.q}
@@ -79,7 +197,7 @@ export function FAQ() {
                 question={faq.q}
                 answer={faq.a}
                 open={openIndex === i}
-                onToggle={() => setOpenIndex((prev) => (prev === i ? -1 : i))}
+                onToggle={() => selectItem(i)}
               />
             ))}
           </div>
@@ -192,7 +310,17 @@ function FaqItem({
           className="px-5 md:px-6 pb-5 md:pb-6 text-[14px] md:text-[15px] leading-relaxed font-light"
           style={{ color: "rgba(255,255,255,0.58)" }}
         >
-          <div className="pl-9 md:pl-12 border-l border-primary/40 ml-1">
+          <div className="relative pl-9 md:pl-12 ml-1">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-0 top-0 bottom-0 w-px bg-primary/25"
+            />
+            <span
+              data-faq-beam={index}
+              aria-hidden
+              className="pointer-events-none absolute left-0 top-0 bottom-0 w-0.5 origin-top bg-primary shadow-[0_0_10px_color-mix(in_srgb,hsl(32_28%_55%)_55%,transparent)] will-change-transform"
+              style={{ transform: "scaleY(0)" }}
+            />
             <p className="pl-4">{answer}</p>
           </div>
         </div>

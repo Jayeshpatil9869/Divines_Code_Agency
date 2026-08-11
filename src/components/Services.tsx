@@ -2,48 +2,7 @@ import { useRef } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateCards, gsap, EASE } from "@/animations";
-
-const services = [
-  {
-    num: "01",
-    title: "0-to-1 Product Design",
-    desc: "Raw ideas and messy constraints into structured, buildable interfaces ready for engineering.",
-    deliverables: [
-      "User flows",
-      "High-fidelity UI",
-      "Interactive prototype",
-      "Handoff specs",
-    ],
-  },
-  {
-    num: "02",
-    title: "Frontend Architecture",
-    desc: "Foundations for scalable React apps — routing, state, and component boundaries that last.",
-    deliverables: [
-      "App shell",
-      "Design tokens",
-      "Component library",
-      "Perf budgets",
-    ],
-  },
-  {
-    num: "03",
-    title: "Design Systems",
-    desc: "Audit inconsistent UIs and create a single source of truth that speeds design and development.",
-    deliverables: ["Token system", "Primitives", "Docs", "Adoption plan"],
-  },
-  {
-    num: "04",
-    title: "Growth & Optimization",
-    desc: "Find where users drop off and fix the friction. Focused on activation and retention.",
-    deliverables: [
-      "Funnel audit",
-      "Experiment plan",
-      "Ship cycles",
-      "Impact report",
-    ],
-  },
-];
+import { serviceOfferings } from "@/data/offerings";
 
 export function Services() {
   const rootRef = useRef<HTMLElement>(null);
@@ -62,14 +21,14 @@ export function Services() {
           </h2>
           <p className="text-lg font-light max-w-lg">
             <TextShimmer duration={3}>
-              Most engagements fall into one of these. If yours doesn&apos;t, ask
-              anyway.
+              Frontend builds, full websites from scratch, custom product work, and
+              optional care — pick the lane that fits.
             </TextShimmer>
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {services.map((s, i) => (
+          {serviceOfferings.map((s, i) => (
             <div key={s.num} data-gsap="card">
               <ServiceCard {...s} index={i} />
             </div>

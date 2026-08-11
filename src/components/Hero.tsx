@@ -30,8 +30,8 @@ export function Hero({ introReady = true }: HeroProps) {
       id="hero"
       ref={rootRef}
       className={cn(
-        "relative w-full min-h-[100dvh] flex flex-col justify-center px-6 pt-24 sm:pt-[14vh] md:pt-[18vh] pb-16 overflow-hidden",
-        !introReady && "[&_[data-gsap]]:opacity-0"
+        "relative w-full min-h-dvh flex flex-col justify-center px-6 pt-24 sm:pt-[14vh] md:pt-[18vh] pb-16 overflow-hidden",
+        !introReady && "**:data-gsap:opacity-0"
       )}
     >
       <div data-gsap="hero-bg" className="absolute inset-0 pointer-events-none">
@@ -49,7 +49,7 @@ export function Hero({ introReady = true }: HeroProps) {
           </p>
 
           <div className="relative">
-            <h1 className="font-black tracking-[-0.05em] uppercase md:pr-[min(42%,26rem)]">
+            <h1 className="font-black tracking-tighter uppercase md:pr-[min(42%,26rem)]">
               <span
                 data-gsap="hero-line"
                 className="block text-foreground text-[clamp(2rem,6.5vw,8.5rem)] leading-[0.82]"

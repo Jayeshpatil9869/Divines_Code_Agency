@@ -46,7 +46,7 @@ function TestimonialCard({
   role: string;
 }) {
   return (
-    <div className="w-[320px] md:w-[420px] shrink-0 p-8 border border-border bg-surface flex flex-col justify-between min-h-[280px]">
+    <div className="w-[320px] md:w-105 shrink-0 p-8 border border-border bg-surface flex flex-col justify-between min-h-70">
       <p className="text-base md:text-lg font-light leading-relaxed text-foreground/90 mb-8">
         &ldquo;{quote}&rdquo;
       </p>

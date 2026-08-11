@@ -68,8 +68,15 @@ export function setFaqPanelState(els: FaqPanelEls, open: boolean) {
     overflow: "hidden",
   });
   gsap.set(body, { y: 0, opacity: open ? 1 : 0 });
-  if (icon) gsap.set(icon, { rotation: open ? 180 : 0, color: open ? FAQ_COLORS.iconOpen : FAQ_COLORS.iconClosed });
-  if (title) gsap.set(title, { color: open ? FAQ_COLORS.titleOpen : FAQ_COLORS.titleClosed });
+  if (icon)
+    gsap.set(icon, {
+      rotation: open ? 180 : 0,
+      color: open ? FAQ_COLORS.iconOpen : FAQ_COLORS.iconClosed,
+    });
+  if (title)
+    gsap.set(title, {
+      color: open ? FAQ_COLORS.titleOpen : FAQ_COLORS.titleClosed,
+    });
   gsap.set(item, {
     borderColor: open ? FAQ_COLORS.borderOpen : FAQ_COLORS.borderClosed,
     backgroundColor: open ? FAQ_COLORS.bgOpen : FAQ_COLORS.bgClosed,
@@ -97,17 +104,26 @@ export function expandFaqPanel(els: FaqPanelEls): gsap.core.Timeline {
       duration: 0.5,
       ease: EASE.soft,
     },
-    0
+    0,
   );
 
   if (title) {
-    tl.to(title, { color: FAQ_COLORS.titleOpen, duration: 0.4, ease: EASE.soft }, 0);
+    tl.to(
+      title,
+      { color: FAQ_COLORS.titleOpen, duration: 0.4, ease: EASE.soft },
+      0,
+    );
   }
   if (icon) {
     tl.to(
       icon,
-      { rotation: 180, color: FAQ_COLORS.iconOpen, duration: 0.45, ease: EASE.soft },
-      0
+      {
+        rotation: 180,
+        color: FAQ_COLORS.iconOpen,
+        duration: 0.45,
+        ease: EASE.soft,
+      },
+      0,
     );
   }
 
@@ -119,7 +135,7 @@ export function expandFaqPanel(els: FaqPanelEls): gsap.core.Timeline {
       ease: "power3.inOut",
       onComplete: () => gsap.set(panel, { height: "auto" }),
     },
-    0
+    0,
   );
 
   tl.to(
@@ -130,7 +146,7 @@ export function expandFaqPanel(els: FaqPanelEls): gsap.core.Timeline {
       duration: 0.45,
       ease: EASE.out,
     },
-    0.18
+    0.18,
   );
 
   return tl;
@@ -154,7 +170,7 @@ export function collapseFaqPanel(els: FaqPanelEls): gsap.core.Timeline {
       duration: 0.28,
       ease: EASE.soft,
     },
-    0
+    0,
   );
 
   tl.to(
@@ -164,7 +180,7 @@ export function collapseFaqPanel(els: FaqPanelEls): gsap.core.Timeline {
       duration: 0.55,
       ease: "power3.inOut",
     },
-    0.08
+    0.08,
   );
 
   tl.to(
@@ -175,17 +191,26 @@ export function collapseFaqPanel(els: FaqPanelEls): gsap.core.Timeline {
       duration: 0.45,
       ease: EASE.soft,
     },
-    0.05
+    0.05,
   );
 
   if (title) {
-    tl.to(title, { color: FAQ_COLORS.titleClosed, duration: 0.35, ease: EASE.soft }, 0.05);
+    tl.to(
+      title,
+      { color: FAQ_COLORS.titleClosed, duration: 0.35, ease: EASE.soft },
+      0.05,
+    );
   }
   if (icon) {
     tl.to(
       icon,
-      { rotation: 0, color: FAQ_COLORS.iconClosed, duration: 0.4, ease: EASE.soft },
-      0.05
+      {
+        rotation: 0,
+        color: FAQ_COLORS.iconClosed,
+        duration: 0.4,
+        ease: EASE.soft,
+      },
+      0.05,
     );
   }
 

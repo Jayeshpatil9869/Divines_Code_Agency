@@ -1,6 +1,17 @@
 import { useEffect, useState, useRef } from "react";
 import { Magnetic } from "@/components/ui/magnetic";
 import { useGsap, animateFooter, bindFooterSpotlight } from "@/animations";
+import {
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_E164,
+  CONTACT_WHATSAPP,
+  CONTACT_LINKEDIN,
+  COMPANY_TAGLINE,
+  COMPANY_BLURB,
+} from "@/data/contact";
+
+const footerLinkClass =
+  "text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors";
 
 export function Footer() {
   const rootRef = useRef<HTMLElement>(null);
@@ -41,8 +52,11 @@ export function Footer() {
             <h3 className="font-display text-xl font-black tracking-tighter uppercase mb-6">
               Divine<span className="text-primary">&apos;</span>s
             </h3>
-            <p className="text-[11px] text-muted-foreground max-w-[220px] font-light leading-relaxed">
-              Product design and frontend engineering for startups that ship.
+            <p className="text-[11px] text-primary uppercase tracking-[0.18em] font-bold mb-3">
+              {COMPANY_TAGLINE}
+            </p>
+            <p className="text-[11px] text-muted-foreground max-w-60 font-light leading-relaxed">
+              {COMPANY_BLURB}
             </p>
           </div>
 
@@ -50,56 +64,58 @@ export function Footer() {
             <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-2">
               Work
             </h4>
-            <a
-              href="#work"
-              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
-            >
-              Selected Projects
-            </a>
-            <a
-              href="#services"
-              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
-            >
-              Services
-            </a>
-            <a
-              href="#process"
-              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
-            >
-              Process
-            </a>
-            <a
-              href="#pricing"
-              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
-            >
-              Pricing
-            </a>
+            <Magnetic strength={0.18}>
+              <a href="#work" className={footerLinkClass}>
+                Selected Projects
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.18}>
+              <a href="#services" className={footerLinkClass}>
+                Services
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.18}>
+              <a href="#process" className={footerLinkClass}>
+                Process
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.18}>
+              <a href="#pricing" className={footerLinkClass}>
+                Pricing
+              </a>
+            </Magnetic>
           </div>
 
           <div data-gsap="footer-item" className="flex flex-col gap-4">
             <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-2">
               Connect
             </h4>
-            <Magnetic strength={0.15}>
+            <Magnetic strength={0.18}>
               <a
                 href="https://twitter.com"
-                className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={footerLinkClass}
               >
                 Twitter / X
               </a>
             </Magnetic>
-            <Magnetic strength={0.15}>
+            <Magnetic strength={0.18}>
               <a
-                href="https://linkedin.com"
-                className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+                href={CONTACT_LINKEDIN}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={footerLinkClass}
               >
                 LinkedIn
               </a>
             </Magnetic>
-            <Magnetic strength={0.15}>
+            <Magnetic strength={0.18}>
               <a
                 href="https://github.com"
-                className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={footerLinkClass}
               >
                 GitHub
               </a>
@@ -110,18 +126,31 @@ export function Footer() {
             <h4 className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-primary mb-2">
               Details
             </h4>
-            <a
-              href="mailto:hello@divinescode.agency"
-              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors break-all"
-            >
-              hello@divinescode.agency
-            </a>
-            <a
-              href="#contact"
-              className="text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors"
-            >
-              Start a project
-            </a>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <Magnetic strength={0.18}>
+                <a
+                  href={`tel:${CONTACT_PHONE_E164}`}
+                  className={footerLinkClass}
+                >
+                  {CONTACT_PHONE_DISPLAY}
+                </a>
+              </Magnetic>
+              <Magnetic strength={0.18}>
+                <a
+                  href={CONTACT_WHATSAPP}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={footerLinkClass}
+                >
+                  WhatsApp
+                </a>
+              </Magnetic>
+            </div>
+            <Magnetic strength={0.18}>
+              <a href="#contact" className={footerLinkClass}>
+                Start a project
+              </a>
+            </Magnetic>
             <span className="text-[11px] font-mono text-muted-foreground mt-2">
               {time}
             </span>
