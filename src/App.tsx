@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { registerGsapPlugins } from "@/animations";
 import { useLenis } from "@/hooks/useLenis";
 import { ArcRevealHero } from "@/components/ui/arc-preloader-hero";
@@ -86,6 +87,7 @@ export default function App() {
 
         <Footer />
       </div>
+      <Analytics />
     </ArcRevealHero>
   );
 }
