@@ -17,3 +17,11 @@ export { animatePhilosophy } from "./philosophy";
 export { animateLogos } from "./logos";
 export { animatePricing } from "./pricing";
 export { animateFaq, expandFaqPanel, collapseFaqPanel, setFaqPanelState, FAQ_COLORS } from "./faq";
+export {
+  animateTeamSection,
+  collectTeamCardEls,
+  setTeamCardState,
+  expandTeamCard,
+  collapseTeamCard,
+} from "./team";
+export type { TeamCardEls } from "./team";

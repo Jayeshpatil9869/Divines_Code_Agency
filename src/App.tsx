@@ -9,6 +9,7 @@ import { Metrics } from "./components/Metrics";
 import { Projects } from "./components/Projects";
 import { Services } from "./components/Services";
 import { About } from "./components/About";
+import { Team } from "./components/Team";
 import { Process } from "./components/Process";
 import { Testimonials } from "./components/Testimonials";
 import { WhyMe, Philosophy } from "./components/WhyMe";
@@ -72,6 +73,7 @@ export default function App() {
           <Projects />
           <Services />
           <About />
+          <Team />
           <Process />
           <Testimonials />
           <WhyMe />
