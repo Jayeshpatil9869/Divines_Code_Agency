@@ -25,3 +25,10 @@ export {
   collapseTeamCard,
 } from "./team";
 export type { TeamCardEls } from "./team";
+export {
+  animateServicesExperience,
+  animateProcessItemOpen,
+  animateProcessItemClose,
+  scrollToServiceId,
+  nudgeArrow,
+} from "./services";

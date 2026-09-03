@@ -1,25 +1,10 @@
 import { useEffect, useState } from "react";
-import { registerGsapPlugins } from "@/animations";
-import { useLenis } from "@/hooks/useLenis";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { ArcRevealHero } from "@/components/ui/arc-preloader-hero";
-
-import { Hero } from "./components/Hero";
-import { Logos } from "./components/Logos";
-import { Metrics } from "./components/Metrics";
-import { Projects } from "./components/Projects";
-import { Services } from "./components/Services";
-import { About } from "./components/About";
-import { Team } from "./components/Team";
-import { Process } from "./components/Process";
-import { Testimonials } from "./components/Testimonials";
-import { WhyMe, Philosophy } from "./components/WhyMe";
-import { Pricing } from "./components/Pricing";
-import { FAQ } from "./components/FAQ";
-import { Availability } from "./components/Availability";
-import { Contact } from "./components/Contact";
-import { Footer } from "./components/Footer";
-import { Navigation } from "./components/Navigation";
-import { CustomCursor } from "./components/CustomCursor";
+import { SiteShell } from "@/components/layout/SiteShell";
+import { HomePage } from "@/pages/HomePage";
+import { ServicesPage } from "@/pages/ServicesPage";
+import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 
 const INTRO_GREETINGS = [
   { text: "Think." },
@@ -28,28 +13,36 @@ const INTRO_GREETINGS = [
 ];
 
 export default function App() {
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const [desktopPointer, setDesktopPointer] = useState(false);
-  const [introReady, setIntroReady] = useState(false);
-
-  useLenis();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+  const [introReady, setIntroReady] = useState(!isHome);
+  const [skipIntro] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return sessionStorage.getItem("dc-intro-seen") === "1";
+  });
 
   useEffect(() => {
-    registerGsapPlugins();
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const desktopQuery = window.matchMedia("(min-width: 768px)");
-    setReducedMotion(motionQuery.matches);
-    setDesktopPointer(desktopQuery.matches);
-    const onMotion = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    const onDesktop = (e: MediaQueryListEvent) => setDesktopPointer(e.matches);
-    motionQuery.addEventListener("change", onMotion);
-    desktopQuery.addEventListener("change", onDesktop);
+    if (!isHome) setIntroReady(true);
+  }, [isHome]);
 
-    return () => {
-      motionQuery.removeEventListener("change", onMotion);
-      desktopQuery.removeEventListener("change", onDesktop);
-    };
-  }, []);
+  const showIntro = isHome && !skipIntro;
+
+  const shell = (
+    <SiteShell introReady={showIntro ? introReady : true}>
+      <Routes>
+        <Route
+          path="/"
+          element={<HomePage introReady={showIntro ? introReady : true} />}
+        />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/services/:slug" element={<ServiceDetailPage />} />
+      </Routes>
+    </SiteShell>
+  );
+
+  if (!showIntro) {
+    return shell;
+  }
 
   return (
     <ArcRevealHero
@@ -58,34 +51,12 @@ export default function App() {
       revealDuration={1100}
       className="min-h-0 overflow-visible"
       revealClassName="relative"
-      onComplete={() => setIntroReady(true)}
+      onComplete={() => {
+        sessionStorage.setItem("dc-intro-seen", "1");
+        setIntroReady(true);
+      }}
     >
-      <div className="relative min-h-screen bg-background">
-        <div className="noise-overlay" aria-hidden />
-        {!reducedMotion && desktopPointer && <CustomCursor />}
-
-        <Navigation introReady={introReady} />
-
-        <main className="relative z-10 flex flex-col w-full overflow-x-hidden">
-          <Hero introReady={introReady} />
-          <Logos />
-          <Metrics />
-          <Projects />
-          <Services />
-          <About />
-          <Team />
-          <Process />
-          <Testimonials />
-          <WhyMe />
-          <Philosophy />
-          <Pricing />
-          <FAQ />
-          <Availability />
-          <Contact />
-        </main>
-
-        <Footer />
-      </div>
+      {shell}
     </ArcRevealHero>
   );
 }

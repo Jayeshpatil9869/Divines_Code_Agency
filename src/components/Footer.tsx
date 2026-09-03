@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Magnetic } from "@/components/ui/magnetic";
 import { useGsap, animateFooter, bindFooterSpotlight } from "@/animations";
 import {
@@ -71,9 +72,9 @@ export function Footer() {
               </a>
             </Magnetic>
             <Magnetic strength={0.18}>
-              <a href="#services" className={footerLinkClass}>
+              <Link to="/services" className={footerLinkClass}>
                 Services
-              </a>
+              </Link>
             </Magnetic>
             <Magnetic strength={0.18}>
               <a href="#process" className={footerLinkClass}>

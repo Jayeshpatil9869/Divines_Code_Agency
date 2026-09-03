@@ -1,207 +1,98 @@
 import { useRef } from "react";
-import { BorderBeam } from "@/components/ui/border-beam";
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 import { TextShimmer } from "@/components/ui/text-shimmer";
-import { useGsap, animateCards, gsap, EASE } from "@/animations";
-import { serviceOfferings } from "@/data/offerings";
+import { Magnetic } from "@/components/ui/magnetic";
+import { useGsap, animateServicesExperience } from "@/animations";
+import { services, servicePath, servicesTotal } from "@/data/services";
+import { cn } from "@/lib/utils";
 
+/** Homepage services teaser — full experience lives at /services. */
 export function Services() {
   const rootRef = useRef<HTMLElement>(null);
-  useGsap(rootRef, (root) => animateCards(root, '[data-gsap="card"]'), []);
+  useGsap(rootRef, (root) => animateServicesExperience(root), []);
 
   return (
     <section
       id="services"
       ref={rootRef}
-      className="w-full py-24 md:py-32 bg-surface"
+      className="w-full py-24 md:py-32 bg-surface border-t border-border"
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
-            How we can help
-          </h2>
-          <p className="text-lg font-light max-w-lg">
-            <TextShimmer duration={3}>
-              Frontend builds, full websites from scratch, custom product work, and
-              optional care — pick the lane that fits.
-            </TextShimmer>
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {serviceOfferings.map((s, i) => (
-            <div key={s.num} data-gsap="card">
-              <ServiceCard {...s} index={i} />
+        <header className="mb-14 md:mb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+          <div className="lg:col-span-7">
+            <p
+              data-gsap="svc-hero"
+              className="text-[11px] font-mono uppercase tracking-[0.35em] text-primary mb-5"
+            >
+              01 / Services / How we help
+            </p>
+            <h2
+              data-gsap="svc-hero"
+              className="text-[clamp(2rem,4.5vw,3.5rem)] leading-[0.95] font-black tracking-[-0.02em] uppercase"
+            >
+              Six lanes.
+              <br />
+              <span className="font-serif font-light italic normal-case tracking-tight text-primary">
+                One studio.
+              </span>
+            </h2>
+          </div>
+          <div className="lg:col-span-5 flex flex-col gap-5">
+            <p
+              data-gsap="svc-hero"
+              className="text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-md"
+            >
+              <TextShimmer duration={3}>
+                Websites, frontend systems, product surfaces, commerce,
+                integrations, and care — pick a lane or explore the full map.
+              </TextShimmer>
+            </p>
+            <div data-gsap="svc-hero">
+              <Magnetic strength={0.2}>
+                <Link
+                  to="/services"
+                  className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold hover:text-primary transition-colors"
+                >
+                  Explore all services
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </Magnetic>
             </div>
+          </div>
+        </header>
+
+        <ul className="border-t border-border" data-gsap="svc-reveal">
+          {services.map((service) => (
+            <li key={service.id} data-gsap="svc-index-row">
+              <Link
+                to={servicePath(service.slug)}
+                className={cn(
+                  "group grid grid-cols-[auto_1fr_auto] md:grid-cols-[3.5rem_minmax(0,1fr)_minmax(0,1.2fr)_auto] gap-x-4 md:gap-x-8 gap-y-2 items-baseline py-5 md:py-6 border-b border-border transition-colors hover:border-primary/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                )}
+              >
+                <span className="text-[10px] font-mono tracking-[0.2em] text-muted-foreground group-hover:text-primary transition-colors">
+                  {service.num}
+                </span>
+                <span className="text-lg md:text-2xl font-light italic font-serif normal-case tracking-tight">
+                  {service.title}
+                </span>
+                <span className="hidden md:block text-[13px] font-light text-muted-foreground leading-snug">
+                  {service.short}
+                </span>
+                <ArrowUpRight className="h-4 w-4 md:h-5 md:w-5 text-muted-foreground group-hover:text-primary transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 justify-self-end" />
+                <span className="md:hidden col-span-3 text-[12px] font-light text-muted-foreground leading-snug">
+                  {service.short}
+                </span>
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
+
+        <p className="mt-4 text-[10px] font-mono text-muted-foreground tracking-wider">
+          {services.length.toString().padStart(2, "0")} / {servicesTotal} offerings
+        </p>
       </div>
     </section>
-  );
-}
-
-function ServiceCard({
-  num,
-  title,
-  desc,
-  deliverables,
-  index,
-}: {
-  num: string;
-  title: string;
-  desc: string;
-  deliverables: string[];
-  index: number;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
-  const openRef = useRef(false);
-
-  const expand = () => {
-    if (openRef.current) return;
-    openRef.current = true;
-    const panel = panelRef.current;
-    const card = cardRef.current;
-    if (!panel) return;
-
-    gsap.killTweensOf(panel);
-    const tags = panel.querySelectorAll<HTMLElement>("[data-service-tag]");
-
-    gsap.set(panel, { height: "auto", opacity: 1 });
-    const fullH = panel.offsetHeight;
-    gsap.fromTo(
-      panel,
-      { height: 0, opacity: 0 },
-      {
-        height: fullH,
-        opacity: 1,
-        duration: 0.5,
-        ease: EASE.expo,
-        overwrite: "auto",
-        onComplete: () => gsap.set(panel, { height: "auto" }),
-      }
-    );
-
-    gsap.fromTo(
-      tags,
-      { y: 10, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.35,
-        stagger: 0.05,
-        delay: 0.12,
-        ease: EASE.out,
-        overwrite: "auto",
-      }
-    );
-
-    if (card) {
-      gsap.to(card, {
-        backgroundColor: "rgba(0,0,0,1)",
-        duration: 0.35,
-        ease: EASE.soft,
-        overwrite: "auto",
-      });
-    }
-  };
-
-  const collapse = () => {
-    if (!openRef.current) return;
-    openRef.current = false;
-    const panel = panelRef.current;
-    const card = cardRef.current;
-    if (!panel) return;
-
-    gsap.killTweensOf(panel);
-    const tags = panel.querySelectorAll<HTMLElement>("[data-service-tag]");
-    gsap.to(tags, { opacity: 0, y: 6, duration: 0.2, stagger: 0.02, ease: EASE.soft });
-
-    gsap.set(panel, { height: panel.offsetHeight });
-    gsap.to(panel, {
-      height: 0,
-      opacity: 0,
-      duration: 0.4,
-      ease: "power2.inOut",
-      overwrite: "auto",
-    });
-
-    if (card) {
-      gsap.to(card, {
-        backgroundColor: "rgba(0,0,0,1)",
-        duration: 0.3,
-        ease: EASE.soft,
-        overwrite: "auto",
-      });
-    }
-  };
-
-  const toggle = () => {
-    if (openRef.current) collapse();
-    else expand();
-  };
-
-  const isFinePointer = () =>
-    typeof window !== "undefined" &&
-    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-  return (
-    <div
-      ref={cardRef}
-      className="relative flex flex-col p-6 md:p-8 bg-background border border-border overflow-hidden h-full cursor-pointer"
-      onMouseEnter={() => {
-        if (isFinePointer()) expand();
-      }}
-      onMouseLeave={() => {
-        if (isFinePointer()) collapse();
-      }}
-      onClick={(e) => {
-        if (isFinePointer()) return;
-        if ((e.target as HTMLElement).closest("a")) return;
-        toggle();
-      }}
-      onFocus={expand}
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node)) collapse();
-      }}
-      tabIndex={0}
-      role="button"
-      aria-expanded={openRef.current}
-    >
-      <BorderBeam
-        size={55}
-        duration={8 + index}
-        delay={index * 1.8}
-        initialOffset={index * 22}
-        borderWidth={1.5}
-      />
-      <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-4">
-        Service {num}
-      </div>
-      <h3 className="text-2xl md:text-3xl font-light italic tracking-tight font-serif mb-3 normal-case">
-        {title}
-      </h3>
-      <p className="text-[13px] text-muted-foreground leading-relaxed font-light">
-        {desc}
-      </p>
-
-      <div
-        ref={panelRef}
-        className="overflow-hidden"
-        style={{ height: 0, opacity: 0 }}
-        aria-hidden={!openRef.current}
-      >
-        <div className="pt-6 mt-6 border-t border-border flex flex-wrap gap-2">
-          {deliverables.map((d) => (
-            <span
-              key={d}
-              data-service-tag
-              className="text-[9px] uppercase tracking-wider px-2 py-1 bg-surface text-muted-foreground border border-border font-mono"
-            >
-              {d}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
   );
 }
