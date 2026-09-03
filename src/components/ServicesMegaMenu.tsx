@@ -72,7 +72,7 @@ export function ServicesMegaMenu({ open, onClose, id }: ServicesMegaMenuProps) {
               View all services
             </Link>
             <Link
-              to="/#contact"
+              to="/contact"
               onClick={onClose}
               className="group inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] font-bold text-primary hover:brightness-110 transition-all"
             >

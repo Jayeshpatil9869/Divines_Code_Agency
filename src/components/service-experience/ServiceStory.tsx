@@ -135,13 +135,13 @@ export function ServiceStory({
           </Magnetic>
         )}
         <Magnetic strength={0.18}>
-          <a
-            href={service.ctaHref.startsWith("#") ? `/${service.ctaHref}` : service.ctaHref}
+          <Link
+            to={service.ctaHref.startsWith("#") ? `/${service.ctaHref}` : service.ctaHref}
             className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold text-muted-foreground hover:text-primary transition-colors"
           >
             {service.ctaLabel}
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+          </Link>
         </Magnetic>
       </div>
     </article>

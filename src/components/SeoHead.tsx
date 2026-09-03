@@ -1,36 +1,51 @@
 import { useEffect } from "react";
-import { buildOrganizationGraph } from "@/data/schema";
+import { useLocation } from "react-router-dom";
+import { buildJsonLdForPath } from "@/data/schema";
 import {
   OG_IMAGE,
-  SEO_DESCRIPTION,
-  SEO_TITLE,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_WIDTH,
   SITE_NAME,
   SITE_URL,
 } from "@/data/seo";
+import { getPageSeo, normalizePath } from "@/data/seo-pages";
 
 const JSON_LD_ID = "seo-json-ld";
 
+function canonicalFor(path: string): string {
+  if (path === "/") return `${SITE_URL}/`;
+  return `${SITE_URL}${path}`;
+}
+
 /**
- * Ensures document head meta + JSON-LD stay correct after client boot.
- * Critical crawl tags also live in index.html for the pre-JS HTML shell.
+ * Keeps document head meta + JSON-LD aligned with the active route.
+ * Build prerender writes the same tags into each static HTML file.
  */
 export function SeoHead() {
-  useEffect(() => {
-    document.title = SEO_TITLE;
+  const location = useLocation();
 
-    setMeta("description", SEO_DESCRIPTION);
-    setLink("canonical", `${SITE_URL}/`);
+  useEffect(() => {
+    const path = normalizePath(location.pathname);
+    const seo = getPageSeo(path);
+    const canonical = canonicalFor(path);
+
+    document.title = seo.title;
+    setMeta("description", seo.description);
+    setMeta("robots", seo.robots);
+    setLink("canonical", canonical);
 
     setMetaProperty("og:type", "website");
     setMetaProperty("og:site_name", SITE_NAME);
-    setMetaProperty("og:title", SEO_TITLE);
-    setMetaProperty("og:description", SEO_DESCRIPTION);
-    setMetaProperty("og:url", `${SITE_URL}/`);
+    setMetaProperty("og:title", seo.title);
+    setMetaProperty("og:description", seo.description);
+    setMetaProperty("og:url", canonical);
     setMetaProperty("og:image", OG_IMAGE);
+    setMetaProperty("og:image:width", OG_IMAGE_WIDTH);
+    setMetaProperty("og:image:height", OG_IMAGE_HEIGHT);
 
     setMetaName("twitter:card", "summary_large_image");
-    setMetaName("twitter:title", SEO_TITLE);
-    setMetaName("twitter:description", SEO_DESCRIPTION);
+    setMetaName("twitter:title", seo.title);
+    setMetaName("twitter:description", seo.description);
     setMetaName("twitter:image", OG_IMAGE);
 
     let script = document.getElementById(JSON_LD_ID) as HTMLScriptElement | null;
@@ -40,8 +55,8 @@ export function SeoHead() {
       script.type = "application/ld+json";
       document.head.appendChild(script);
     }
-    script.textContent = JSON.stringify(buildOrganizationGraph());
-  }, []);
+    script.textContent = JSON.stringify(buildJsonLdForPath(path));
+  }, [location.pathname]);
 
   return null;
 }

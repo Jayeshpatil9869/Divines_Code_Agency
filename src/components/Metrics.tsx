@@ -4,28 +4,28 @@ import { useGsap, animateMetrics } from "@/animations";
 
 const metrics = [
   {
-    value: 40,
-    suffix: "+",
-    label: "Products shipped",
-    detail: "From MVPs to Series B platforms",
+    value: 6,
+    suffix: "",
+    label: "Public projects",
+    detail: "Named work with live URLs on this site",
   },
   {
-    value: 61,
-    suffix: "%",
-    label: "Avg. conversion lift",
-    detail: "Measured 90 days post-launch",
+    value: 3,
+    suffix: "",
+    label: "Website packages",
+    detail: "Starter ₹9,999+ · Modern ₹19,999+ · Premium ₹34,999+",
   },
   {
     value: 6,
-    suffix: "mo",
-    label: "Avg. engagement",
-    detail: "Embedded, not drive-by",
+    suffix: "",
+    label: "Service lanes",
+    detail: "Websites, frontend, apps, ecommerce, integrations, care",
   },
   {
-    value: 4,
+    value: 2,
     suffix: "",
-    label: "Clients per year",
-    detail: "Depth over volume",
+    label: "Founders",
+    detail: "Jayesh Patil and Mahendra Nagpure",
   },
 ];
 
@@ -42,7 +42,7 @@ export function Metrics() {
           </h2>
           <p className="text-lg font-light mb-16 max-w-lg">
             <TextShimmer duration={3}>
-              Measured 90 days post-launch, verified with each client.
+              Figures you can check on this site — not a pitch deck.
             </TextShimmer>
           </p>
         </div>

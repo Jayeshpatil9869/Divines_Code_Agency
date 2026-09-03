@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Magnetic } from "@/components/ui/magnetic";
 import { TextShimmer } from "@/components/ui/text-shimmer";
@@ -7,7 +8,7 @@ import { useGsap, animatePricing } from "@/animations";
 import { pricedPackages, additionalCosts } from "@/data/offerings";
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_E164 } from "@/data/contact";
 
-export function Pricing() {
+export function Pricing({ hideHeading = false }: { hideHeading?: boolean }) {
   const rootRef = useRef<HTMLElement>(null);
   useGsap(rootRef, (root) => animatePricing(root), []);
 
@@ -15,7 +16,10 @@ export function Pricing() {
     <section
       id="pricing"
       ref={rootRef}
-      className="relative w-full py-24 md:py-32 border-t border-border overflow-x-clip lg:overflow-hidden"
+      className={cn(
+        "relative w-full border-t border-border overflow-x-clip lg:overflow-hidden",
+        hideHeading ? "pt-8 pb-24 md:pb-32" : "py-24 md:py-32",
+      )}
     >
       {/* Soft focus wash behind the middle plan */}
       <div
@@ -24,6 +28,7 @@ export function Pricing() {
       />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {hideHeading ? null : (
         <div data-gsap="pricing-header" className="mb-14 md:mb-16 max-w-3xl">
           <p className="text-[11px] font-mono uppercase tracking-[0.35em] text-primary mb-4">
             Website Packages
@@ -38,6 +43,7 @@ export function Pricing() {
             </TextShimmer>
           </p>
         </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 md:items-stretch">
           {pricedPackages.map((pkg, i) => (
@@ -133,8 +139,8 @@ export function Pricing() {
                   strength={0.25}
                   className={cn(pkg.popular ? "w-full" : "w-fit")}
                 >
-                  <a
-                    href="#contact"
+                  <Link
+                    to="/contact"
                     className={cn(
                       "relative inline-flex items-center text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-300",
                       pkg.popular
@@ -152,7 +158,7 @@ export function Pricing() {
                         <span aria-hidden>→</span>
                       </>
                     )}
-                  </a>
+                  </Link>
                 </Magnetic>
 
                 <a
@@ -191,12 +197,12 @@ export function Pricing() {
           </ul>
           <p className="text-sm text-muted-foreground font-light pt-1">
             Need e-commerce, CMS, or a web app?{" "}
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="text-white/90 border-b border-white/25 hover:border-primary hover:text-primary transition-colors"
             >
               Custom quote →
-            </a>
+            </Link>
           </p>
         </div>
       </div>

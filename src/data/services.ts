@@ -96,7 +96,7 @@ export const services: ServiceItem[] = [
       { title: "Premium interactive", blurb: "GSAP-led sections when presence matters." },
     ],
     relatedIds: ["frontend", "ecommerce", "care"],
-    ctaHref: "#pricing",
+    ctaHref: "/pricing",
     ctaLabel: "View website packages",
   },
   {
@@ -133,7 +133,7 @@ export const services: ServiceItem[] = [
       { title: "Responsive rebuilds", blurb: "Mobile-first corrections for broken layouts." },
     ],
     relatedIds: ["websites", "apps", "care"],
-    ctaHref: "#contact",
+    ctaHref: "/contact",
     ctaLabel: "Discuss frontend scope",
   },
   {
@@ -170,7 +170,7 @@ export const services: ServiceItem[] = [
       { title: "MVP product shells", blurb: "Lean first versions ready for feedback." },
     ],
     relatedIds: ["frontend", "integrations", "care"],
-    ctaHref: "#contact",
+    ctaHref: "/contact",
     ctaLabel: "Start a product conversation",
   },
   {
@@ -207,7 +207,7 @@ export const services: ServiceItem[] = [
       { title: "Store redesigns", blurb: "Rebuilds when the current shop underperforms." },
     ],
     relatedIds: ["websites", "frontend", "care"],
-    ctaHref: "#work",
+    ctaHref: "/work",
     ctaLabel: "See commerce work",
   },
   {
@@ -244,7 +244,7 @@ export const services: ServiceItem[] = [
       { title: "Legacy replacements", blurb: "Modernize one painful workflow at a time." },
     ],
     relatedIds: ["apps", "websites", "care"],
-    ctaHref: "#contact",
+    ctaHref: "/contact",
     ctaLabel: "Map an integration",
   },
   {
@@ -280,7 +280,7 @@ export const services: ServiceItem[] = [
       { title: "Handover support", blurb: "Help your team take ownership confidently." },
     ],
     relatedIds: ["websites", "frontend", "apps"],
-    ctaHref: "#contact",
+    ctaHref: "/contact",
     ctaLabel: "Ask about care plans",
   },
 ];

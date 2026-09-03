@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Magnetic } from "@/components/ui/magnetic";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 
@@ -36,21 +37,21 @@ export function ServicesCta() {
 
         <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
           <Magnetic strength={0.25}>
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="inline-flex h-12 md:h-14 items-center gap-2 px-8 bg-primary text-primary-foreground text-[11px] uppercase tracking-[0.2em] font-bold hover:brightness-110 transition-all"
             >
               Start a conversation
               <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
+            </Link>
           </Magnetic>
           <Magnetic strength={0.18}>
-            <a
-              href="#work"
+            <Link
+              to="/work"
               className="inline-flex h-12 md:h-14 items-center gap-2 px-6 border border-border text-[11px] uppercase tracking-[0.18em] font-bold hover:border-foreground/40 transition-colors"
             >
               View our work
-            </a>
+            </Link>
           </Magnetic>
         </div>
       </div>

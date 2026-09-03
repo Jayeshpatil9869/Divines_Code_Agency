@@ -33,10 +33,12 @@ export const FOUNDER_MAHENDRA = {
   ],
 } as const;
 
-export const OG_IMAGE = `${SITE_URL}/android-chrome-512x512.png`;
+export const OG_IMAGE = `${SITE_URL}/og-image.svg`;
+export const OG_IMAGE_WIDTH = "1200";
+export const OG_IMAGE_HEIGHT = "630";
 
 export const SEO_TITLE =
-  "Divine's Code Agency — Website Design & Development";
+  "Divine's Code — Custom Website Design & Development";
 
 export const SEO_DESCRIPTION =
-  "Website design and development with clear packages from ₹9,999. Modern UI, frontend builds, and optional Website Care. Founded by Jayesh Patil & Mahendra Nagpure.";
+  "Custom React websites, storefronts, and web app interfaces. Clear packages from ₹9,999, optional Website Care. Founded by Jayesh Patil & Mahendra Nagpure.";

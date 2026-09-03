@@ -55,6 +55,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const email = body.email;
     const message = body.message;
     const phone = body.phone;
+    const projectType = body.projectType;
+    const budget = body.budget;
+    const timeline = body.timeline;
+    const country = body.country;
 
     if (!isNonEmptyString(name) || !isNonEmptyString(email) || !isNonEmptyString(message)) {
       res.status(400).json({
@@ -104,6 +108,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const safePhone =
       typeof phone === "string" && phone.trim() ? phone.trim().slice(0, 40) : "";
 
+    const optionalLine = (label: string, value: unknown) =>
+      typeof value === "string" && value.trim()
+        ? `${label}: ${value.trim().slice(0, 80)}`
+        : null;
+
     await transporter.sendMail({
       from: `"Divine's Code" <${gmailUser}>`,
       to: contactTo,
@@ -113,6 +122,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         `Name: ${safeName}`,
         `Email: ${safeEmail}`,
         safePhone ? `Phone: ${safePhone}` : null,
+        optionalLine("Project type", projectType),
+        optionalLine("Budget", budget),
+        optionalLine("Timeline", timeline),
+        optionalLine("Country", country),
         "",
         "Message:",
         safeMessage,

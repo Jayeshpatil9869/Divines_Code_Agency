@@ -42,7 +42,7 @@ export function ServicesHero() {
           <div data-gsap="svc-hero" className="flex flex-wrap items-center gap-3">
             <Magnetic strength={0.22}>
               <Link
-                to="/#contact"
+                to="/contact"
                 className="inline-flex h-12 items-center px-7 bg-primary text-primary-foreground text-[11px] uppercase tracking-[0.2em] font-bold hover:brightness-110 transition-all"
               >
                 Start a conversation

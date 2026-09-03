@@ -152,9 +152,9 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
   const hashHref = (hash: string) => (isHome ? hash : `/${hash}`);
 
   const links = [
-    { label: "Work", href: hashHref("#work") },
+    { label: "Work", href: "/work" },
     { label: "Process", href: hashHref("#process") },
-    { label: "About", href: hashHref("#about") },
+    { label: "About", href: "/about" },
   ];
 
   return (
@@ -240,7 +240,7 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
 
             <Magnetic strength={0.25}>
               <Link
-                to={hashHref("#contact")}
+                to="/contact"
                 data-gsap="nav-cta"
                 className="text-[11px] uppercase tracking-[0.2em] font-bold px-4 py-2 bg-primary text-primary-foreground hover:brightness-110 transition-all"
               >
@@ -265,14 +265,14 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
           ref={panelRef}
           className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl flex flex-col items-center justify-center gap-6 md:hidden px-6 overflow-y-auto"
         >
-          <a
-            href={links[0].href}
+          <Link
+            to={links[0].href}
             data-gsap="mobile-link"
             onClick={closeMenu}
             className="text-2xl uppercase tracking-widest font-black"
           >
             Work
-          </a>
+          </Link>
 
           <div className="w-full max-w-sm flex flex-col items-center gap-3">
             <button
@@ -321,19 +321,31 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
             )}
           </div>
 
-          {links.slice(1).map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              data-gsap="mobile-link"
-              onClick={closeMenu}
-              className="text-2xl uppercase tracking-widest font-black"
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.slice(1).map((link) =>
+            link.href.startsWith("/") ? (
+              <Link
+                key={link.label}
+                to={link.href}
+                data-gsap="mobile-link"
+                onClick={closeMenu}
+                className="text-2xl uppercase tracking-widest font-black"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                data-gsap="mobile-link"
+                onClick={closeMenu}
+                className="text-2xl uppercase tracking-widest font-black"
+              >
+                {link.label}
+              </a>
+            ),
+          )}
           <Link
-            to={hashHref("#contact")}
+            to="/contact"
             data-gsap="mobile-link"
             onClick={closeMenu}
             className="mt-4 px-8 py-4 bg-primary text-primary-foreground font-bold tracking-widest uppercase text-xs"
@@ -348,7 +360,7 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
 
 function NavShimmerLink({ href, label }: { href: string; label: string }) {
   const [hovered, setHovered] = useState(false);
-  const isRouteHash = href.startsWith("/#");
+  const isInternal = href.startsWith("/");
   const className = cn(
     "text-[11px] uppercase tracking-[0.2em] font-medium transition-opacity",
     hovered ? "opacity-100" : "opacity-60 text-foreground"
@@ -359,7 +371,7 @@ function NavShimmerLink({ href, label }: { href: string; label: string }) {
     label
   );
 
-  if (isRouteHash) {
+  if (isInternal) {
     return (
       <Link
         to={href}

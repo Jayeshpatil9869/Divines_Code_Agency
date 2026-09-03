@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { proofProjects } from "@/data/services";
 import { Magnetic } from "@/components/ui/magnetic";
 
@@ -31,13 +32,13 @@ export function ServicesProof() {
             then proven in shipped projects.
           </p>
           <Magnetic strength={0.18}>
-            <a
-              href="#work"
+            <Link
+              to="/work"
               className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold hover:text-primary transition-colors"
             >
               View all work
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
+            </Link>
           </Magnetic>
         </div>
 

@@ -14,13 +14,21 @@ import {
   CONTACT_PHONE_E164,
   CONTACT_WHATSAPP,
 } from "@/data/contact";
+import {
+  BUDGET_BANDS,
+  PROJECT_TYPES,
+  TIMELINES,
+} from "@/data/contact-form";
+
+const selectClass =
+  "contact-select flex h-12 w-full border-b border-border bg-transparent px-0 py-3 text-base text-foreground focus-visible:outline-none focus-visible:border-primary transition-colors disabled:cursor-not-allowed disabled:opacity-50";
 
 const contactLinkClass =
   "group inline-flex items-center gap-2 whitespace-nowrap border border-white/15 bg-white/[0.03] px-3.5 py-2.5 text-[10px] uppercase tracking-[0.18em] font-bold text-white/75 transition-all duration-300 hover:border-primary/60 hover:bg-primary/10 hover:text-primary";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-export function Contact() {
+export function Contact({ hideHeading = false }: { hideHeading?: boolean }) {
   const rootRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<FormStatus>("idle");
@@ -51,6 +59,10 @@ export function Contact() {
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
+    const projectType = String(data.get("projectType") ?? "").trim();
+    const budget = String(data.get("budget") ?? "").trim();
+    const timeline = String(data.get("timeline") ?? "").trim();
+    const country = String(data.get("country") ?? "").trim();
 
     setErrorMessage("");
     setStatus("submitting");
@@ -59,7 +71,15 @@ export function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          projectType,
+          budget,
+          timeline,
+          country,
+        }),
       });
 
       const payload = (await res.json().catch(() => null)) as
@@ -85,8 +105,16 @@ export function Contact() {
   const canSubmit = status === "idle" || status === "error";
 
   return (
-    <section id="contact" ref={rootRef} className="w-full py-24 md:py-32 border-t border-border">
+    <section
+      id="contact"
+      ref={rootRef}
+      className={cn(
+        "w-full border-t border-border",
+        hideHeading ? "pt-8 pb-24 md:pb-32" : "py-24 md:py-32",
+      )}
+    >
       <div className="max-w-4xl mx-auto px-6">
+        {hideHeading ? null : (
         <div data-gsap="reveal">
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
             Tell us what you&apos;re building.
@@ -95,6 +123,7 @@ export function Contact() {
             A sentence is enough to start. We reply within one business day — always personally.
           </p>
         </div>
+        )}
 
         <form
           ref={formRef}
@@ -110,6 +139,52 @@ export function Contact() {
             <div className="flex flex-col gap-2">
               <Label htmlFor="email">Email</Label>
               <Input id="email" name="email" type="email" required placeholder="priya@business.com" />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="projectType">Project type</Label>
+              <select id="projectType" name="projectType" className={selectClass}>
+                {PROJECT_TYPES.map((option) => (
+                  <option
+                    key={option.value || "type-empty"}
+                    value={option.value}
+                    className="bg-white text-black"
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="budget">Budget</Label>
+              <select id="budget" name="budget" className={selectClass}>
+                {BUDGET_BANDS.map((option) => (
+                  <option
+                    key={option.value || "budget-empty"}
+                    value={option.value}
+                    className="bg-white text-black"
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="timeline">Timeline</Label>
+              <select id="timeline" name="timeline" className={selectClass}>
+                {TIMELINES.map((option) => (
+                  <option
+                    key={option.value || "timeline-empty"}
+                    value={option.value}
+                    className="bg-white text-black"
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="country">Country</Label>
+              <Input id="country" name="country" placeholder="India, USA, …" />
             </div>
           </div>
 

@@ -15,4 +15,4 @@ export const CONTACT_LINKEDIN =
 export const COMPANY_TAGLINE = "Where Innovation Meets Digital Success";
 
 export const COMPANY_BLURB =
-  "Website design, development, and optional care — clear packages that help businesses launch and grow online.";
+  "Custom React websites, storefronts, and web app interfaces — clear packages and optional care after launch.";

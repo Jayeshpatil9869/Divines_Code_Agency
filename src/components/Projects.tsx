@@ -1,10 +1,12 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import MusicPortfolio, { type MusicProject } from "@/components/ui/music-portfolio";
 import "@/components/ui/music-portfolio.css";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateSectionReveals } from "@/animations";
 import { CONTACT_EMAIL, CONTACT_LINKEDIN } from "@/data/contact";
 import { projects } from "@/data/projects";
+import { cn } from "@/lib/utils";
 
 const projectsData: MusicProject[] = projects.map((p) => ({
   id: p.id,
@@ -34,12 +36,17 @@ const location = {
   display: true,
 };
 
-export function Projects() {
+export function Projects({ showHeading = true }: { showHeading?: boolean }) {
   const rootRef = useRef<HTMLElement>(null);
   useGsap(rootRef, (root) => animateSectionReveals(root), []);
 
   return (
-    <section id="work" ref={rootRef} className="w-full py-24 md:py-32">
+    <section
+      id="work"
+      ref={rootRef}
+      className={cn("w-full", showHeading ? "py-24 md:py-32" : "pb-24 md:pb-32")}
+    >
+      {showHeading ? (
       <div className="max-w-7xl mx-auto px-6 mb-10 md:mb-14">
         <div
           data-gsap="reveal"
@@ -55,14 +62,15 @@ export function Projects() {
               </TextShimmer>
             </p>
           </div>
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="text-[11px] uppercase tracking-[0.2em] font-bold border-b border-border pb-1 hover:border-primary hover:text-primary transition-colors"
           >
             Start a project →
-          </a>
+          </Link>
         </div>
       </div>
+      ) : null}
 
       <div data-gsap="reveal" className="max-w-7xl mx-auto px-6">
         <MusicPortfolio

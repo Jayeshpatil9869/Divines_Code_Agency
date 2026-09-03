@@ -8,6 +8,10 @@ async function sendViaNodemailer(payload: {
   email: string;
   message: string;
   phone?: string;
+  projectType?: string;
+  budget?: string;
+  timeline?: string;
+  country?: string;
 }) {
   const gmailUser = (process.env.GMAIL_USER ?? "").trim();
   const gmailAppPassword = (process.env.GMAIL_APP_PASSWORD ?? "").replace(/\s+/g, "");
@@ -40,6 +44,10 @@ async function sendViaNodemailer(payload: {
       `Name: ${payload.name}`,
       `Email: ${payload.email}`,
       payload.phone ? `Phone: ${payload.phone}` : null,
+      payload.projectType ? `Project type: ${payload.projectType}` : null,
+      payload.budget ? `Budget: ${payload.budget}` : null,
+      payload.timeline ? `Timeline: ${payload.timeline}` : null,
+      payload.country ? `Country: ${payload.country}` : null,
       "",
       "Message:",
       payload.message,
@@ -68,7 +76,8 @@ app.get("/api/health", (_req, res) => {
 
 app.post("/api/contact", async (req, res) => {
   try {
-    const { name, email, message, phone } = req.body ?? {};
+    const { name, email, message, phone, projectType, budget, timeline, country } =
+      req.body ?? {};
     if (
       typeof name !== "string" ||
       !name.trim() ||
@@ -89,6 +98,10 @@ app.post("/api/contact", async (req, res) => {
       email: email.trim(),
       message: message.trim(),
       phone: typeof phone === "string" ? phone.trim() : undefined,
+      projectType: typeof projectType === "string" ? projectType.trim() : undefined,
+      budget: typeof budget === "string" ? budget.trim() : undefined,
+      timeline: typeof timeline === "string" ? timeline.trim() : undefined,
+      country: typeof country === "string" ? country.trim() : undefined,
     });
 
     if (!result.ok) {

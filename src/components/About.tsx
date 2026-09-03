@@ -69,7 +69,7 @@ export function About() {
             </div>
             <div className="mt-10">
               <a
-                href="#process"
+                href="/#process"
                 className="text-foreground font-bold text-[11px] uppercase tracking-[0.2em] border-b border-border pb-1 hover:border-primary transition-colors hover:text-primary"
               >
                 More about how we work →

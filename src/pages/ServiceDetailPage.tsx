@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { useGsap, animateServicesExperience } from "@/animations";
 import {
@@ -14,6 +14,7 @@ import { ServicesFaq } from "@/components/service-experience/ServicesFaq";
 import { ServicesCta } from "@/components/service-experience/ServicesCta";
 import { Magnetic } from "@/components/ui/magnetic";
 import { Contact } from "@/components/Contact";
+import { NotFoundPage } from "@/pages/NotFoundPage";
 
 export function ServiceDetailPage() {
   const { slug = "" } = useParams();
@@ -22,7 +23,7 @@ export function ServiceDetailPage() {
   useGsap(rootRef, (root) => animateServicesExperience(root), [slug]);
 
   if (!service) {
-    return <Navigate to="/services" replace />;
+    return <NotFoundPage />;
   }
 
   const related = getRelatedServices(service.relatedIds).slice(0, 3);
@@ -71,7 +72,7 @@ export function ServiceDetailPage() {
               <div className="flex flex-wrap gap-3">
                 <Magnetic strength={0.22}>
                   <Link
-                    to="/#contact"
+                    to="/contact"
                     className="inline-flex h-12 items-center px-7 bg-primary text-primary-foreground text-[11px] uppercase tracking-[0.2em] font-bold hover:brightness-110 transition-all"
                   >
                     Start a conversation

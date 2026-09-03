@@ -11,6 +11,7 @@ import {
   COMPANY_TAGLINE,
   COMPANY_BLURB,
 } from "@/data/contact";
+import { CRAWL_NAV } from "@/data/seo-pages";
 
 const footerLinkClass =
   "text-[11px] uppercase tracking-wider font-bold hover:text-primary transition-colors";
@@ -67,9 +68,9 @@ export function Footer() {
               Work
             </h4>
             <Magnetic strength={0.18}>
-              <a href="#work" className={footerLinkClass}>
+              <Link to="/work" className={footerLinkClass}>
                 Selected Projects
-              </a>
+              </Link>
             </Magnetic>
             <Magnetic strength={0.18}>
               <Link to="/services" className={footerLinkClass}>
@@ -77,15 +78,22 @@ export function Footer() {
               </Link>
             </Magnetic>
             <Magnetic strength={0.18}>
-              <a href="#process" className={footerLinkClass}>
-                Process
-              </a>
+              <Link to="/about" className={footerLinkClass}>
+                About
+              </Link>
             </Magnetic>
             <Magnetic strength={0.18}>
-              <a href="#pricing" className={footerLinkClass}>
+              <Link to="/pricing" className={footerLinkClass}>
                 Pricing
-              </a>
+              </Link>
             </Magnetic>
+            <nav aria-label="All pages" className="sr-only">
+              {CRAWL_NAV.map((item) => (
+                <Link key={item.href} to={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
           </div>
 
           <div data-gsap="footer-item" className="flex flex-col gap-4">
@@ -134,9 +142,9 @@ export function Footer() {
               </Magnetic>
             </div>
             <Magnetic strength={0.18}>
-              <a href="#contact" className={footerLinkClass}>
+              <Link to="/contact" className={footerLinkClass}>
                 Start a project
-              </a>
+              </Link>
             </Magnetic>
             <span className="text-[11px] font-mono text-muted-foreground mt-2">
               {time}

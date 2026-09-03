@@ -6,6 +6,11 @@ import { SiteShell } from "@/components/layout/SiteShell";
 import { HomePage } from "@/pages/HomePage";
 import { ServicesPage } from "@/pages/ServicesPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
+import { ContactPage } from "@/pages/ContactPage";
+import { PricingPage } from "@/pages/PricingPage";
+import { AboutPage } from "@/pages/AboutPage";
+import { WorkPage } from "@/pages/WorkPage";
+import { NotFoundPage } from "@/pages/NotFoundPage";
 
 const INTRO_GREETINGS = [
   { text: "Think." },
@@ -37,6 +42,11 @@ export default function App() {
         />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/work" element={<WorkPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </SiteShell>
   );

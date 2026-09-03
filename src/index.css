@@ -119,6 +119,16 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tighter uppercase font-black;
   }
+
+  /* Native OS pickers are light on Windows; inherited white text vanishes. */
+  select.contact-select {
+    color-scheme: light;
+  }
+
+  select.contact-select option {
+    color: #111111;
+    background-color: #ffffff;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
