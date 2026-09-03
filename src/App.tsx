@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { ArcRevealHero } from "@/components/ui/arc-preloader-hero";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { HomePage } from "@/pages/HomePage";
@@ -41,22 +42,30 @@ export default function App() {
   );
 
   if (!showIntro) {
-    return shell;
+    return (
+      <>
+        {shell}
+        <Analytics />
+      </>
+    );
   }
 
   return (
-    <ArcRevealHero
-      greetings={INTRO_GREETINGS}
-      greetingHold={580}
-      revealDuration={1100}
-      className="min-h-0 overflow-visible"
-      revealClassName="relative"
-      onComplete={() => {
-        sessionStorage.setItem("dc-intro-seen", "1");
-        setIntroReady(true);
-      }}
-    >
-      {shell}
-    </ArcRevealHero>
+    <>
+      <ArcRevealHero
+        greetings={INTRO_GREETINGS}
+        greetingHold={580}
+        revealDuration={1100}
+        className="min-h-0 overflow-visible"
+        revealClassName="relative"
+        onComplete={() => {
+          sessionStorage.setItem("dc-intro-seen", "1");
+          setIntroReady(true);
+        }}
+      >
+        {shell}
+      </ArcRevealHero>
+      <Analytics />
+    </>
   );
 }
