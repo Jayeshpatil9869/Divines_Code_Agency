@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { ArcRevealHero } from "@/components/ui/arc-preloader-hero";
@@ -26,6 +26,10 @@ export default function App() {
     if (typeof window === "undefined") return false;
     return sessionStorage.getItem("dc-intro-seen") === "1";
   });
+
+  useLayoutEffect(() => {
+    document.getElementById("boot-curtain")?.remove();
+  }, []);
 
   useEffect(() => {
     if (!isHome) setIntroReady(true);
