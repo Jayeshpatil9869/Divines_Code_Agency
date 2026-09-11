@@ -5,7 +5,8 @@ import { Magnetic } from "@/components/ui/magnetic";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { cn } from "@/lib/utils";
 import { useGsap, animatePricing } from "@/animations";
-import { pricedPackages, additionalCosts } from "@/data/offerings";
+import { Globe, Server, ShieldCheck, Sparkles, ArrowRight } from "lucide-react";
+import { pricedPackages } from "@/data/offerings";
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_E164 } from "@/data/contact";
 
 export function Pricing({ hideHeading = false }: { hideHeading?: boolean }) {
@@ -179,31 +180,130 @@ export function Pricing({ hideHeading = false }: { hideHeading?: boolean }) {
           ))}
         </div>
 
+        {/* Additional Costs & Infrastructure Transparent Policy */}
         <div
           data-gsap="pricing-note"
-          className="mt-10 md:mt-12 flex flex-col gap-3 max-w-3xl"
+          className="mt-14 sm:mt-16 lg:mt-20 relative rounded-2xl border border-white/10 bg-linear-to-b from-white/[0.04] to-black/80 backdrop-blur-md p-6 sm:p-8 lg:p-10 overflow-hidden"
         >
-          <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-primary">
-            Additional costs
-          </p>
-          <ul className="flex flex-col sm:flex-row sm:flex-wrap gap-x-8 gap-y-2 text-sm text-muted-foreground font-light">
-            {additionalCosts.map((item) => (
-              <li key={item.title}>
-                <span className="text-white/80">{item.title}</span>
-                <span className="text-white/25"> — </span>
-                {item.detail}
-              </li>
-            ))}
-          </ul>
-          <p className="text-sm text-muted-foreground font-light pt-1">
-            Need e-commerce, CMS, or a web app?{" "}
-            <Link
-              to="/contact"
-              className="text-white/90 border-b border-white/25 hover:border-primary hover:text-primary transition-colors"
-            >
-              Custom quote →
-            </Link>
-          </p>
+          {/* Subtle decorative glow in top-right */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-20 -top-20 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
+          />
+
+          {/* Header row with eyebrow and title */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-white/10">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-primary">
+                  Transparent Commercials
+                </p>
+              </div>
+              <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                Additional Costs & Infrastructure
+              </h4>
+            </div>
+            <p className="text-xs sm:text-sm text-muted-foreground font-light max-w-md sm:text-right">
+              Direct third-party costs with zero agency markups. You retain 100% full ownership and control of your assets.
+            </p>
+          </div>
+
+          {/* 3 Modular Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 my-8">
+            <div className="group relative p-5 rounded-xl border border-white/6 bg-white/[0.02] hover:bg-white/[0.04] hover:border-primary/40 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-300">
+                    <Globe className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/70">
+                    Client-Owned
+                  </span>
+                </div>
+                <h5 className="text-base font-semibold text-white mb-1.5">
+                  Domain Name
+                </h5>
+                <p className="text-xs sm:text-sm text-muted-foreground font-light leading-relaxed">
+                  Client pays separately (GoDaddy, Namecheap, Hostinger, etc.). You keep full DNS ownership and control.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-white/40">
+                Direct Registrar Billing
+              </div>
+            </div>
+
+            <div className="group relative p-5 rounded-xl border border-white/6 bg-white/[0.02] hover:bg-white/[0.04] hover:border-primary/40 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-300">
+                    <Server className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/70">
+                    Zero Markup
+                  </span>
+                </div>
+                <h5 className="text-base font-semibold text-white mb-1.5">
+                  Hosting & Infrastructure
+                </h5>
+                <p className="text-xs sm:text-sm text-muted-foreground font-light leading-relaxed">
+                  Client pays separately (Vercel, Netlify, Cloudflare, etc.). Free tiers often cover launch and early traffic.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-white/40">
+                Cloud Provider Direct
+              </div>
+            </div>
+
+            <div className="group relative p-5 rounded-xl border border-white/6 bg-white/[0.02] hover:bg-white/[0.04] hover:border-primary/40 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-300">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-primary/15 border border-primary/30 text-primary">
+                    Optional Care
+                  </span>
+                </div>
+                <h5 className="text-base font-semibold text-white mb-1.5">
+                  Website Care Plan
+                </h5>
+                <p className="text-xs sm:text-sm text-muted-foreground font-light leading-relaxed">
+                  Optional from <span className="text-white font-medium">₹999/month</span>. Continuous support, content updates, and maintenance (not hosting).
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-primary/80">
+                Cancel Anytime
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom custom quote callout banner */}
+          <div className="relative rounded-xl border border-primary/25 bg-linear-to-r from-primary/10 via-primary/5 to-transparent p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-start sm:items-center gap-3.5">
+              <div className="w-9 h-9 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-sm sm:text-base font-medium text-white">
+                  Need e-commerce, custom CMS, or a full-stack web application?
+                </p>
+                <p className="text-xs text-muted-foreground font-light">
+                  Tailored scopes with custom architecture, backend APIs, and database integrations.
+                </p>
+              </div>
+            </div>
+
+            <Magnetic strength={0.25}>
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary/90 transition-all duration-300 shrink-0 shadow-[0_0_20px_rgba(232,213,181,0.2)]"
+              >
+                <span>Request Custom Quote</span>
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Magnetic>
+          </div>
         </div>
       </div>
     </section>

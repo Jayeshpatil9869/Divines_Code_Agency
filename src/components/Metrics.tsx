@@ -1,10 +1,11 @@
 import { useRef } from "react";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateMetrics } from "@/animations";
+import { projects } from "@/data/projects";
 
 const metrics = [
   {
-    value: 6,
+    value: projects.length,
     suffix: "",
     label: "Public projects",
     detail: "Named work with live URLs on this site",

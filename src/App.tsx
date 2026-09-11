@@ -9,7 +9,7 @@ import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { ContactPage } from "@/pages/ContactPage";
 import { PricingPage } from "@/pages/PricingPage";
 import { AboutPage } from "@/pages/AboutPage";
-import { WorkPage } from "@/pages/WorkPage";
+import { ShowcasePage } from "@/pages/ShowcasePage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 
 const INTRO_GREETINGS = [
@@ -49,7 +49,9 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/work" element={<WorkPage />} />
+        <Route path="/work" element={<ShowcasePage />} />
+        <Route path="/showcase" element={<ShowcasePage />} />
+        <Route path="/projects" element={<ShowcasePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </SiteShell>

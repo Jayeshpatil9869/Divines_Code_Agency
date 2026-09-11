@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/ui/magnetic";
+import { CustomSelect } from "@/components/ui/custom-select";
 import { useGsap, animateSectionReveals, gsap, EASE } from "@/animations";
 import { cn } from "@/lib/utils";
 import {
@@ -19,9 +20,6 @@ import {
   PROJECT_TYPES,
   TIMELINES,
 } from "@/data/contact-form";
-
-const selectClass =
-  "contact-select flex h-12 w-full border-b border-border bg-transparent px-0 py-3 text-base text-foreground focus-visible:outline-none focus-visible:border-primary transition-colors disabled:cursor-not-allowed disabled:opacity-50";
 
 const contactLinkClass =
   "group inline-flex items-center gap-2 whitespace-nowrap border border-white/15 bg-white/[0.03] px-3.5 py-2.5 text-[10px] uppercase tracking-[0.18em] font-bold text-white/75 transition-all duration-300 hover:border-primary/60 hover:bg-primary/10 hover:text-primary";
@@ -134,53 +132,38 @@ export function Contact({ hideHeading = false }: { hideHeading?: boolean }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="flex flex-col gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" required placeholder="Priya Sharma" />
+              <Input id="name" name="name" required placeholder="Rutuja Deore" />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" required placeholder="priya@business.com" />
+              <Input id="email" name="email" type="email" required placeholder="Rutuja@business.com" />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="projectType">Project type</Label>
-              <select id="projectType" name="projectType" className={selectClass}>
-                {PROJECT_TYPES.map((option) => (
-                  <option
-                    key={option.value || "type-empty"}
-                    value={option.value}
-                    className="bg-white text-black"
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+              <CustomSelect
+                id="projectType"
+                name="projectType"
+                options={PROJECT_TYPES}
+                placeholder="Select a project type"
+              />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="budget">Budget</Label>
-              <select id="budget" name="budget" className={selectClass}>
-                {BUDGET_BANDS.map((option) => (
-                  <option
-                    key={option.value || "budget-empty"}
-                    value={option.value}
-                    className="bg-white text-black"
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+              <CustomSelect
+                id="budget"
+                name="budget"
+                options={BUDGET_BANDS}
+                placeholder="Select a budget band"
+              />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="timeline">Timeline</Label>
-              <select id="timeline" name="timeline" className={selectClass}>
-                {TIMELINES.map((option) => (
-                  <option
-                    key={option.value || "timeline-empty"}
-                    value={option.value}
-                    className="bg-white text-black"
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+              <CustomSelect
+                id="timeline"
+                name="timeline"
+                options={TIMELINES}
+                placeholder="Select a timeline"
+              />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="country">Country</Label>

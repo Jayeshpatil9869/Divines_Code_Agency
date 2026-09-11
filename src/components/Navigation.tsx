@@ -152,7 +152,7 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
   const hashHref = (hash: string) => (isHome ? hash : `/${hash}`);
 
   const links = [
-    { label: "Work", href: "/work" },
+    { label: "Our Work", href: "/showcase" },
     { label: "Process", href: hashHref("#process") },
     { label: "About", href: "/about" },
   ];
@@ -172,7 +172,7 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
           className={cn(
             "flex items-center justify-between pointer-events-auto transition-all duration-300 relative",
             scrolled
-              ? "w-full max-w-180 px-6 py-3 bg-background/70 backdrop-blur-xl border-b border-border rounded-full overflow-visible"
+              ? "w-full max-w-4xl px-6 lg:px-8 py-3 bg-background/70 backdrop-blur-xl border-b border-border rounded-full overflow-visible"
               : "w-full max-w-7xl px-0 bg-transparent border-transparent rounded-none overflow-visible"
           )}
         >
@@ -187,19 +187,19 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
           <Link
             to="/"
             data-gsap="nav-brand"
-            className="font-display text-xl tracking-tighter uppercase font-black"
+            className="font-display text-xl tracking-tighter uppercase font-black shrink-0"
           >
             Divine<span className="text-primary">'</span>s
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-5 lg:gap-7 shrink-0">
             <Magnetic strength={0.2}>
               <NavShimmerLink href={links[0].href} label={links[0].label} />
             </Magnetic>
 
             <div
               ref={servicesWrapRef}
-              className="relative"
+              className="relative shrink-0"
               onMouseEnter={openServices}
               onMouseLeave={scheduleCloseServices}
             >
@@ -212,7 +212,7 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
                 onClick={onServicesTriggerClick}
                 onFocus={openServices}
                 className={cn(
-                  "inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.2em] font-medium transition-opacity",
+                  "inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.2em] font-medium transition-opacity whitespace-nowrap",
                   servicesOpen || onServicesRoute ? "opacity-100" : "opacity-60"
                 )}
               >
@@ -242,7 +242,7 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
               <Link
                 to="/contact"
                 data-gsap="nav-cta"
-                className="text-[11px] uppercase tracking-[0.2em] font-bold px-4 py-2 bg-primary text-primary-foreground hover:brightness-110 transition-all"
+                className="text-[11px] uppercase tracking-[0.2em] font-bold px-4 py-2 bg-primary text-primary-foreground hover:brightness-110 transition-all shrink-0 whitespace-nowrap"
               >
                 Start a project
               </Link>
@@ -269,9 +269,9 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
             to={links[0].href}
             data-gsap="mobile-link"
             onClick={closeMenu}
-            className="text-2xl uppercase tracking-widest font-black"
+            className="text-2xl uppercase tracking-widest font-black flex items-center gap-2"
           >
-            Work
+            <span>{links[0].label}</span>
           </Link>
 
           <div className="w-full max-w-sm flex flex-col items-center gap-3">
@@ -342,7 +342,7 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
               >
                 {link.label}
               </a>
-            ),
+            )
           )}
           <Link
             to="/contact"
@@ -362,7 +362,7 @@ function NavShimmerLink({ href, label }: { href: string; label: string }) {
   const [hovered, setHovered] = useState(false);
   const isInternal = href.startsWith("/");
   const className = cn(
-    "text-[11px] uppercase tracking-[0.2em] font-medium transition-opacity",
+    "text-[11px] uppercase tracking-[0.2em] font-medium transition-opacity shrink-0 whitespace-nowrap inline-block",
     hovered ? "opacity-100" : "opacity-60 text-foreground"
   );
   const content = hovered ? (

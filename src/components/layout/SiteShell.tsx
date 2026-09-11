@@ -58,6 +58,9 @@ export function SiteShell({ introReady = true, children }: SiteShellProps) {
     else window.scrollTo(0, 0);
   }, [location.pathname, location.hash]);
 
+  const isShowcase =
+    location.pathname === "/showcase" || location.pathname === "/projects";
+
   return (
     <div className="relative min-h-screen bg-background">
       <div className="noise-overlay" aria-hidden />
@@ -66,7 +69,8 @@ export function SiteShell({ introReady = true, children }: SiteShellProps) {
       <main className="relative z-10 flex flex-col w-full overflow-x-hidden">
         {children ?? <Outlet />}
       </main>
-      <Footer />
+      {!isShowcase && <Footer />}
     </div>
   );
 }
+

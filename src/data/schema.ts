@@ -218,6 +218,14 @@ function graphForRoute(route: SeoRoute): JsonLd[] {
           { name: "Work", path: "/work" },
         ]),
       ];
+    case "showcase":
+      return [
+        webPageNode("/showcase"),
+        breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Showcase", path: "/showcase" },
+        ]),
+      ];
     case "notFound":
       return [webPageNode("/404")];
     default: {

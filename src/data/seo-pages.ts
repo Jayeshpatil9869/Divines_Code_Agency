@@ -18,6 +18,7 @@ export type SeoRoute =
   | { kind: "contact" }
   | { kind: "about" }
   | { kind: "work" }
+  | { kind: "showcase" }
   | { kind: "notFound" };
 
 export function normalizePath(pathname: string): string {
@@ -134,10 +135,20 @@ const STATIC_PAGES: PageSeo[] = [
     path: "/work",
     title: `Selected Work | ${SITE_NAME}`,
     description:
-      "Selected work from Divine's Code — live websites and storefronts including Riyansh, Gravitatee, Tell Star, Outpost, Rethink, and AnimeVerse.",
+      "Selected work from Divine's Code — live websites and storefronts including Riyansh, Gravitatee, Pravin Realty, One Capital, Tell Star, Outpost, Rethink, and AnimeVerse.",
     h1: "Selected work",
     intro:
       "Public projects with live URLs. Named work only — no invented case-study metrics.",
+    robots: "index,follow",
+  },
+  {
+    path: "/showcase",
+    title: `Our Work | ${SITE_NAME}`,
+    description:
+      "Explore selected live websites and web applications in an interactive 3D WebGL showcase featuring Riyansh, Gravitatee, Pravin Realty, One Capital, Tell Star, Outpost, and more.",
+    h1: "Our Work",
+    intro:
+      "Explore selected projects in an interactive 3D WebGL showcase with kinetic typography and chromatic shaders.",
     robots: "index,follow",
   },
 ];
@@ -197,6 +208,9 @@ export function getSeoRoute(pathname: string): SeoRoute {
       return { kind: "about" };
     case "/work":
       return { kind: "work" };
+    case "/showcase":
+    case "/projects":
+      return { kind: "showcase" };
     default:
       break;
   }
@@ -217,7 +231,7 @@ export const PRERENDER_PATHS = PAGE_SEO_LIST.map((page) => page.path);
 export const CRAWL_NAV: { href: string; label: string }[] = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/work", label: "Work" },
+  { href: "/showcase", label: "Our Work" },
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -226,3 +240,4 @@ export const CRAWL_NAV: { href: string; label: string }[] = [
     label: service.title,
   })),
 ];
+

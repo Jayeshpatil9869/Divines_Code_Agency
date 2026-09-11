@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { Magnetic } from "@/components/ui/magnetic";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateSectionReveals } from "@/animations";
 
 export function Availability() {
@@ -8,7 +9,7 @@ export function Availability() {
   useGsap(rootRef, (root) => animateSectionReveals(root), []);
 
   return (
-    <section ref={rootRef} className="w-full py-24 md:py-32">
+    <section ref={rootRef} className="w-full pt-4 pb-20 md:pt-6 md:pb-28">
       <div className="max-w-7xl mx-auto px-6">
         <div
           data-gsap="reveal"
@@ -21,11 +22,15 @@ export function Availability() {
                 Capacity
               </p>
               <h2 className="text-[clamp(2rem,4vw,3.5rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
-                Open for new website builds
+                <TextShimmer duration={3.5}>
+                  Open for new website builds
+                </TextShimmer>
               </h2>
               <p className="text-muted-foreground font-light max-w-md">
-                Clear packages, direct communication. Tell us what you need and
-                we&apos;ll reply within one business day.
+                <TextShimmer duration={3}>
+                  Clear packages, direct communication. Tell us what you need and
+                  we&apos;ll reply within one business day.
+                </TextShimmer>
               </p>
             </div>
             <Magnetic className="block w-full md:inline-block md:w-auto">

@@ -148,7 +148,7 @@ export function FAQ() {
     <section
       id="faq"
       ref={rootRef}
-      className="relative w-full py-24 md:py-32 lg:min-h-svh lg:flex lg:items-center border-t border-border overflow-hidden"
+      className="relative w-full py-20 md:py-28 border-t border-border overflow-hidden"
     >
       <div
         aria-hidden

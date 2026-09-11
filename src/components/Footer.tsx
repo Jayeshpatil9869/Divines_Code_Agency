@@ -68,8 +68,8 @@ export function Footer() {
               Work
             </h4>
             <Magnetic strength={0.18}>
-              <Link to="/work" className={footerLinkClass}>
-                Selected Projects
+              <Link to="/showcase" className={footerLinkClass}>
+                Our Work
               </Link>
             </Magnetic>
             <Magnetic strength={0.18}>
