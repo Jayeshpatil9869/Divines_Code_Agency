@@ -44,8 +44,7 @@ export function Team() {
             </TextShimmer>
           </h2>
           <p className="font-serif text-base font-normal italic normal-case tracking-normal text-black/55">
-            Three people. Direct communication. The work, not the theatre around
-            it.
+            Direct communication. The work, not the theatre around it.
           </p>
         </header>
 
@@ -528,7 +527,7 @@ function TeamCarousel({ members }: { members: TeamMember[] }) {
       >
         <div
           ref={trackRef}
-          className="flex w-full gap-5 will-change-transform md:grid md:grid-cols-3 md:translate-x-0 md:will-change-auto"
+          className="flex w-full gap-5 will-change-transform md:grid md:grid-cols-2 lg:grid-cols-4 md:translate-x-0 md:will-change-auto"
         >
           {members.map((member, i) => (
             <TeamCard
@@ -689,7 +688,9 @@ function TeamCard({
             "pointer-events-none absolute left-0 w-full origin-[50%_100%] object-cover will-change-transform",
             member.id === "sanket-gangurde"
               ? "top-0 h-full"
-              : "top-[-11%] h-[120%]",
+              : member.id === "apurv-ahire"
+                ? "top-[-20%] h-[145%]"
+                : "top-[-11%] h-[120%]",
           )}
           style={{ objectPosition: member.imagePosition ?? "center 8%" }}
         />
@@ -712,7 +713,7 @@ function TeamCard({
       >
         <div
           data-team-info-inner
-          className="flex cursor-pointer flex-col gap-5 px-2 pt-5 pb-2"
+          className="flex cursor-pointer flex-col gap-4 px-2 pt-5 pb-2"
           onClick={(e) => {
             if ((e.target as HTMLElement).closest("a")) return;
             onActivate();
@@ -721,23 +722,23 @@ function TeamCard({
           <div className="min-w-0">
             <h3
               data-team-name
-              className="font-sans text-[1.7rem] font-semibold leading-none tracking-[-0.03em] text-neutral-950 normal-case"
+              className="font-sans text-[1.55rem] font-semibold leading-none tracking-[-0.03em] text-neutral-950 normal-case"
             >
               {member.name}
             </h3>
             <p
               data-team-desc
-              className="mt-2.5 line-clamp-4 font-sans text-[0.95rem] font-normal leading-relaxed tracking-normal text-neutral-500 normal-case"
+              className="mt-2.5 line-clamp-4 font-sans text-[0.92rem] font-normal leading-relaxed tracking-normal text-neutral-500 normal-case"
             >
               {member.description}
             </p>
           </div>
 
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between gap-1.5 pt-1">
+            <div className="flex items-center gap-1 min-w-0">
               <span
                 data-team-tag
-                className="inline-flex min-h-8 items-center rounded-full bg-neutral-100 px-3 text-[11px] font-medium tracking-wide text-neutral-600 normal-case"
+                className="inline-flex min-h-7 items-center rounded-full bg-neutral-100 px-2.5 text-[10.5px] font-medium tracking-wide text-neutral-600 normal-case shrink-0"
               >
                 {member.category}
               </span>
@@ -748,9 +749,9 @@ function TeamCard({
                   rel="noopener noreferrer"
                   tabIndex={expanded ? 0 : -1}
                   aria-label={`${member.name} on LinkedIn`}
-                  className="inline-flex size-8 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors duration-300 hover:bg-neutral-200 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+                  className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors duration-300 hover:bg-neutral-200 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
                 >
-                  <Linkedin className="size-3.5" aria-hidden />
+                  <Linkedin className="size-3" aria-hidden />
                 </a>
               ) : null}
               {member.githubUrl ? (
@@ -760,9 +761,9 @@ function TeamCard({
                   rel="noopener noreferrer"
                   tabIndex={expanded ? 0 : -1}
                   aria-label={`${member.name} on GitHub`}
-                  className="inline-flex size-8 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors duration-300 hover:bg-neutral-200 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+                  className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors duration-300 hover:bg-neutral-200 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
                 >
-                  <Github className="size-3.5" aria-hidden />
+                  <Github className="size-3" aria-hidden />
                 </a>
               ) : null}
               {member.instagramUrl ? (
@@ -772,9 +773,9 @@ function TeamCard({
                   rel="noopener noreferrer"
                   tabIndex={expanded ? 0 : -1}
                   aria-label={`${member.name} on Instagram`}
-                  className="inline-flex size-8 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors duration-300 hover:bg-neutral-200 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+                  className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors duration-300 hover:bg-neutral-200 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
                 >
-                  <Instagram className="size-3.5" aria-hidden />
+                  <Instagram className="size-3" aria-hidden />
                 </a>
               ) : null}
             </div>
@@ -784,11 +785,11 @@ function TeamCard({
               target={member.profileUrl.startsWith("http") ? "_blank" : undefined}
               rel={member.profileUrl.startsWith("http") ? "noopener noreferrer" : undefined}
               tabIndex={expanded ? 0 : -1}
-              className="group/cta inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[#2c2c2c] px-5 text-[13px] font-medium tracking-normal text-white normal-case transition-colors duration-300 hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2"
+              className="group/cta inline-flex min-h-9 items-center gap-1 rounded-full bg-[#2c2c2c] px-3.5 text-[11.5px] font-medium tracking-normal text-white normal-case transition-colors duration-300 hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2 shrink-0"
             >
               View Profile
               <ArrowUpRight
-                className="size-3.5 transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
+                className="size-3 transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
                 aria-hidden
               />
               <span className="sr-only">{` for ${member.name}`}</span>

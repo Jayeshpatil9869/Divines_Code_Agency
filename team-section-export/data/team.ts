@@ -19,7 +19,7 @@ export const teamMembers: TeamMember[] = [
     name: "Mahendra Nagpure",
     role: "Full Stack Developer (Backend)",
     description:
-      "Full Stack Developer (Backend) — APIs, databases, and production systems.",
+      "Architecting scalable backend systems, robust APIs, and cloud databases.",
     category: "Backend",
     image: "/images/team/member-1.png",
     imagePosition: "center 18%",
@@ -32,13 +32,26 @@ export const teamMembers: TeamMember[] = [
     name: "Jayesh Patil",
     role: "Full Stack Developer (Frontend UI/UX)",
     description:
-      "Full Stack Developer (Frontend UI/UX) — interfaces, motion, and product craft.",
+      "Crafting modern frontend interfaces, smooth motion, and UX craft.",
     category: "Frontend",
     image: "/images/team/member-2.png",
     imagePosition: "center 10%",
     profileUrl: "https://jayeshbpatil.com/",
     linkedinUrl: "https://www.linkedin.com/in/jayeshpatilfs",
     githubUrl: "https://github.com/Jayeshpatil9869",
+  },
+  {
+    id: "apurv-ahire",
+    name: "Apurv Ahire",
+    role: "Full Stack Developer",
+    description:
+      "Engineering scalable full-stack applications and cloud solutions.",
+    category: "Full Stack",
+    image: "/images/team/member-4.jpg",
+    imagePosition: "center 22%",
+    profileUrl: "https://www.linkedin.com/in/apurv-ahire2003/",
+    linkedinUrl: "https://www.linkedin.com/in/apurv-ahire2003/",
+    githubUrl: "https://github.com/ApurvAhire03",
   },
   {
     id: "sanket-gangurde",

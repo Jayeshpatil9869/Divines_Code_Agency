@@ -9,8 +9,8 @@ const TEAM_FLOAT_EASE = CustomEase.create("teamFloat", "0.22,1,0.36,1");
 
 /** Scale from the bottom so shrinking creates headroom instead of eating the hairline. */
 const IMAGE_ORIGIN = "50% 100%";
-const IMAGE_HOVER_SCALE = 0.97;
-const IMAGE_HOVER_Y = -6;
+const IMAGE_HOVER_SCALE = 1.0;
+const IMAGE_HOVER_Y = -4;
 const IMAGE_FLOAT_DURATION = 0.78;
 
 export type TeamCardEls = {
