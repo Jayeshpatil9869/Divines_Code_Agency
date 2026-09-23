@@ -689,7 +689,7 @@ function TeamCard({
             member.id === "sanket-gangurde"
               ? "top-0 h-full"
               : member.id === "apurv-ahire"
-                ? "top-[-20%] h-[145%]"
+                ? "top-[-22%] h-[150%]"
                 : "top-[-11%] h-[120%]",
           )}
           style={{ objectPosition: member.imagePosition ?? "center 8%" }}

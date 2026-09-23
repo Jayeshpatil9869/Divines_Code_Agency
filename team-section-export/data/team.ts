@@ -28,6 +28,19 @@ export const teamMembers: TeamMember[] = [
     githubUrl: "https://github.com/Mahendra111111",
   },
   {
+    id: "apurv-ahire",
+    name: "Apurv Ahire",
+    role: "Full Stack Developer",
+    description:
+      "Engineering scalable full-stack applications and cloud solutions.",
+    category: "Full Stack",
+    image: "/images/team/member-4.png",
+    imagePosition: "center 20%",
+    profileUrl: "https://www.linkedin.com/in/apurv-ahire2003/",
+    linkedinUrl: "https://www.linkedin.com/in/apurv-ahire2003/",
+    githubUrl: "https://github.com/ApurvAhire03",
+  },
+  {
     id: "jayesh-patil",
     name: "Jayesh Patil",
     role: "Full Stack Developer (Frontend UI/UX)",
@@ -39,19 +52,6 @@ export const teamMembers: TeamMember[] = [
     profileUrl: "https://jayeshbpatil.com/",
     linkedinUrl: "https://www.linkedin.com/in/jayeshpatilfs",
     githubUrl: "https://github.com/Jayeshpatil9869",
-  },
-  {
-    id: "apurv-ahire",
-    name: "Apurv Ahire",
-    role: "Full Stack Developer",
-    description:
-      "Engineering scalable full-stack applications and cloud solutions.",
-    category: "Full Stack",
-    image: "/images/team/member-4.jpg",
-    imagePosition: "center 22%",
-    profileUrl: "https://www.linkedin.com/in/apurv-ahire2003/",
-    linkedinUrl: "https://www.linkedin.com/in/apurv-ahire2003/",
-    githubUrl: "https://github.com/ApurvAhire03",
   },
   {
     id: "sanket-gangurde",

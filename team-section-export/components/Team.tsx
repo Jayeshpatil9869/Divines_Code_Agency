@@ -8,9 +8,9 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Instagram, Linkedin } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { TextShimmer } from "@/components/ui/text-shimmer";
-import { teamMembers, type TeamMember } from "@/data/team";
+import { cn } from "../lib/utils";
+import { TextShimmer } from "./ui/text-shimmer";
+import { teamMembers, type TeamMember } from "../data/team";
 import {
   useGsap,
   animateTeamSection,
@@ -20,7 +20,7 @@ import {
   collapseTeamCard,
   prefersReducedMotion,
   gsap,
-} from "@/animations";
+} from "../animations";
 
 export function Team() {
   const rootRef = useRef<HTMLElement>(null);
@@ -689,7 +689,7 @@ function TeamCard({
             member.id === "sanket-gangurde"
               ? "top-0 h-full"
               : member.id === "apurv-ahire"
-                ? "top-[-20%] h-[145%]"
+                ? "top-[-22%] h-[150%]"
                 : "top-[-11%] h-[120%]",
           )}
           style={{ objectPosition: member.imagePosition ?? "center 8%" }}

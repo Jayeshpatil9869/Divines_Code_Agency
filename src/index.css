@@ -283,12 +283,12 @@
   letter-spacing: -0.04em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: #000;
-  transition: color 0.25s ease;
+  color: #fff;
+  transition: color 0.25s ease, opacity 0.25s ease;
 }
 
 .scroller-mask:hover .logo-item {
-  color: #000;
+  color: #fff;
 }
 
 @media (prefers-reduced-motion: reduce) {

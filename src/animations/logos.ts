@@ -1,13 +1,11 @@
 import { gsap, prefersReducedMotion, registerGsapPlugins, qs } from "./utils";
-import { bindLightSectionBackground } from "./sectionTheme";
 
 /**
- * Logos strip: light-section bg scrub + horizontal marquee linked to scroll.
+ * Logos strip: dark-section horizontal marquee linked to scroll.
  * Scroll down → track moves left; scroll up → track moves right.
  */
 export function animateLogos(root: HTMLElement): void {
   registerGsapPlugins();
-  bindLightSectionBackground(root);
 
   const track = qs(root, '[data-gsap="logo-track"]');
   if (!track) return;

@@ -17,7 +17,7 @@ export function Logos() {
   return (
     <section
       ref={rootRef}
-      className="w-full py-12 md:py-12 overflow-hidden bg-white text-black border-y border-black/10"
+      className="w-full py-12 md:py-12 overflow-hidden bg-black text-white"
     >
       <div data-gsap="reveal">
         <LogoScroller logos={projectBrandNames} scrollLinked />
