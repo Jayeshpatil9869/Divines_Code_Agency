@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { serviceProcess } from "@/data/services";
@@ -38,13 +39,13 @@ export function ServicesProcess() {
             Predictable checkpoints from discovery to launch — the same rhythm
             used across website packages and custom builds.
           </p>
-          <a
-            href="#process"
+          <Link
+            to="/contact"
             className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] font-bold text-muted-foreground hover:text-primary transition-colors"
           >
-            See the full process section
+            Start your project with us
             <span aria-hidden>→</span>
-          </a>
+          </Link>
         </div>
 
         <div className="lg:col-span-7">

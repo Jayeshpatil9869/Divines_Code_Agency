@@ -149,11 +149,8 @@ export function Navigation({ introReady = true }: { introReady?: boolean }) {
     else setMobileMenuOpen(false);
   };
 
-  const hashHref = (hash: string) => (isHome ? hash : `/${hash}`);
-
   const links = [
     { label: "Our Work", href: "/showcase" },
-    { label: "Process", href: hashHref("#process") },
     { label: "About", href: "/about" },
   ];
 

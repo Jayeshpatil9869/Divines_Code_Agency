@@ -135,7 +135,7 @@ const STATIC_PAGES: PageSeo[] = [
     path: "/work",
     title: `Selected Work | ${SITE_NAME}`,
     description:
-      "Selected work from Divine's Code — live websites and storefronts including Riyansh, Gravitatee, Pravin Realty, One Capital, Tell Star, Outpost, Rethink, and AnimeVerse.",
+      "Selected work from Divine's Code — live websites and storefronts including LinkNest, Gravitatee, Riyansh, Pravin Realty, One Capital, Tell Star, Outpost, and Rethink.",
     h1: "Selected work",
     intro:
       "Public projects with live URLs. Named work only — no invented case-study metrics.",

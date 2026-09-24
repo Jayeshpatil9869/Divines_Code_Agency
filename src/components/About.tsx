@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { RevealWaveImage } from "@/components/ui/reveal-wave-image";
 import { useGsap, animateSectionReveals, animateParallax, ScrollTrigger, gsap } from "@/animations";
@@ -22,17 +23,17 @@ export function About() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start relative">
           {/* Left Column: Studio Media with generous scroll runway */}
-          <div className="w-full flex flex-col gap-8">
-            <div data-gsap="reveal" className="w-full">
+          <div className="w-full flex flex-col items-center md:items-start gap-8">
+            <div data-gsap="reveal" className="w-full flex justify-center md:block">
               <div
                 data-gsap="parallax"
-                className="relative aspect-square md:aspect-[3/4] min-h-[460px] md:min-h-[700px] overflow-hidden bg-surface border border-border"
+                className="relative aspect-square md:aspect-[3/4] w-full max-w-[460px] md:max-w-none md:min-h-[700px] overflow-hidden bg-surface border border-border mx-auto md:mx-0"
               >
                 {/* Mobile: static image. Desktop: interactive wave reveal canvas */}
                 <img
                   src={TEAM_IMAGE}
                   alt="Divine's Code Agency studio"
-                  className="absolute inset-0 h-full w-full object-cover md:hidden grayscale-[20%] opacity-90"
+                  className="absolute inset-0 h-full w-full object-cover object-center md:hidden grayscale-[20%] opacity-90"
                 />
                 <div className="absolute inset-0 hidden md:block">
                   <RevealWaveImage
@@ -83,12 +84,12 @@ export function About() {
               </div>
 
               <div data-gsap="reveal" className="mt-10">
-                <a
-                  href="/#process"
+                <Link
+                  to="/services"
                   className="inline-block text-foreground font-bold text-[11px] uppercase tracking-[0.2em] border-b border-border pb-1 hover:border-primary transition-colors hover:text-primary"
                 >
-                  More about how we work →
-                </a>
+                  Explore our services →
+                </Link>
               </div>
             </div>
           </div>
