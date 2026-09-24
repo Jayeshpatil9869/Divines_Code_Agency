@@ -3,7 +3,7 @@ import { gsap, prefersReducedMotion, EASE } from "./utils";
 type SpotState = { x: number; y: number; r: number; opacity: number };
 
 function activeRadius(wrap: HTMLElement) {
-  return Math.min(220, Math.max(120, wrap.offsetWidth * 0.22));
+  return Math.min(340, Math.max(160, wrap.offsetWidth * 0.25));
 }
 
 /**
@@ -39,12 +39,12 @@ export function bindFooterSpotlight(wrap: HTMLElement): () => void {
   apply();
 
   const xTo = gsap.quickTo(state, "x", {
-    duration: 0.55,
+    duration: 0.35,
     ease: EASE.out,
     onUpdate: apply,
   });
   const yTo = gsap.quickTo(state, "y", {
-    duration: 0.55,
+    duration: 0.35,
     ease: EASE.out,
     onUpdate: apply,
   });
@@ -58,7 +58,7 @@ export function bindFooterSpotlight(wrap: HTMLElement): () => void {
     radiusTween = gsap.to(state, {
       r: activeRadius(wrap),
       opacity: 1,
-      duration: 0.7,
+      duration: 0.5,
       ease: EASE.out,
       overwrite: "auto",
       onUpdate: apply,
@@ -71,7 +71,7 @@ export function bindFooterSpotlight(wrap: HTMLElement): () => void {
     radiusTween = gsap.to(state, {
       r: 0,
       opacity: 0,
-      duration: 0.85,
+      duration: 0.75,
       ease: "power2.inOut",
       overwrite: "auto",
       onUpdate: apply,
@@ -98,6 +98,14 @@ export function bindFooterSpotlight(wrap: HTMLElement): () => void {
     openSpot(e.clientX - rect.left, e.clientY - rect.top);
   };
 
+  const onPointerDown = (e: PointerEvent) => {
+    const rect = wrap.getBoundingClientRect();
+    state.x = e.clientX - rect.left;
+    state.y = e.clientY - rect.top;
+    apply();
+    openSpot(state.x, state.y);
+  };
+
   const onPointerEnter = (e: PointerEvent) => {
     const rect = wrap.getBoundingClientRect();
     // Snap follow origin so first open doesn't lag from off-screen
@@ -108,20 +116,27 @@ export function bindFooterSpotlight(wrap: HTMLElement): () => void {
   };
 
   const onPointerLeave = () => closeSpot();
+  const onPointerUp = () => closeSpot();
 
   const onFocus = () => floodSpot();
   const onBlur = () => closeSpot();
 
   wrap.addEventListener("pointerenter", onPointerEnter);
+  wrap.addEventListener("pointerdown", onPointerDown);
   wrap.addEventListener("pointermove", onPointerMove);
   wrap.addEventListener("pointerleave", onPointerLeave);
+  wrap.addEventListener("pointerup", onPointerUp);
+  wrap.addEventListener("pointercancel", onPointerLeave);
   wrap.addEventListener("focus", onFocus);
   wrap.addEventListener("blur", onBlur);
 
   return () => {
     wrap.removeEventListener("pointerenter", onPointerEnter);
+    wrap.removeEventListener("pointerdown", onPointerDown);
     wrap.removeEventListener("pointermove", onPointerMove);
     wrap.removeEventListener("pointerleave", onPointerLeave);
+    wrap.removeEventListener("pointerup", onPointerUp);
+    wrap.removeEventListener("pointercancel", onPointerLeave);
     wrap.removeEventListener("focus", onFocus);
     wrap.removeEventListener("blur", onBlur);
     radiusTween?.kill();

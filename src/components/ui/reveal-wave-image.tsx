@@ -142,7 +142,7 @@ function ImagePlane({
 }: ImagePlaneProps) {
   const texture = useTexture(src);
   const meshRef = useRef<THREE.Mesh>(null);
-  const { pointer } = useThree();
+  const { viewport, pointer } = useThree();
   const mouseActiveRef = useRef(0);
   const hasEnteredRef = useRef(false);
 
@@ -164,7 +164,7 @@ function ImagePlane({
       uWaveSpeed: { value: waveSpeed },
       uWaveFrequency: { value: waveFrequency },
       uWaveAmplitude: { value: waveAmplitude },
-      uMouseRadius: { value: mouseRadius },
+      mouseRadius: { value: mouseRadius },
     }),
     [
       texture,
@@ -178,12 +178,18 @@ function ImagePlane({
     ],
   );
 
+  const screenAspect = viewport.width / viewport.height;
+
   const scale = useMemo<[number, number, number]>(() => {
-    if (aspectRatio > 1) {
-      return [aspectRatio, 1, 1];
+    let width = viewport.width;
+    let height = viewport.height;
+    if (screenAspect > aspectRatio) {
+      height = width / aspectRatio;
+    } else {
+      width = height * aspectRatio;
     }
-    return [1, 1 / aspectRatio, 1];
-  }, [aspectRatio]);
+    return [width, height, 1];
+  }, [viewport.width, viewport.height, screenAspect, aspectRatio]);
 
   useFrame((state) => {
     if (!meshRef.current) return;
@@ -205,7 +211,7 @@ function ImagePlane({
 
   return (
     <mesh ref={meshRef} scale={scale}>
-      <planeGeometry args={[2, 2]} />
+      <planeGeometry args={[1, 1]} />
       <shaderMaterial
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
@@ -255,10 +261,15 @@ export function RevealWaveImage({
 
   return (
     <div
-      className={cn("relative overflow-hidden", className)}
+      className={cn("relative overflow-hidden touch-none", className)}
       onPointerEnter={() => setIsMouseInCanvas(true)}
       onPointerLeave={() => setIsMouseInCanvas(false)}
       onPointerDown={() => setIsMouseInCanvas(true)}
+      onPointerUp={() => setIsMouseInCanvas(false)}
+      onPointerCancel={() => setIsMouseInCanvas(false)}
+      onTouchStart={() => setIsMouseInCanvas(true)}
+      onTouchEnd={() => setIsMouseInCanvas(false)}
+      onTouchCancel={() => setIsMouseInCanvas(false)}
       role="img"
       aria-label={alt || undefined}
     >

@@ -29,26 +29,18 @@ export function About() {
                 data-gsap="parallax"
                 className="relative aspect-square md:aspect-[3/4] w-full max-w-[460px] md:max-w-none md:min-h-[700px] overflow-hidden bg-surface border border-border mx-auto md:mx-0"
               >
-                {/* Mobile: static image. Desktop: interactive wave reveal canvas */}
-                <img
+                <RevealWaveImage
                   src={TEAM_IMAGE}
                   alt="Divine's Code Agency studio"
-                  className="absolute inset-0 h-full w-full object-cover object-center md:hidden grayscale-[20%] opacity-90"
+                  className="h-full w-full absolute inset-0"
+                  waveSpeed={0.25}
+                  waveFrequency={0.85}
+                  waveAmplitude={0.45}
+                  revealRadius={0.42}
+                  revealSoftness={0.85}
+                  pixelSize={2.5}
+                  mouseRadius={0.35}
                 />
-                <div className="absolute inset-0 hidden md:block">
-                  <RevealWaveImage
-                    src={TEAM_IMAGE}
-                    alt="Divine's Code Agency studio"
-                    className="h-full w-full"
-                    waveSpeed={0.25}
-                    waveFrequency={0.85}
-                    waveAmplitude={0.45}
-                    revealRadius={0.42}
-                    revealSoftness={0.85}
-                    pixelSize={2.5}
-                    mouseRadius={0.35}
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -73,13 +65,17 @@ export function About() {
                   </TextShimmer>
                 </p>
                 <p data-gsap="reveal" className="text-muted-foreground">
-                  We don&apos;t decorate products. We make complex systems
-                  legible: interfaces that hold up in production, not just in
-                  Figma.
+                  <TextShimmer duration={3.8} className="text-muted-foreground">
+                    We don&apos;t decorate products. We make complex systems
+                    legible: interfaces that hold up in production, not just in
+                    Figma.
+                  </TextShimmer>
                 </p>
                 <p data-gsap="reveal">
-                  Small roster. Senior people. Direct communication. Fast
-                  iteration. No account managers between you and the work.
+                  <TextShimmer duration={4.2}>
+                    Small roster. Senior people. Direct communication. Fast
+                    iteration. No account managers between you and the work.
+                  </TextShimmer>
                 </p>
               </div>
 

@@ -62,7 +62,7 @@ async function main(): Promise<void> {
       const shell = [
         `<h1>${escapeHtml(seo.h1)}</h1>`,
         `<p>${escapeHtml(seo.intro)}</p>`,
-        `<p>Crafted by <a href="https://jayeshbpatil.com/">Jayesh Patil</a> and <a href="https://mahendranagpure.com/">Mahendra Nagpure</a> — Founders of Divine's Code.</p>`,
+        `<p>Crafted by <a href="https://jayeshbpatil.com/">Jayesh Patil</a>, <a href="https://mahendranagpure.com/">Mahendra Nagpure</a>, and <a href="https://www.linkedin.com/in/apurv-ahire2003/">Apurv Ahire</a> — Founders of Divine's Code.</p>`,
         crawlNavHtml(),
       ].join("\n        ");
 
