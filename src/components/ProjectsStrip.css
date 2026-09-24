@@ -47,7 +47,7 @@
   --strip-badge-ink: #ffffff;
   --strip-shimmer-base: rgba(0, 0, 0, 0.42);
   --strip-shimmer-glow: #000000;
-  --strip-shimmer-accent: #92400e;
+  --strip-shimmer-accent: hsl(32 28% 55%);
 }
 
 .strip ::selection {

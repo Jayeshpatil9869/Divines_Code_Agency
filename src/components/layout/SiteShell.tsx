@@ -66,7 +66,7 @@ export function SiteShell({ introReady = true, children }: SiteShellProps) {
       <div className="noise-overlay" aria-hidden />
       {!reducedMotion && desktopPointer && <CustomCursor />}
       <Navigation introReady={introReady} />
-      <main className="relative z-10 flex flex-col w-full overflow-x-hidden">
+      <main className="relative z-10 flex flex-col w-full overflow-x-clip">
         {children ?? <Outlet />}
       </main>
       {!isShowcase && <Footer />}

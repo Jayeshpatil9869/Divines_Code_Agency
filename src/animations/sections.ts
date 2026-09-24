@@ -20,6 +20,7 @@ export function animateSectionReveals(root: HTMLElement) {
         ease: EASE.out,
         stagger: 0.08,
         overwrite: "auto",
+        clearProps: "transform",
       });
     },
   });
