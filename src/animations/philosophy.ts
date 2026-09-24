@@ -24,9 +24,10 @@ export function animatePhilosophy(root: HTMLElement): void {
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: root,
-          start: "top 55%",
-          end: "bottom 15%",
+          start: "top 75%",
+          end: "bottom 20%",
           scrub: 0.55,
+          invalidateOnRefresh: true,
         },
       })
       .fromTo(top, { x: 0 }, { x: "22vw" }, 0)

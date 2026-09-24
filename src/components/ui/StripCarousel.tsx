@@ -1,48 +1,128 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextShimmer } from "@/components/ui/text-shimmer";
-import { gsap, ScrollTrigger, registerGsapPlugins, prefersReducedMotion } from "@/animations";
-import { projects, type Project } from "@/data/projects";
-import "./ProjectsStrip.css";
+import "./strip-carousel.css";
 
-interface ProjectsProps {
-  showHeading?: boolean;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
+
+export interface ProjectCard {
+  id: string | number;
+  number?: string;
+  title: string;
+  category: string;
+  year: string;
+  poster: string;
+  video?: string;
+  aspectVariant?: "wide" | "portrait" | "tall" | "landscape" | "square";
+  link: string;
+}
+
+const DEFAULT_PROJECTS: ProjectCard[] = [
+  {
+    id: "azzato",
+    number: "01",
+    title: "Azzato",
+    category: "Refonte éditoriale",
+    year: "2026",
+    poster: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80",
+    video: "https://assets.mixkit.co/videos/preview/mixkit-abstract-fast-lines-in-orange-and-black-40618-large.mp4",
+    aspectVariant: "wide",
+    link: "https://riyanshamrit.com/",
+  },
+  {
+    id: "celine-savigny",
+    number: "02",
+    title: "Céline Savigny",
+    category: "Branding & web",
+    year: "2026",
+    poster: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+    video: "https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-water-1164-large.mp4",
+    aspectVariant: "portrait",
+    link: "https://gravitatee.com/",
+  },
+  {
+    id: "vertical-view",
+    number: "03",
+    title: "Vertical View",
+    category: "UX/UI & SEO",
+    year: "2025",
+    poster: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200&q=80",
+    video: "https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-sky-in-a-sunset-26070-large.mp4",
+    aspectVariant: "tall",
+    link: "https://pravin-realty.divinescode.com/",
+  },
+  {
+    id: "david-dieu",
+    number: "04",
+    title: "David Dieu",
+    category: "Plateforme créateur",
+    year: "2026",
+    poster: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&q=80",
+    video: "https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-water-433-large.mp4",
+    aspectVariant: "landscape",
+    link: "https://one-capital-premium-website.vercel.app/",
+  },
+  {
+    id: "simontarea",
+    number: "05",
+    title: "Simon Tarea",
+    category: "UX & conversion",
+    year: "2026",
+    poster: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&q=80",
+    video: "https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-green-screen-41221-large.mp4",
+    aspectVariant: "square",
+    link: "https://tellstar.in/",
+  },
+];
 
 const TILT_MATRIX = [-2.5, 2, -1.5, 3, -2, 1.5, -3, 2.5];
 
-export function Projects({ showHeading = true }: ProjectsProps) {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const pinRef = useRef<HTMLDivElement | null>(null);
-  const railRef = useRef<HTMLDivElement | null>(null);
-  const headRef = useRef<HTMLElement | null>(null);
+export interface StripCarouselProps {
+  projects?: ProjectCard[];
+  showHeading?: boolean;
+  eyebrowNumber?: string;
+  eyebrowText?: string;
+  titleMain?: string;
+  titleItalic?: string;
+  introText?: string;
+  footerLabel?: string;
+  allProjectsLink?: string;
+  allProjectsText?: string;
+}
+
+export function StripCarousel({
+  projects = DEFAULT_PROJECTS,
+  showHeading = true,
+  eyebrowNumber = "02",
+  eyebrowText = "Selected Work",
+  titleMain = "See,",
+  titleItalic = "before you read.",
+  introText,
+  footerLabel,
+  allProjectsLink = "/showcase",
+  allProjectsText = "All projects",
+}: StripCarouselProps) {
+  const containerRef = useRef<HTMLElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLElement>(null);
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
 
   useEffect(() => {
-    registerGsapPlugins();
-
-    const section = sectionRef.current;
+    const container = containerRef.current;
     const pin = pinRef.current;
     const rail = railRef.current;
     const head = headRef.current;
-    if (!section || !pin || !rail || projects.length < 2) return;
+    if (!container || !pin || !rail || projects.length < 2) return;
 
     const cards = Array.from(rail.querySelectorAll<HTMLAnchorElement>(".strip-card"));
-    if (cards.length < 2) return;
-
-    if (prefersReducedMotion()) {
-      cards.forEach((card) => {
-        card.style.opacity = "1";
-        card.style.transform = "none";
-      });
-      return;
-    }
-
     let localActiveIndex = -1;
     let focusedIndex = -1;
     let resizeTimer: ReturnType<typeof setTimeout>;
 
-    // Responsive Math Factors
     const getScrollFactor = () => (window.innerWidth <= 560 ? 1.15 : window.innerWidth <= 900 ? 1.25 : 1.35);
     const getVerticalStep = () =>
       window.innerWidth <= 560
@@ -72,7 +152,6 @@ export function Projects({ showHeading = true }: ProjectsProps) {
     const getTotalPinDistance = () =>
       Math.round(Math.max((getStartX() - getEndX()) * getScrollFactor(), window.innerHeight * 0.6));
 
-    // 3D Tilt Matrix (Yaw and Pitch per Card)
     const cardRotations = cards.map((_, i) => {
       const angle = TILT_MATRIX[i % TILT_MATRIX.length];
       const rotateZ = Math.max(-4, Math.min(4, angle * 0.55));
@@ -82,8 +161,7 @@ export function Projects({ showHeading = true }: ProjectsProps) {
 
     let currentVerticalStep = getVerticalStep();
 
-    // Update 3D card matrices on every scroll step
-    const updateCards = (progressVal: number, overrideIndex: number = -1) => {
+    const updateCards = (progressVal: number, overrideIndex: number) => {
       const targetIdx =
         overrideIndex >= 0
           ? overrideIndex
@@ -109,7 +187,7 @@ export function Projects({ showHeading = true }: ProjectsProps) {
         cards[targetIdx]?.classList.add("is-dominant");
         localActiveIndex = targetIdx;
         setActiveProjectIndex(targetIdx);
-        section.dataset.activeIndex = String(targetIdx);
+        container.dataset.activeIndex = String(targetIdx);
       }
     };
 
@@ -129,17 +207,16 @@ export function Projects({ showHeading = true }: ProjectsProps) {
       focusHandlers.push({ card, onFocus, onBlur });
     });
 
-    // Enable Viewport Observation & Setup
-    section.classList.add("is-carousel-ready");
-    section.dataset.activeIndex = "0";
-    section.dataset.pinDistance = String(getTotalPinDistance());
+    container.classList.add("is-carousel-ready");
+    container.dataset.activeIndex = "0";
+    container.dataset.pinDistance = String(getTotalPinDistance());
     updateCards(0, -1);
 
     const nearTrigger = ScrollTrigger.create({
-      trigger: section,
+      trigger: container,
       start: "top bottom",
       end: "bottom top",
-      onToggle: (self) => section.classList.toggle("strip--near", self.isActive),
+      onToggle: (self) => container.classList.toggle("strip--near", self.isActive),
     });
 
     let tl: gsap.core.Timeline;
@@ -148,11 +225,11 @@ export function Projects({ showHeading = true }: ProjectsProps) {
       tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
-          trigger: section,
+          trigger: container,
           start: "top top",
           end: () => {
             const pinDist = getTotalPinDistance();
-            section.dataset.pinDistance = String(pinDist);
+            container.dataset.pinDistance = String(pinDist);
             return `+=${pinDist}`;
           },
           pin: pin,
@@ -174,7 +251,7 @@ export function Projects({ showHeading = true }: ProjectsProps) {
         0
       );
 
-      const introEl = section.querySelector(".strip__intro");
+      const introEl = container.querySelector(".strip__intro");
       if (introEl) {
         tl.to(
           introEl,
@@ -189,27 +266,27 @@ export function Projects({ showHeading = true }: ProjectsProps) {
       // Dynamic Background Transition: Black -> White on entry, White -> Black on exit
       const bgTl = gsap.timeline({
         scrollTrigger: {
-          trigger: section,
+          trigger: container,
           start: "top 85%",
           end: () => `+=${getTotalPinDistance() + window.innerHeight * 0.8}`,
           scrub: 0.35,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const isLight = self.progress > 0.08 && self.progress < 0.92;
-            section.classList.toggle("is-theme-light", isLight);
+            container.classList.toggle("is-theme-light", isLight);
           },
         },
       });
 
       bgTl
         .fromTo(
-          section,
+          container,
           { backgroundColor: "#000000", color: "#ffffff" },
           { backgroundColor: "#ffffff", color: "#000000", duration: 0.12, ease: "power1.out" }
         )
-        .to(section, { backgroundColor: "#ffffff", color: "#000000", duration: 0.76, ease: "none" })
-        .to(section, { backgroundColor: "#000000", color: "#ffffff", duration: 0.12, ease: "power1.in" });
-    }, section);
+        .to(container, { backgroundColor: "#ffffff", color: "#000000", duration: 0.76, ease: "none" })
+        .to(container, { backgroundColor: "#000000", color: "#ffffff", duration: 0.12, ease: "power1.in" });
+    }, container);
 
     // Refresh ScrollTrigger and sort triggers in DOM order so downstream sections receive correct offsets
     requestAnimationFrame(() => {
@@ -217,19 +294,14 @@ export function Projects({ showHeading = true }: ProjectsProps) {
       ScrollTrigger.refresh();
     });
 
-    // Handle Window Resizing
-    let currentWindowWidth = window.innerWidth;
     const onResize = () => {
-      if (window.innerWidth !== currentWindowWidth) {
-        currentWindowWidth = window.innerWidth;
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          currentVerticalStep = getVerticalStep();
-          section.dataset.pinDistance = String(getTotalPinDistance());
-          ScrollTrigger.sort();
-          ScrollTrigger.refresh();
-        }, 220);
-      }
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        currentVerticalStep = getVerticalStep();
+        container.dataset.pinDistance = String(getTotalPinDistance());
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      }, 220);
     };
 
     window.addEventListener("resize", onResize, { passive: true });
@@ -248,53 +320,36 @@ export function Projects({ showHeading = true }: ProjectsProps) {
     };
   }, [projects]);
 
-  const getFormatClass = (format?: Project["format"]) => {
-    switch (format) {
-      case "portrait":
-        return "strip-card--portrait";
-      case "tall":
-        return "strip-card--tall";
-      case "square":
-        return "strip-card--square";
-      case "landscape":
-      default:
-        return "strip-card--landscape";
-    }
-  };
+  const defaultIntro =
+    projects.length === 5
+      ? "Five projects, five unique experiences built down to their micro-interactions."
+      : `${projects.length} curated projects, designed and built down to every interaction.`;
 
-  const totalProjectsFormatted = String(projects.length).padStart(2, "0");
+  const totalFormatted = String(projects.length).padStart(2, "0");
 
   return (
     <section
-      id="work"
-      ref={sectionRef}
+      ref={containerRef}
       className="strip is-carousel-ready"
       aria-labelledby="stripTitle"
       data-strip-carousel
     >
       <div ref={pinRef} className="strip__pin">
-        {/* Head */}
         {showHeading && (
           <header ref={headRef} className="strip__head">
             <p className="strip__eyebrow">
-              <span>02</span>
-              <span>Selected Work</span>
+              <span>{eyebrowNumber}</span>
+              <span>{eyebrowText}</span>
             </p>
-
             <h2 className="strip__title" id="stripTitle">
-              <span>See,</span>
+              <span>{titleMain}</span>
               <em>
-                <TextShimmer duration={3}>before you read.</TextShimmer>
+                <TextShimmer duration={3}>{titleItalic}</TextShimmer>
               </em>
             </h2>
-
             <div className="strip__intro">
               <p>
-                <TextShimmer duration={3}>
-                  {projects.length === 5
-                    ? "Five projects, five unique experiences built down to their micro-interactions."
-                    : `${projects.length} curated projects, designed and built down to every interaction.`}
-                </TextShimmer>
+                <TextShimmer duration={3}>{introText || defaultIntro}</TextShimmer>
               </p>
               <span className="strip__arrow" aria-hidden="true">
                 ↘
@@ -303,48 +358,58 @@ export function Projects({ showHeading = true }: ProjectsProps) {
           </header>
         )}
 
-        {/* 3D Perspective Viewport & Rail */}
         <div className="strip__viewport">
-          <div
-            ref={railRef}
-            className="strip__rail"
-            aria-label={`${projects.length} selected projects`}
-          >
+          <div ref={railRef} className="strip__rail" aria-label={`${projects.length} selected projects`}>
             {projects.map((proj, idx) => {
-              const numStr = String(proj.id || idx + 1).padStart(2, "0");
+              const numStr = proj.number || String(idx + 1).padStart(2, "0");
+              const isExt = proj.link.startsWith("http");
               return (
                 <a
                   key={proj.id}
-                  href={proj.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-project-index={idx}
-                  className={`strip-card ${getFormatClass(proj.format)} ${
+                  className={`strip-card strip-card--${proj.aspectVariant || "wide"} ${
                     idx === activeProjectIndex ? "is-dominant" : ""
                   }`}
-                  aria-label={`${proj.name} — ${proj.label || proj.category}`}
+                  data-project-index={idx}
+                  href={proj.link}
+                  target={isExt ? "_blank" : undefined}
+                  rel={isExt ? "noopener noreferrer" : undefined}
+                  aria-label={`${proj.title} — ${proj.category}`}
                 >
                   <div className="strip-card__float">
                     <figure className="strip-card__media">
-                      <img
-                        src={proj.image}
-                        alt={proj.name}
-                        loading={idx < 3 ? "eager" : "lazy"}
-                        width="1200"
-                        height="800"
-                      />
+                      {proj.video ? (
+                        <video
+                          className="project-motion-thumb"
+                          poster={proj.poster}
+                          muted
+                          loop
+                          playsInline
+                          autoPlay
+                          preload="none"
+                          width="1200"
+                          height="800"
+                        >
+                          <source src={proj.video} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <img
+                          src={proj.poster}
+                          alt={proj.title}
+                          loading={idx < 3 ? "eager" : "lazy"}
+                          width="1200"
+                          height="800"
+                        />
+                      )}
                       <span className="strip-card__open">
                         View project <i aria-hidden="true">↗</i>
                       </span>
                     </figure>
-
                     <div className="strip-card__meta">
                       <p>
-                        <span>{numStr}</span>
-                        {proj.name}
+                        <span>{numStr}</span> {proj.title}
                       </p>
                       <p>
-                        {proj.category || proj.label} · {proj.year}
+                        {proj.category} · {proj.year}
                       </p>
                     </div>
                   </div>
@@ -354,27 +419,23 @@ export function Projects({ showHeading = true }: ProjectsProps) {
           </div>
         </div>
 
-        {/* Counter */}
         <p className="strip__progress" aria-hidden="true">
           <span id="stripCurrent">{String(activeProjectIndex + 1).padStart(2, "0")}</span>
           <span>/</span>
-          <span id="stripTotal">{totalProjectsFormatted}</span>
+          <span id="stripTotal">{totalFormatted}</span>
         </p>
-
-        {/* Footer */}
-        <footer className="strip__foot">
-          <p>
-            Featured selection · {totalProjectsFormatted} projects
-          </p>
-          <div className="works__more">
-            <Link to="/showcase">
-              All projects <sup>({totalProjectsFormatted})</sup>
-            </Link>
-          </div>
-        </footer>
       </div>
+
+      <footer className="strip__foot">
+        <p>{footerLabel || `Featured selection · ${totalFormatted} projects`}</p>
+        <div className="works__more">
+          <a href={allProjectsLink}>
+            {allProjectsText} <sup>({totalFormatted})</sup>
+          </a>
+        </div>
+      </footer>
     </section>
   );
 }
 
-export default Projects;
+export default StripCarousel;

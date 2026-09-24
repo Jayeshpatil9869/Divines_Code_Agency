@@ -1,14 +1,14 @@
-import { gsap, prefersReducedMotion, registerGsapPlugins } from "./utils";
+import { gsap, prefersReducedMotion, registerGsapPlugins, ScrollTrigger } from "./utils";
 
 const LIGHT = "#ffffff";
 const DARK = "#000000";
 
 /**
- * ScrollTrigger backgroundColor for this section only (Logos / Philosophy).
- * Page shell and neighboring sections stay black — no global theme flip.
+ * ScrollTrigger backgroundColor for light sections (Team / Philosophy).
+ * Page shell and neighboring sections stay dark.
  *
  * Scroll progress through the section:
- *   enter → black to white → hold white → exit → white to black
+ *   enter → smooth blend from dark to light → hold pure white through content → exit → smooth blend back to dark
  */
 export function bindLightSectionBackground(section: HTMLElement): void {
   registerGsapPlugins();
@@ -18,22 +18,24 @@ export function bindLightSectionBackground(section: HTMLElement): void {
     return;
   }
 
-  gsap.set(section, { backgroundColor: DARK });
+  // Ensure default base background is light for high-contrast legibility
+  gsap.set(section, { backgroundColor: LIGHT });
 
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: section,
-      start: "top 90%",
-      end: "bottom 10%",
-      scrub: 0.45,
+      start: "top 85%",
+      end: "bottom 15%",
+      scrub: 0.4,
+      invalidateOnRefresh: true,
     },
   });
 
   tl.fromTo(
     section,
     { backgroundColor: DARK },
-    { backgroundColor: LIGHT, duration: 0.22, ease: "none" }
+    { backgroundColor: LIGHT, duration: 0.18, ease: "none" }
   )
-    .to(section, { backgroundColor: LIGHT, duration: 0.56, ease: "none" })
-    .to(section, { backgroundColor: DARK, duration: 0.22, ease: "none" });
+    .to(section, { backgroundColor: LIGHT, duration: 0.64, ease: "none" })
+    .to(section, { backgroundColor: DARK, duration: 0.18, ease: "none" });
 }

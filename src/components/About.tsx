@@ -52,12 +52,14 @@ export function About() {
             <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-6">
               <TextShimmer>We are Divine&apos;s.</TextShimmer>
             </h2>
-            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed font-light">
+            <div className="space-y-6 text-lg font-light leading-relaxed">
               <p>
-                Divine&apos;s Code Agency sits in the room where design and
-                engineering argue — and makes both sides ship.
+                <TextShimmer duration={3.2}>
+                  Divine&apos;s Code Agency sits in the room where design and
+                  engineering argue — and makes both sides ship.
+                </TextShimmer>
               </p>
-              <p>
+              <p className="text-muted-foreground">
                 We don&apos;t decorate products. We make complex systems
                 legible: interfaces that hold up in production, not just in
                 Figma.

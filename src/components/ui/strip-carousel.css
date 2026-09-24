@@ -1,0 +1,584 @@
+/* ============================================================
+   STUDIO RS 3D PERSPECTIVE SCROLL-PINNED CAROUSEL
+   Scroll-Triggered Dark to Light Dynamic Theme
+============================================================ */
+:root {
+  --bg: #000000;
+  --bg-deep: #090908;
+  --bg-raise: #131311;
+  --font-grotesk: "Cabinet Grotesk Variable", "Cabinet Grotesk", sans-serif;
+  --font-serif: "Zodiak", Georgia, serif;
+  --font-body: "General Sans", system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --pad: clamp(1.25rem, 4vw, 4rem);
+  --content-max: 128rem;
+  --gutter: max(var(--pad), calc((100vw - var(--content-max)) / 2));
+}
+
+/* ============================================================
+   BASE STRIP STYLES (DYNAMIC SCROLL-TRIGGERED THEME)
+============================================================ */
+.strip {
+  --strip-bg: #000000;
+  --strip-ink: #ffffff;
+  --strip-muted: rgba(255, 255, 255, 0.55);
+  --strip-line: rgba(255, 255, 255, 0.14);
+  --strip-badge-bg: #ffffff;
+  --strip-badge-ink: #000000;
+  --strip-shimmer-base: rgba(255, 255, 255, 0.42);
+  --strip-shimmer-glow: #ffffff;
+  --strip-shimmer-accent: #e8d5b5;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(6rem, 12vh, 10rem) 0 clamp(3rem, 7vh, 5rem);
+  background-color: var(--strip-bg);
+  color: var(--strip-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.strip.is-theme-light {
+  --strip-bg: #ffffff;
+  --strip-ink: #000000;
+  --strip-muted: rgba(0, 0, 0, 0.58);
+  --strip-line: rgba(0, 0, 0, 0.12);
+  --strip-badge-bg: #000000;
+  --strip-badge-ink: #ffffff;
+  --strip-shimmer-base: rgba(0, 0, 0, 0.42);
+  --strip-shimmer-glow: #000000;
+  --strip-shimmer-accent: #92400e;
+}
+
+.strip ::selection {
+  background: var(--strip-ink);
+  color: var(--strip-bg);
+}
+
+.strip__pin,
+.strip__viewport {
+  position: relative;
+}
+
+.strip__head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 clamp(0.8rem, 1.5vw, 1.5rem);
+  padding: 0 var(--gutter);
+}
+
+.strip__eyebrow {
+  grid-column: 1 / span 3;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding-top: 0.7rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--strip-muted);
+  transition: color 0.3s ease;
+}
+
+.strip__eyebrow span:first-child {
+  color: var(--strip-ink);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.strip__title {
+  grid-column: 4 / -1;
+  font-family: var(--font-grotesk);
+  font-size: clamp(5rem, 11.5vw, 12.5rem);
+  font-weight: 800;
+  line-height: 0.78;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+  color: var(--strip-ink);
+  transition: color 0.3s ease;
+}
+
+.strip__title span,
+.strip__title em {
+  display: block;
+}
+
+.strip__title em {
+  margin-top: 0.14em;
+  margin-left: clamp(0rem, 10vw, 10rem);
+  font-family: var(--font-serif);
+  font-size: 0.65em;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  text-transform: none !important;
+  font-style: italic;
+  white-space: nowrap;
+  color: var(--strip-ink);
+  transition: color 0.3s ease;
+}
+
+/* ============================================================
+   TEXT SHIMMER ANIMATION
+============================================================ */
+.strip-shimmer {
+  display: inline-block;
+  background-image: linear-gradient(
+    105deg,
+    var(--strip-shimmer-base) 0%,
+    var(--strip-shimmer-base) 22%,
+    var(--strip-shimmer-glow) 42%,
+    var(--strip-shimmer-accent) 50%,
+    var(--strip-shimmer-glow) 58%,
+    var(--strip-shimmer-base) 78%,
+    var(--strip-shimmer-base) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: strip-text-shimmer 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: background-position;
+}
+
+@keyframes strip-text-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -150% 0;
+  }
+}
+
+.strip__intro {
+  grid-column: 7 / -1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: clamp(3rem, 7vh, 5rem);
+  padding-top: 1rem;
+  border-top: 1px solid var(--strip-line);
+  transition: border-color 0.3s ease;
+}
+
+.strip__intro p {
+  max-width: 38ch;
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  line-height: 1.5;
+  color: var(--strip-muted);
+  transition: color 0.3s ease;
+}
+
+.strip__intro > .strip__arrow,
+.strip__intro > span[aria-hidden="true"] {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--strip-line);
+  border-radius: 50%;
+  font-size: 1rem;
+  color: var(--strip-ink);
+  transition: transform 0.4s var(--ease-out), background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.strip__intro > .strip__arrow:hover,
+.strip__intro > span[aria-hidden="true"]:hover {
+  transform: rotate(45deg);
+  background-color: rgba(128, 128, 128, 0.12);
+}
+
+/* ============================================================
+   3D CAROUSEL ACTIVE MODE
+============================================================ */
+.strip.is-carousel-ready {
+  padding: 0;
+}
+
+.strip.is-carousel-ready .strip__pin {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(4.5rem, 9vh, 7rem) 0 clamp(2rem, 4vh, 3rem);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.strip.is-carousel-ready .strip__head {
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.strip.is-carousel-ready .strip__viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  perspective: 1200px;
+  perspective-origin: 58% 48%;
+  pointer-events: none;
+}
+
+.strip.is-carousel-ready .strip__rail {
+  position: absolute;
+  top: clamp(12.5rem, 28dvh, 28rem);
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1.25rem, 2.4vw, 2.75rem);
+  width: max-content;
+  margin: 0;
+  padding: 0 max(var(--gutter), calc((100vw - 128rem) / 2));
+  overflow: visible;
+  transform-style: preserve-3d;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* ============================================================
+   CARDS & 3D TRANSFORMS
+============================================================ */
+.strip-card {
+  display: block;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.strip.is-carousel-ready .strip-card {
+  flex: 0 0 clamp(18rem, 36dvh, 25rem);
+  width: clamp(18rem, 36dvh, 25rem);
+  margin: 0;
+  opacity: 0.52;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
+}
+
+.strip.is-carousel-ready .strip-card--portrait {
+  flex-basis: clamp(13rem, 25dvh, 18rem);
+  width: clamp(13rem, 25dvh, 18rem);
+}
+
+.strip.is-carousel-ready .strip-card--tall {
+  flex-basis: clamp(12.5rem, 27dvh, 19rem);
+  width: clamp(12.5rem, 27dvh, 19rem);
+}
+
+.strip.is-carousel-ready .strip-card--landscape,
+.strip.is-carousel-ready .strip-card--wide {
+  flex-basis: clamp(18rem, 38dvh, 25rem);
+  width: clamp(18rem, 38dvh, 25rem);
+}
+
+.strip.is-carousel-ready .strip-card--square {
+  flex-basis: clamp(16rem, 30dvh, 22rem);
+  width: clamp(16rem, 30dvh, 22rem);
+}
+
+.strip.is-carousel-ready .strip-card.is-dominant {
+  opacity: 1;
+}
+
+.strip-card__float {
+  display: block;
+  transform-style: preserve-3d;
+}
+
+/* Ambient Floating Animation */
+.strip.is-carousel-ready .strip-card__float {
+  animation: strip-card-float var(--float-duration, 6.4s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  will-change: transform;
+}
+
+.strip.is-carousel-ready .strip-card:nth-child(1) .strip-card__float { --float-x: 2px;  --float-y: 5px; --float-duration: 6.4s; --float-delay: -1.2s; }
+.strip.is-carousel-ready .strip-card:nth-child(2) .strip-card__float { --float-x: -2px; --float-y: 7px; --float-duration: 7.1s; --float-delay: -3.8s; }
+.strip.is-carousel-ready .strip-card:nth-child(3) .strip-card__float { --float-x: 1px;  --float-y: 4px; --float-duration: 5.8s; --float-delay: -2.4s; }
+.strip.is-carousel-ready .strip-card:nth-child(4) .strip-card__float { --float-x: -1px; --float-y: 6px; --float-duration: 6.8s; --float-delay: -5.1s; }
+.strip.is-carousel-ready .strip-card:nth-child(5) .strip-card__float { --float-x: 2px;  --float-y: 5px; --float-duration: 7.4s; --float-delay: -0.7s; }
+.strip.is-carousel-ready .strip-card:nth-child(6) .strip-card__float { --float-x: -2px; --float-y: 6px; --float-duration: 6.2s; --float-delay: -3.1s; }
+.strip.is-carousel-ready .strip-card:nth-child(7) .strip-card__float { --float-x: 1px;  --float-y: 5px; --float-duration: 6.9s; --float-delay: -1.8s; }
+.strip.is-carousel-ready .strip-card:nth-child(8) .strip-card__float { --float-x: -1px; --float-y: 7px; --float-duration: 7.5s; --float-delay: -4.3s; }
+
+.strip.is-carousel-ready .strip-card:is(:hover, :focus-visible) .strip-card__float {
+  animation-play-state: paused;
+}
+
+.strip:not(.strip--near) .strip-card__float {
+  animation-play-state: paused;
+}
+
+@keyframes strip-card-float {
+  0%, 100% { transform: translateZ(0); }
+  50% { transform: translate3d(var(--float-x, 1px), calc(0px - var(--float-y, 5px)), 0); }
+}
+
+/* ============================================================
+   CARD MEDIA & HOVER STYLES
+============================================================ */
+.strip-card__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #090908;
+  border-radius: 4px;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.35);
+}
+
+.strip-card--portrait .strip-card__media  { aspect-ratio: 4 / 5; }
+.strip-card--tall .strip-card__media      { aspect-ratio: 3 / 4; }
+.strip-card--landscape .strip-card__media,
+.strip-card--wide .strip-card__media      { aspect-ratio: 4 / 3; }
+.strip-card--square .strip-card__media    { aspect-ratio: 1 / 1; }
+
+.strip-card__media video,
+.strip-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(0.12) contrast(1.03);
+  transform: scale(1.025);
+  transition: transform 0.8s var(--ease-out), filter 0.5s var(--ease-out);
+}
+
+.strip-card:hover .strip-card__media video,
+.strip-card:hover .strip-card__media img {
+  filter: grayscale(0) contrast(1.02);
+  transform: scale(1.06);
+}
+
+/* Hover Pill Badge */
+.strip-card__open {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.6rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 99px;
+  background: var(--strip-badge-bg);
+  color: var(--strip-badge-ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-0.75rem);
+  transition: opacity 0.35s var(--ease-out), transform 0.45s var(--ease-out), background-color 0.3s, color 0.3s;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.strip-card__open i {
+  font-style: normal;
+  font-size: 0.9rem;
+}
+
+.strip-card:hover .strip-card__open,
+.strip-card:focus-visible .strip-card__open {
+  opacity: 1;
+  transform: none;
+}
+
+/* Card Meta (Title + Subtitle) */
+.strip-card__meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: baseline;
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--strip-line);
+  transition: border-color 0.3s ease;
+}
+
+.strip-card__meta p:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.7rem, 1.2vw, 1.2rem);
+  font-family: var(--font-grotesk);
+  font-size: clamp(1.15rem, 1.8vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--strip-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s ease;
+}
+
+.strip-card__meta p:first-child span {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--strip-muted);
+  transition: color 0.3s ease;
+}
+
+.strip-card__meta p:last-child {
+  max-width: 24ch;
+  font-size: 0.67rem;
+  letter-spacing: 0.03em;
+  text-align: right;
+  color: var(--strip-muted);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.strip-card--portrait .strip-card__meta,
+.strip-card--tall .strip-card__meta,
+.strip-card--landscape .strip-card__meta,
+.strip-card--square .strip-card__meta {
+  grid-template-columns: 1fr;
+  gap: 0.3rem;
+}
+
+.strip-card--portrait .strip-card__meta p:last-child,
+.strip-card--tall .strip-card__meta p:last-child,
+.strip-card--landscape .strip-card__meta p:last-child,
+.strip-card--square .strip-card__meta p:last-child {
+  max-width: none;
+  text-align: left;
+}
+
+/* ============================================================
+   PROGRESS INDICATOR & FOOTER
+============================================================ */
+.strip.is-carousel-ready .strip__progress {
+  position: absolute;
+  top: clamp(5.5rem, 10vh, 7rem);
+  right: var(--gutter);
+  z-index: 4;
+  display: flex;
+  gap: 0.35rem;
+  font-family: var(--font-grotesk);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  color: var(--strip-ink);
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.strip.is-carousel-ready .strip__progress #stripCurrent {
+  color: var(--strip-ink);
+  transition: color 0.3s ease;
+}
+
+.strip.is-carousel-ready .strip__progress span:nth-child(2),
+.strip.is-carousel-ready .strip__progress #stripTotal {
+  color: var(--strip-muted);
+  transition: color 0.3s ease;
+}
+
+.strip.is-carousel-ready .strip__foot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 0 var(--gutter);
+  padding-bottom: clamp(2rem, 5vh, 4rem);
+  border-top: 1px solid var(--strip-line);
+  padding-top: 1rem;
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--strip-muted);
+  font-weight: 600;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.strip__foot a {
+  color: var(--strip-ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  border-bottom: 1px solid var(--strip-ink);
+  padding-bottom: 2px;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.strip__foot a sup {
+  color: var(--strip-muted);
+}
+
+.strip__foot a:hover {
+  color: var(--strip-muted);
+  border-color: var(--strip-muted);
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS (Mobile & Tablet)
+============================================================ */
+@media (max-width: 900px) {
+  .strip__eyebrow {
+    grid-column: 1 / span 12;
+  }
+  .strip__title {
+    grid-column: 1 / span 12;
+    margin-top: 0.25rem;
+  }
+  .strip__intro {
+    grid-column: 1 / span 12;
+    margin-top: clamp(2.5rem, 6vh, 5rem);
+  }
+  .strip.is-carousel-ready .strip__title {
+    font-size: clamp(3.8rem, 13vw, 7rem);
+  }
+  .strip.is-carousel-ready .strip__rail {
+    top: clamp(11rem, 30dvh, 22rem);
+    gap: clamp(1rem, 3vw, 1.5rem);
+  }
+  .strip.is-carousel-ready .strip-card,
+  .strip.is-carousel-ready .strip-card--portrait,
+  .strip.is-carousel-ready .strip-card--tall,
+  .strip.is-carousel-ready .strip-card--landscape,
+  .strip.is-carousel-ready .strip-card--square {
+    flex: 0 0 clamp(14rem, 34dvh, 22rem);
+    width: clamp(14rem, 34dvh, 22rem);
+  }
+}
+
+@media (max-width: 560px) {
+  .strip.is-carousel-ready .strip__pin {
+    padding-top: 4.75rem;
+  }
+  .strip.is-carousel-ready .strip__title {
+    font-size: clamp(2.6rem, 13vw, 4rem);
+  }
+  .strip.is-carousel-ready .strip__rail {
+    top: clamp(7.5rem, calc(27dvh - 1.75rem), 18rem);
+    gap: 0.85rem;
+  }
+  .strip.is-carousel-ready .strip-card,
+  .strip.is-carousel-ready .strip-card--portrait,
+  .strip.is-carousel-ready .strip-card--tall,
+  .strip.is-carousel-ready .strip-card--landscape,
+  .strip.is-carousel-ready .strip-card--square {
+    flex-basis: min(66vw, 17rem);
+    width: min(66vw, 17rem);
+  }
+  .strip.is-carousel-ready .strip__progress {
+    top: 5.75rem;
+  }
+  .strip__foot {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}

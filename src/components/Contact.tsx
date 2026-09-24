@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/ui/magnetic";
 import { CustomSelect } from "@/components/ui/custom-select";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { useGsap, animateSectionReveals, gsap, EASE } from "@/animations";
 import { cn } from "@/lib/utils";
 import {
@@ -117,8 +118,10 @@ export function Contact({ hideHeading = false }: { hideHeading?: boolean }) {
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-none font-black tracking-[-0.02em] uppercase mb-4">
             Tell us what you&apos;re building.
           </h2>
-          <p className="text-[11px] text-muted-foreground mb-16 max-w-md uppercase tracking-widest font-bold">
-            A sentence is enough to start. We reply within one business day — always personally.
+          <p className="text-[11px] mb-16 max-w-md uppercase tracking-widest font-bold">
+            <TextShimmer duration={3}>
+              A sentence is enough to start. We reply within one business day — always personally.
+            </TextShimmer>
           </p>
         </div>
         )}

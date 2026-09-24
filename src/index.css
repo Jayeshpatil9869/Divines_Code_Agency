@@ -1,6 +1,34 @@
 @import "tailwindcss";
 
-/* Local Geist fonts from the `geist` npm package (copied to src/assets/fonts) */
+/* Fallback @font-face (CLS / metric matching for Cabinet Grotesk, Zodiak, and General Sans) */
+@font-face {
+  font-family: "Cabinet Grotesk Fallback";
+  src: local("Helvetica Neue"), local("Arial"), local("Roboto");
+  size-adjust: 91%;
+  ascent-override: 98%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Zodiak Fallback";
+  src: local("Georgia"), local("Times New Roman");
+  size-adjust: 96%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "General Sans Fallback";
+  src: local("Helvetica Neue"), local("Arial"), local("Roboto");
+  size-adjust: 97%;
+  ascent-override: 100%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+/* Local Geist fonts preserved as secondary fallbacks */
 @font-face {
   font-family: "Geist Sans";
   src: url("./assets/fonts/GeistSans-Variable.woff2") format("woff2");
@@ -34,10 +62,13 @@
   --color-primary-foreground: #000;
   --color-success: #e8d5b5;
 
-  --font-display: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  /* Typography Stack: Cabinet Grotesk (Headings/Display), General Sans (Body), Zodiak (Serif/Italics), System Mono */
+  --font-grotesk: "Cabinet Grotesk Variable", "Cabinet Grotesk", "Cabinet Grotesk Fallback", sans-serif;
+  --font-display: "Cabinet Grotesk Variable", "Cabinet Grotesk", "Cabinet Grotesk Fallback", sans-serif;
+  --font-sans: "General Sans", "General Sans Fallback", system-ui, sans-serif;
+  --font-body: "General Sans", "General Sans Fallback", system-ui, sans-serif;
+  --font-serif: "Zodiak", "Zodiak Fallback", Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-tight: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-caveat: "Caveat Brush", cursive;
 
@@ -89,6 +120,12 @@
 
 @layer base {
   :root {
+    --font-grotesk: "Cabinet Grotesk Variable", "Cabinet Grotesk", "Cabinet Grotesk Fallback", sans-serif;
+    --font-serif: "Zodiak", "Zodiak Fallback", Georgia, serif;
+    --font-body: "General Sans", "General Sans Fallback", system-ui, sans-serif;
+    --font-sans: "General Sans", "General Sans Fallback", system-ui, sans-serif;
+    --font-display: "Cabinet Grotesk Variable", "Cabinet Grotesk", "Cabinet Grotesk Fallback", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
     --font-cavet: "Caveat Brush", cursive;
 
     --color-white: #fff;
@@ -113,11 +150,16 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30 selection:text-foreground;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    @apply bg-background text-foreground antialiased selection:bg-primary/30 selection:text-foreground;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tighter uppercase font-black;
+    font-family: var(--font-grotesk);
+    @apply tracking-tighter uppercase font-black;
   }
 
   /* Native OS pickers are light on Windows; inherited white text vanishes. */

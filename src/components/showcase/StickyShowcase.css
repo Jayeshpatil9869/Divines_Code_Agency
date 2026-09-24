@@ -6,7 +6,7 @@
   overflow: hidden;
   position: relative;
   background-color: #000000;
-  font-family: var(--font-sans, "Geist Sans", -apple-system, BlinkMacSystemFont, sans-serif);
+  font-family: var(--font-sans, system-ui, sans-serif);
   user-select: none;
   touch-action: none;
 }
@@ -104,12 +104,12 @@
   }
 }
 
-/* Metadata & Badges — Geist Mono */
+/* Metadata & Badges — Mono */
 .showcase-slide-meta {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-family: var(--font-mono, "Geist Mono", monospace);
+  font-family: var(--font-mono, monospace);
   font-size: 0.72rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -125,7 +125,7 @@
   border-radius: 9999px;
   background: rgba(232, 213, 181, 0.08);
   border: 1px solid rgba(232, 213, 181, 0.25);
-  font-family: var(--font-mono, "Geist Mono", monospace);
+  font-family: var(--font-mono, monospace);
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   color: #e8d5b5;
@@ -136,9 +136,9 @@
   transform: translateY(0);
 }
 
-/* Main Heading — Geist Sans / Inter Tight */
+/* Main Heading — Cabinet Grotesk */
 .showcase-slide-title {
-  font-family: var(--font-display, var(--font-sans, "Geist Sans", sans-serif));
+  font-family: var(--font-display, var(--font-grotesk, sans-serif));
   font-size: clamp(2.2rem, 5.2vw, 5.5rem);
   font-weight: 900;
   letter-spacing: -0.035em;
@@ -150,9 +150,9 @@
   text-shadow: 0 8px 30px rgba(0, 0, 0, 0.9);
 }
 
-/* Description — Geist Sans Light */
+/* Description — General Sans */
 .showcase-slide-desc {
-  font-family: var(--font-sans, "Geist Sans", sans-serif);
+  font-family: var(--font-sans, var(--font-body, sans-serif));
   font-size: clamp(0.88rem, 1.2vw, 1.05rem);
   font-weight: 300;
   color: rgba(255, 255, 255, 0.65);
@@ -190,7 +190,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.7rem 1.5rem;
-  font-family: var(--font-sans, "Geist Sans", sans-serif);
+  font-family: var(--font-grotesk, var(--font-sans, sans-serif));
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -259,7 +259,7 @@
 }
 
 .showcase-counter {
-  font-family: var(--font-mono, "Geist Mono", monospace);
+  font-family: var(--font-mono, monospace);
   font-size: 0.85rem;
   letter-spacing: 0.25em;
   color: #e8d5b5;
@@ -270,7 +270,7 @@
 }
 
 .showcase-hint {
-  font-family: var(--font-mono, "Geist Mono", monospace);
+  font-family: var(--font-mono, monospace);
   font-size: 0.68rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;

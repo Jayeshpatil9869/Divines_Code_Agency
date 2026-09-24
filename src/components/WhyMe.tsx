@@ -66,7 +66,7 @@ export function Philosophy() {
     >
       <div className="relative max-w-5xl mx-auto px-6 text-center">
         <div className="relative inline-block">
-          <h2 className="font-tight text-[clamp(3rem,6vw,5rem)] leading-[0.85] font-black tracking-[-0.04em] uppercase text-black mb-8">
+          <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.85] font-black tracking-[-0.04em] uppercase text-black mb-8">
             <span data-gsap="phil-line-top" className="block will-change-transform">
               Good design is
             </span>
@@ -93,9 +93,11 @@ export function Philosophy() {
 
           <p
             data-gsap="reveal"
-            className="mt-0 text-base md:text-xl font-serif italic font-normal normal-case tracking-normal text-black/70 max-w-2xl mx-auto leading-relaxed"
+            className="mt-0 text-base md:text-xl font-serif italic font-normal normal-case tracking-normal max-w-2xl mx-auto leading-relaxed"
           >
-            We&apos;d rather ship four things properly than twelve things approximately.
+            <TextShimmer variant="light" duration={3.5}>
+              We&apos;d rather ship four things properly than twelve things approximately.
+            </TextShimmer>
           </p>
         </div>
       </div>

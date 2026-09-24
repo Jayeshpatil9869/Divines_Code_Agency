@@ -13,6 +13,7 @@ export type Project = {
   url: string;
   /** Short factual highlight for the marquee (no invented quotes). */
   highlight: string;
+  format?: "landscape" | "portrait" | "tall" | "square";
 };
 
 export const projects: Project[] = [
@@ -26,6 +27,7 @@ export const projects: Project[] = [
     image: "/images/projects/riyansh.png",
     url: "https://riyanshamrit.com/",
     highlight: "Ayurvedic e-commerce storefront — product catalog and shop experience.",
+    format: "landscape",
   },
   {
     id: 2,
@@ -37,6 +39,7 @@ export const projects: Project[] = [
     image: "/images/projects/gravitatee.png",
     url: "https://gravitatee.com/",
     highlight: "Masala brand site with e-commerce UI and product storytelling.",
+    format: "portrait",
   },
   {
     id: 3,
@@ -48,6 +51,7 @@ export const projects: Project[] = [
     image: "/images/projects/pravin-realty.png",
     url: "https://pravin-realty.divinescode.com/",
     highlight: "Real estate platform for luxury & commercial properties in West Pune.",
+    format: "tall",
   },
   {
     id: 4,
@@ -59,6 +63,7 @@ export const projects: Project[] = [
     image: "/images/projects/one-capital.png",
     url: "https://one-capital-premium-website.vercel.app/",
     highlight: "Precision wealth management and family office platform.",
+    format: "landscape",
   },
   {
     id: 5,
@@ -70,6 +75,7 @@ export const projects: Project[] = [
     image: "/images/projects/tellstar.png",
     url: "https://tellstar.in/",
     highlight: "IT networks marketing site built in React.",
+    format: "square",
   },
   {
     id: 6,
@@ -81,6 +87,7 @@ export const projects: Project[] = [
     image: "/images/projects/outpost.png",
     url: "https://jayeshpatil9869.github.io/Outpost-Project/",
     highlight: "Design studio presence with motion and brand-led layout.",
+    format: "portrait",
   },
   {
     id: 7,
@@ -92,6 +99,7 @@ export const projects: Project[] = [
     image: "/images/projects/rethink.png",
     url: "https://jayeshpatil9869.github.io/Rethink/",
     highlight: "Creative studio site with 3D and Webflow craft.",
+    format: "tall",
   },
   {
     id: 8,
@@ -103,6 +111,7 @@ export const projects: Project[] = [
     image: "/images/projects/animeverse.png",
     url: "https://jayeshpatil9869.github.io/Anime/",
     highlight: "Digital artbook experience in React with motion.",
+    format: "landscape",
   },
 ];
 

@@ -30,7 +30,7 @@ export function Team() {
     <section
       id="team"
       ref={rootRef}
-      className="relative w-full bg-black py-16 text-black md:py-20"
+      className="relative w-full bg-white py-16 text-black md:py-20"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <header data-gsap="team-header" className="mb-10 max-w-2xl md:mb-12">
@@ -39,12 +39,14 @@ export function Team() {
           </p>
           <div className="mt-3 mb-5 h-px w-12 bg-black/15" aria-hidden />
           <h2 className="mb-4 text-[clamp(1.75rem,3vw,2.5rem)] font-black uppercase leading-[0.92] tracking-[-0.02em]">
-            <TextShimmer duration={3}>
+            <TextShimmer variant="light" duration={3}>
               Meet the people behind the work.
             </TextShimmer>
           </h2>
-          <p className="font-serif text-base font-normal italic normal-case tracking-normal text-black/55">
-            Direct communication. The work, not the theatre around it.
+          <p className="font-serif text-base font-normal italic normal-case tracking-normal">
+            <TextShimmer variant="light" duration={3.2}>
+              Direct communication. The work, not the theatre around it.
+            </TextShimmer>
           </p>
         </header>
 
