@@ -89,7 +89,7 @@ export function StickyShowcaseComponent({ slides }: StickyShowcaseComponentProps
                 {item.year && <span>· {item.year}</span>}
               </div>
 
-              <h1 className="showcase-slide-title">{item.title}</h1>
+              <h2 className="showcase-slide-title">{item.title}</h2>
 
               {item.blurb && (
                 <p className="showcase-slide-desc">{item.blurb}</p>

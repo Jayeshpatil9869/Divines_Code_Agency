@@ -33,7 +33,7 @@ export function ServicesProof() {
           </p>
           <Magnetic strength={0.18}>
             <Link
-              to="/work"
+              to="/showcase"
               className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold hover:text-primary transition-colors"
             >
               View all work

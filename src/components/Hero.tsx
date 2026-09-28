@@ -8,6 +8,8 @@ import { TextShimmer } from "@/components/ui/text-shimmer";
 import { HeroVideo } from "@/components/HeroVideo";
 import { StringLine } from "@/components/ui/string-line";
 import { useGsap, animateHero } from "@/animations";
+import { HOME_H1_LINES } from "@/data/seo";
+import { getPageSeo } from "@/data/seo-pages";
 
 type HeroProps = {
   /** When false, hero stays hidden; GSAP entrance runs only after the preloader. */
@@ -54,13 +56,13 @@ export function Hero({ introReady = true }: HeroProps) {
                 data-gsap="hero-line"
                 className="block text-foreground text-[clamp(2rem,6.5vw,8.5rem)] leading-[0.82]"
               >
-                Divine&apos;s
-              </span>
+                {HOME_H1_LINES[0]}
+              </span>{" "}
               <span
                 data-gsap="hero-line"
                 className="block text-foreground/90 text-[clamp(2rem,6.5vw,8.5rem)] leading-[0.9] mt-1 md:mt-2"
               >
-                Code Agency
+                {HOME_H1_LINES[1]}
               </span>
             </h1>
 
@@ -80,7 +82,7 @@ export function Hero({ introReady = true }: HeroProps) {
               className="max-w-xl text-lg md:text-xl leading-relaxed font-light"
             >
               <TextShimmer duration={3}>
-                We design and build websites for businesses — clear packages, modern UI, and a site you can actually launch.
+                {getPageSeo("/").intro}
               </TextShimmer>
             </p>
           </div>

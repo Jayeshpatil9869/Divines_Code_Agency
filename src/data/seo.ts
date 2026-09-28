@@ -37,8 +37,15 @@ export const OG_IMAGE = `${SITE_URL}/og-image.svg`;
 export const OG_IMAGE_WIDTH = "1200";
 export const OG_IMAGE_HEIGHT = "630";
 
-export const SEO_TITLE =
-  "Divine's Code — Custom Website Design & Development";
+/** Visible homepage H1, split the way the hero renders it. */
+export const HOME_H1_LINES = ["Divine's", "Code Agency"] as const;
+
+export const HOME_H1 = HOME_H1_LINES.join(" ");
+
+export const SEO_TITLE = "Web Development Agency in India | Divine's Code";
 
 export const SEO_DESCRIPTION =
-  "Custom React websites, storefronts, and web app interfaces. Clear packages from ₹9,999, optional Website Care. Founded by Jayesh Patil & Mahendra Nagpure.";
+  "Divine's Code is a web development agency in India. Custom React websites, storefronts, and web applications, with packages from ₹9,999. Founded by Jayesh Patil and Mahendra Nagpure.";
+
+export const HOME_INTRO =
+  "We are a web development agency in India. We design and build the websites, storefronts, and web applications that close the gaps slowing a business down and give its sales a clearer path.";

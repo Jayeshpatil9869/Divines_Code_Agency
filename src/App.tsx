@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { ArcRevealHero } from "@/components/ui/arc-preloader-hero";
 import { SiteShell } from "@/components/layout/SiteShell";
@@ -11,6 +11,7 @@ import { PricingPage } from "@/pages/PricingPage";
 import { AboutPage } from "@/pages/AboutPage";
 import { ShowcasePage } from "@/pages/ShowcasePage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { PunePage } from "@/pages/PunePage";
 
 const INTRO_GREETINGS = [
   { text: "Think." },
@@ -49,9 +50,10 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/work" element={<ShowcasePage />} />
         <Route path="/showcase" element={<ShowcasePage />} />
-        <Route path="/projects" element={<ShowcasePage />} />
+        <Route path="/locations/pune" element={<PunePage />} />
+        <Route path="/work" element={<Navigate to="/showcase" replace />} />
+        <Route path="/projects" element={<Navigate to="/showcase" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </SiteShell>

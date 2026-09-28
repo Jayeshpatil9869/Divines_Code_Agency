@@ -190,6 +190,25 @@ export function Services() {
           );
         })}
       </FlowArt>
+      <div className="bg-black text-white px-6 py-8 border-t border-white/15">
+        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-3 text-[11px] uppercase tracking-[0.18em] font-bold">
+          <Link to="/services/websites" className="hover:text-white/70">
+            Website development
+          </Link>
+          <Link to="/services/apps" className="hover:text-white/70">
+            Web applications
+          </Link>
+          <Link to="/services/ecommerce" className="hover:text-white/70">
+            Storefronts
+          </Link>
+          <Link to="/locations/pune" className="hover:text-white/70">
+            Pune projects
+          </Link>
+          <Link to="/pricing" className="hover:text-white/70">
+            Website packages
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }

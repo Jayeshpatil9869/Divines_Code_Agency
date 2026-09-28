@@ -1,14 +1,14 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { serviceFaqs } from "@/data/services";
+import { serviceFaqs, type ServiceFaq } from "@/data/services";
 import {
   animateProcessItemClose,
   animateProcessItemOpen,
   gsap,
 } from "@/animations";
 
-export function ServicesFaq() {
+export function ServicesFaq({ faqs = serviceFaqs }: { faqs?: ServiceFaq[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const baseId = useId();
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -22,7 +22,7 @@ export function ServicesFaq() {
         gsap.set(panel, { height: 0, opacity: 0 });
       }
     });
-  }, []);
+  }, [faqs]);
 
   const toggle = (index: number) => {
     const next = openIndex === index ? null : index;
@@ -71,7 +71,7 @@ export function ServicesFaq() {
 
         <div className="lg:col-span-8">
           <ul className="border-t border-border">
-            {serviceFaqs.map((faq, i) => {
+            {faqs.map((faq, i) => {
               const open = openIndex === i;
               const triggerId = `${baseId}-q-${i}`;
               const panelId = `${baseId}-a-${i}`;

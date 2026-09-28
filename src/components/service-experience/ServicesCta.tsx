@@ -47,7 +47,7 @@ export function ServicesCta() {
           </Magnetic>
           <Magnetic strength={0.18}>
             <Link
-              to="/work"
+              to="/showcase"
               className="inline-flex h-12 md:h-14 items-center gap-2 px-6 border border-border text-[11px] uppercase tracking-[0.18em] font-bold hover:border-foreground/40 transition-colors"
             >
               View our work

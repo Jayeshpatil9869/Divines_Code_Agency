@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Magnetic } from "@/components/ui/magnetic";
 import { TextShimmer } from "@/components/ui/text-shimmer";
+import { SERVICES_INTRO } from "@/data/seo-pages";
 
 export function ServicesHero() {
   return (
@@ -19,7 +20,7 @@ export function ServicesHero() {
             data-gsap="svc-hero"
             className="text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[0.92] font-black tracking-[-0.03em] uppercase"
           >
-            Built for clarity.
+            Built for clarity.{" "}
             <br />
             <span className="font-serif font-light italic normal-case tracking-tight text-primary">
               Engineered
@@ -33,10 +34,7 @@ export function ServicesHero() {
             data-gsap="svc-hero"
             className="text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-md"
           >
-            <TextShimmer duration={3.2}>
-              Websites, frontend systems, product surfaces, commerce, and care —
-              scoped so founders and teams know exactly what lands.
-            </TextShimmer>
+            <TextShimmer duration={3.2}>{SERVICES_INTRO}</TextShimmer>
           </p>
 
           <div data-gsap="svc-hero" className="flex flex-wrap items-center gap-3">

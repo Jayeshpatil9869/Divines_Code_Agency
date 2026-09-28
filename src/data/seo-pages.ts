@@ -1,5 +1,25 @@
 import { services, servicePath } from "@/data/services";
-import { SEO_DESCRIPTION, SEO_TITLE, SITE_NAME } from "@/data/seo";
+import {
+  HOME_H1,
+  HOME_INTRO,
+  SEO_DESCRIPTION,
+  SEO_TITLE,
+  SITE_NAME,
+} from "@/data/seo";
+import {
+  PUNE_DESCRIPTION,
+  PUNE_H1,
+  PUNE_INTRO,
+  PUNE_PATH,
+  PUNE_TITLE,
+} from "@/data/pune";
+
+export type SearchIntent =
+  | "commercial"
+  | "commercial-investigation"
+  | "local-commercial"
+  | "navigational"
+  | "informational";
 
 export type PageSeo = {
   path: string;
@@ -8,6 +28,8 @@ export type PageSeo = {
   h1: string;
   intro: string;
   robots: "index,follow" | "noindex,follow";
+  primaryTopic: string;
+  intent: SearchIntent;
 };
 
 export type SeoRoute =
@@ -17,8 +39,8 @@ export type SeoRoute =
   | { kind: "pricing" }
   | { kind: "contact" }
   | { kind: "about" }
-  | { kind: "work" }
   | { kind: "showcase" }
+  | { kind: "location"; slug: "pune" }
   | { kind: "notFound" };
 
 export function normalizePath(pathname: string): string {
@@ -29,77 +51,77 @@ export function normalizePath(pathname: string): string {
 
 const SERVICE_SEO: Record<
   string,
-  Pick<PageSeo, "title" | "description" | "h1" | "intro">
+  Pick<PageSeo, "title" | "description" | "primaryTopic" | "intent">
 > = {
   websites: {
-    title: `Custom Website Development | ${SITE_NAME}`,
+    title: `Professional Website Development | ${SITE_NAME}`,
     description:
-      "Custom website development for businesses and startups — React, responsive UI, SEO foundation, and clear packages from ₹9,999.",
-    h1: "Custom website development",
-    intro:
-      "Marketing and business sites designed and built end-to-end. Starter, Modern, or Premium packages with responsive UI, production deployment, and an SEO foundation.",
+      "Professional website development for businesses and small teams. React sites, responsive UI, and published packages from ₹9,999.",
+    primaryTopic: "professional website development company",
+    intent: "commercial",
   },
   frontend: {
     title: `React Frontend Engineering | ${SITE_NAME}`,
     description:
       "React frontend engineering when you already have a design or product direction — component systems, motion, accessibility, and performance.",
-    h1: "React frontend engineering",
-    intro:
-      "Design-to-code React interfaces: component architecture, responsive layouts, GSAP motion, and performance polish without rewriting your strategy.",
+    primaryTopic: "react frontend engineering",
+    intent: "commercial",
   },
   apps: {
-    title: `Custom Web Applications | ${SITE_NAME}`,
+    title: `Web Application Development | ${SITE_NAME}`,
     description:
-      "Custom web applications — dashboards, customer portals, booking UIs, and MVP product shells. Browser apps, not native mobile stores.",
-    h1: "Custom web applications",
-    intro:
-      "Dashboards, internal tools, customer portals, and API-backed product slices. Scoped web applications — not iOS or Android app store work.",
+      "Web application development for dashboards, portals, and browser-based product shells. Not native iOS or Android apps.",
+    primaryTopic: "web application development companies in india",
+    intent: "commercial",
   },
   ecommerce: {
     title: `Custom Ecommerce Storefronts | ${SITE_NAME}`,
     description:
-      "Custom ecommerce storefronts with catalog clarity, brand storytelling, and maintainable shop UI. Informed by live D2C work.",
-    h1: "Custom ecommerce storefronts",
-    intro:
-      "Catalog, cart paths, and brand-led storefronts. Built as custom work — not as an Adobe Commerce or Shopify Plus partnership page.",
+      "Custom ecommerce storefronts with catalog clarity and brand storytelling. Informed by Riyansh and Gravitatee — not a Shopify or WooCommerce partnership.",
+    primaryTopic: "custom ecommerce storefronts",
+    intent: "commercial",
   },
   integrations: {
     title: `Website Integrations | ${SITE_NAME}`,
     description:
       "Website integrations for CMS, booking, APIs, and the tools your operations already use. Documented ownership after launch.",
-    h1: "Website integrations",
-    intro:
-      "Connect the site to how the business already runs: CMS setups, booking flows, CRMs, and third-party APIs — quoted to the brief.",
+    primaryTopic: "website integrations",
+    intent: "commercial",
   },
   care: {
     title: `Website Care Plans | ${SITE_NAME}`,
     description:
-      "Website care from ₹999/month — content updates and small fixes after launch. Domain and hosting stay yours.",
-    h1: "Website care plans",
-    intro:
-      "Optional monthly support for content updates, small fixes, and priority help. Website Care is not hosting — infrastructure stays client-paid.",
+      "Website care from ₹999/month — content updates and small fixes after launch. Not an SEO retainer. Domain and hosting stay yours.",
+    primaryTopic: "website care plans",
+    intent: "commercial",
   },
 };
+
+const SERVICES_H1 = "Built for clarity. Engineered to ship.";
+const SERVICES_INTRO =
+  "Websites, frontend systems, product surfaces, commerce, and care — scoped so founders and teams know exactly what lands.";
 
 const STATIC_PAGES: PageSeo[] = [
   {
     path: "/",
     title: SEO_TITLE,
     description: SEO_DESCRIPTION,
-    h1: "Divine's Code — custom website design and development",
-    intro:
-      "We design and build custom React websites, storefronts, and web app interfaces, with clear packages from ₹9,999 and optional Website Care after launch.",
+    h1: HOME_H1,
+    intro: HOME_INTRO,
     robots: "index,follow",
+    primaryTopic: "web development agency in india",
+    intent: "commercial",
   },
   {
     path: "/services",
     title: `Website & Product Engineering Services | ${SITE_NAME}`,
     description:
       "Website development, React frontend, web applications, ecommerce storefronts, integrations, and website care — six lanes, one studio.",
-    h1: "Website and product engineering services",
-    intro:
-      "Six lanes we actually sell: websites, frontend engineering, web applications, ecommerce storefronts, integrations, and website care.",
+    h1: SERVICES_H1,
+    intro: SERVICES_INTRO,
     robots: "index,follow",
+    primaryTopic: "website and product engineering services",
+    intent: "navigational",
   },
   {
     path: "/pricing",
@@ -110,6 +132,8 @@ const STATIC_PAGES: PageSeo[] = [
     intro:
       "Published INR packages for website builds. Custom ecommerce, apps, and integrations are quoted. Domain and hosting stay on you.",
     robots: "index,follow",
+    primaryTopic: "website development cost",
+    intent: "commercial-investigation",
   },
   {
     path: "/contact",
@@ -120,6 +144,8 @@ const STATIC_PAGES: PageSeo[] = [
     intro:
       "Tell us what you need, the budget band, and the timeline. A sentence is enough to start. We reply within one business day.",
     robots: "index,follow",
+    primaryTopic: "start a project",
+    intent: "navigational",
   },
   {
     path: "/about",
@@ -130,26 +156,30 @@ const STATIC_PAGES: PageSeo[] = [
     intro:
       "A small studio that designs and engineers websites and interfaces. Direct with the founders. We do not sell SEO retainers, ads, or native mobile apps.",
     robots: "index,follow",
-  },
-  {
-    path: "/work",
-    title: `Selected Work | ${SITE_NAME}`,
-    description:
-      "Selected work from Divine's Code — live websites and storefronts including LinkNest, Gravitatee, Riyansh, Pravin Realty, One Capital, Tell Star, Outpost, and Rethink.",
-    h1: "Selected work",
-    intro:
-      "Public projects with live URLs. Named work only — no invented case-study metrics.",
-    robots: "index,follow",
+    primaryTopic: "about divine's code",
+    intent: "navigational",
   },
   {
     path: "/showcase",
-    title: `Our Work | ${SITE_NAME}`,
+    title: `Selected Work | ${SITE_NAME}`,
     description:
-      "Explore selected live websites and web applications in an interactive 3D WebGL showcase featuring Riyansh, Gravitatee, Pravin Realty, One Capital, Tell Star, Outpost, and more.",
+      "Selected live websites and web applications from Divine's Code, including Pravin Realty in West Pune, Riyansh, Gravitatee, LinkNest, and Tell Star.",
     h1: "Our Work",
     intro:
-      "Explore selected projects in an interactive 3D WebGL showcase with kinetic typography and chromatic shaders.",
+      "Selected live websites and web applications, including Pravin Realty in West Pune, Riyansh, Gravitatee, and LinkNest.",
     robots: "index,follow",
+    primaryTopic: "selected work",
+    intent: "commercial-investigation",
+  },
+  {
+    path: PUNE_PATH,
+    title: PUNE_TITLE,
+    description: PUNE_DESCRIPTION,
+    h1: PUNE_H1,
+    intro: PUNE_INTRO,
+    robots: "index,follow",
+    primaryTopic: "web development company in pune",
+    intent: "local-commercial",
   },
 ];
 
@@ -160,6 +190,8 @@ export const NOT_FOUND_SEO: PageSeo = {
   h1: "Page not found",
   intro: "This URL is not a page on divinescode.com. Use the links below to continue.",
   robots: "noindex,follow",
+  primaryTopic: "page not found",
+  intent: "navigational",
 };
 
 function servicePages(): PageSeo[] {
@@ -172,14 +204,21 @@ function servicePages(): PageSeo[] {
         title: `${service.title} | ${SITE_NAME}`,
         description: service.short,
         h1: service.title,
-        intro: service.description,
+        intro: service.positioning,
         robots: "index,follow" as const,
+        primaryTopic: service.title.toLowerCase(),
+        intent: "commercial" as const,
       };
     }
     return {
       path,
-      ...extra,
+      title: extra.title,
+      description: extra.description,
+      h1: service.title,
+      intro: service.positioning,
       robots: "index,follow" as const,
+      primaryTopic: extra.primaryTopic,
+      intent: extra.intent,
     };
   });
 }
@@ -206,11 +245,10 @@ export function getSeoRoute(pathname: string): SeoRoute {
       return { kind: "contact" };
     case "/about":
       return { kind: "about" };
-    case "/work":
-      return { kind: "work" };
     case "/showcase":
-    case "/projects":
       return { kind: "showcase" };
+    case PUNE_PATH:
+      return { kind: "location", slug: "pune" };
     default:
       break;
   }
@@ -235,9 +273,11 @@ export const CRAWL_NAV: { href: string; label: string }[] = [
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  { href: PUNE_PATH, label: "Pune" },
   ...services.map((service) => ({
     href: servicePath(service.slug),
     label: service.title,
   })),
 ];
 
+export { SERVICES_H1, SERVICES_INTRO };

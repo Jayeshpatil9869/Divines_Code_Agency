@@ -5,6 +5,7 @@ import { useGsap, animateServicesExperience } from "@/animations";
 import {
   getServiceBySlug,
   getRelatedServices,
+  getServiceFaqs,
   servicePath,
   servicesTotal,
 } from "@/data/services";
@@ -138,7 +139,21 @@ export function ServiceDetailPage() {
             </ul>
           </section>
 
-          <ServicesFaq />
+          <p className="text-[13px] font-light text-muted-foreground leading-relaxed">
+            <Link to="/pricing" className="underline underline-offset-4 hover:text-primary">
+              Website packages
+            </Link>
+            <span className="mx-2 text-border">/</span>
+            <Link to="/showcase" className="underline underline-offset-4 hover:text-primary">
+              Selected work
+            </Link>
+            <span className="mx-2 text-border">/</span>
+            <Link to="/locations/pune" className="underline underline-offset-4 hover:text-primary">
+              Pune projects
+            </Link>
+          </p>
+
+          <ServicesFaq key={service.slug} faqs={getServiceFaqs(service.slug)} />
           <ServicesCta />
         </div>
       </section>

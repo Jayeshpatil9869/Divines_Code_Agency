@@ -14,7 +14,8 @@ import {
   getSeoRoute,
   type SeoRoute,
 } from "@/data/seo-pages";
-import { getServiceBySlug, serviceFaqs, servicePath } from "@/data/services";
+import { PUNE_PATH, puneFaqs } from "@/data/pune";
+import { getServiceBySlug, getServiceFaqs, serviceFaqs, servicePath } from "@/data/services";
 
 type JsonLd = Record<string, unknown>;
 
@@ -106,6 +107,24 @@ function webPageNode(path: string): JsonLd {
   };
 }
 
+function faqPageNode(path: string, faqs: { q: string; a: string }[]): JsonLd[] {
+  if (faqs.length === 0) return [];
+  return [
+    {
+      "@type": "FAQPage",
+      "@id": `${absoluteUrl(path)}#faq`,
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.a,
+        },
+      })),
+    },
+  ];
+}
+
 function breadcrumb(items: { name: string; path: string }[]): JsonLd {
   return {
     "@type": "BreadcrumbList",
@@ -129,6 +148,7 @@ function graphForRoute(route: SeoRoute): JsonLd[] {
           { name: "Home", path: "/" },
           { name: "Services", path: "/services" },
         ]),
+        ...faqPageNode("/services", serviceFaqs),
       ];
     case "service": {
       const service = getServiceBySlug(route.slug);
@@ -151,18 +171,7 @@ function graphForRoute(route: SeoRoute): JsonLd[] {
           serviceType: service.title,
           areaServed: { "@type": "Place", name: "Worldwide" },
         },
-        {
-          "@type": "FAQPage",
-          "@id": `${absoluteUrl(path)}#faq`,
-          mainEntity: serviceFaqs.map((faq) => ({
-            "@type": "Question",
-            name: faq.q,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: faq.a,
-            },
-          })),
-        },
+        ...faqPageNode(path, getServiceFaqs(service.slug)),
       ];
     }
     case "pricing":
@@ -210,21 +219,32 @@ function graphForRoute(route: SeoRoute): JsonLd[] {
           { name: "About", path: "/about" },
         ]),
       ];
-    case "work":
-      return [
-        webPageNode("/work"),
-        breadcrumb([
-          { name: "Home", path: "/" },
-          { name: "Work", path: "/work" },
-        ]),
-      ];
     case "showcase":
       return [
         webPageNode("/showcase"),
         breadcrumb([
           { name: "Home", path: "/" },
-          { name: "Showcase", path: "/showcase" },
+          { name: "Our Work", path: "/showcase" },
         ]),
+      ];
+    case "location":
+      return [
+        webPageNode(PUNE_PATH),
+        breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Pune", path: PUNE_PATH },
+        ]),
+        {
+          "@type": "Service",
+          "@id": `${absoluteUrl(PUNE_PATH)}#service`,
+          name: "Web development for Pune businesses",
+          description: getPageSeo(PUNE_PATH).description,
+          provider: { "@id": `${SITE_URL}/#organization` },
+          url: absoluteUrl(PUNE_PATH),
+          serviceType: "Web development",
+          areaServed: { "@type": "City", name: "Pune" },
+        },
+        ...faqPageNode(PUNE_PATH, puneFaqs),
       ];
     case "notFound":
       return [webPageNode("/404")];

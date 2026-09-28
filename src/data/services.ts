@@ -68,9 +68,10 @@ export const services: ServiceItem[] = [
     num: "01",
     title: "Website Development",
     short: "Marketing and business sites shipped end-to-end",
-    positioning: "Sites that look intentional and load like product work.",
+    positioning:
+      "Professional website development for businesses and small teams — design and build in one engagement, with a published package.",
     description:
-      "From blank canvas to a live presence — Starter, Modern, or Premium packages with clear scope, responsive UI, and production deployment.",
+      "From a blank brief to a live site. Starter, Modern, and Premium packages cover responsive UI, a technical SEO foundation, and production deployment. Custom website work is quoted when the scope leaves those packages.",
     problem:
       "Most brochure sites feel templated, slow, or unfinished the moment the brief leaves Figma.",
     approach:
@@ -95,7 +96,7 @@ export const services: ServiceItem[] = [
       { title: "Content platforms", blurb: "Readable structures ready to grow." },
       { title: "Premium interactive", blurb: "GSAP-led sections when presence matters." },
     ],
-    relatedIds: ["frontend", "ecommerce", "care"],
+    relatedIds: ["apps", "ecommerce", "frontend"],
     ctaHref: "/pricing",
     ctaLabel: "View website packages",
   },
@@ -142,9 +143,10 @@ export const services: ServiceItem[] = [
     num: "03",
     title: "Web Applications",
     short: "Dashboards, portals, and product surfaces",
-    positioning: "Interfaces for real workflows — not marketing mockups.",
+    positioning:
+      "Web application development for dashboards, portals, and product shells — in the browser, not as native mobile apps.",
     description:
-      "Custom-quoted product work: dashboards, internal tools, customer portals, and web apps wired to APIs and business logic.",
+      "Custom-quoted product work: admin dashboards, internal tools, customer portals, and API-backed web apps. A lean MVP can start here when the product is a website people log into, not an app-store release.",
     problem:
       "Spreadsheets and bolted-on tools slow teams down long after the first version ships.",
     approach:
@@ -169,7 +171,7 @@ export const services: ServiceItem[] = [
       { title: "API-backed products", blurb: "Frontends that speak to your services." },
       { title: "MVP product shells", blurb: "Lean first versions ready for feedback." },
     ],
-    relatedIds: ["frontend", "integrations", "care"],
+    relatedIds: ["websites", "frontend", "integrations"],
     ctaHref: "/contact",
     ctaLabel: "Start a product conversation",
   },
@@ -179,9 +181,10 @@ export const services: ServiceItem[] = [
     num: "04",
     title: "E-commerce Development",
     short: "Storefronts built to sell and stay maintainable",
-    positioning: "Catalog, cart, and brand storytelling in one coherent build.",
+    positioning:
+      "Custom ecommerce storefronts — catalog, shop UI, and brand storytelling, scoped as its own build.",
     description:
-      "E-commerce experiences scoped as custom work — product catalogs, shop UI, and brand-led storefronts informed by live projects like Riyansh and Gravitatee.",
+      "Storefronts shaped around the catalog and the brand. Public examples are Riyansh, an Ayurvedic shop, and Gravitatee, a masala brand site. This is custom interface work, not a Shopify, WooCommerce, or Adobe Commerce partnership.",
     problem:
       "Stores that only look good still leak conversion when structure, speed, and checkout paths are afterthoughts.",
     approach:
@@ -206,8 +209,8 @@ export const services: ServiceItem[] = [
       { title: "Mobile-first shops", blurb: "Touch-first layouts for real purchase paths." },
       { title: "Store redesigns", blurb: "Rebuilds when the current shop underperforms." },
     ],
-    relatedIds: ["websites", "frontend", "care"],
-    ctaHref: "/work",
+    relatedIds: ["websites", "apps", "frontend"],
+    ctaHref: "/showcase",
     ctaLabel: "See commerce work",
   },
   {
@@ -341,6 +344,97 @@ export const techGroups: TechGroup[] = [
     items: ["Vercel-ready", "SSL setup", "Analytics", "SEO foundation"],
   },
 ];
+
+export const serviceFaqsBySlug: Record<string, ServiceFaq[]> = {
+  websites: [
+    {
+      q: "What does a website package include?",
+      a: "Responsive design and development, motion that is in scope, a technical SEO foundation, deployment, and SSL setup. Domain registration and hosting stay client-paid.",
+    },
+    {
+      q: "Is website development a fit for a small business?",
+      a: "Yes. Starter (₹9,999+, 1–3 pages) is meant for landing pages, portfolios, and simple businesses. Modern and Premium cover larger business sites. Custom work is quoted when you need commerce, a CMS, or a web app.",
+    },
+    {
+      q: "Do you design the site as well as build it?",
+      a: "On website packages, yes. Design and development run in the same engagement. If you already have a design, Frontend Engineering is the lane for design-to-code.",
+    },
+  ],
+  frontend: [
+    {
+      q: "Can you build from a design we already have?",
+      a: "Yes. Frontend Engineering is design-to-code: component structure, responsive layout, motion, and performance, without redoing your product strategy.",
+    },
+    {
+      q: "What does frontend engineering leave out?",
+      a: "It does not replace a full website package, a storefront, or a product backend. If you need the whole site, start with Website Development. If you need a logged-in product, look at Web Applications.",
+    },
+    {
+      q: "Which stack do you implement in?",
+      a: "React and TypeScript, styled with Tailwind, with GSAP when motion is part of the brief. We do not sell WordPress theme builds.",
+    },
+  ],
+  apps: [
+    {
+      q: "What counts as a web application here?",
+      a: "A browser product with real workflows: dashboards, internal tools, customer portals, booking flows, or an API-backed interface. It is quoted separately from a marketing website.",
+    },
+    {
+      q: "Do you ship iOS or Android apps?",
+      a: "No. Native mobile apps are outside this studio. If the first version can live in the browser, we can scope that web application instead.",
+    },
+    {
+      q: "Can a first product version be a web app?",
+      a: "Yes, when the goal is a usable slice people can try in the browser. We map the workflow, then build that slice with a path to iterate after launch.",
+    },
+  ],
+  ecommerce: [
+    {
+      q: "Do you implement Shopify or WooCommerce?",
+      a: "No. Ecommerce here is custom storefront UI — catalog, product storytelling, and shop flows — not a platform partnership page.",
+    },
+    {
+      q: "Which storefronts can we actually open?",
+      a: "Riyansh (riyanshamrit.com) is an Ayurvedic catalog. Gravitatee (gravitatee.com) is a masala brand site with shop UI. We do not invent conversion numbers for either.",
+    },
+    {
+      q: "Is a storefront the same price as a website package?",
+      a: "No. Starter, Modern, and Premium are website packages. Ecommerce is custom-quoted after we see the catalog and the checkout path you need.",
+    },
+  ],
+  integrations: [
+    {
+      q: "What integrations do you actually connect?",
+      a: "CMS editing, booking, CRM lead handoff, payment confirmation paths, and other APIs named in the brief. Each one is scoped so ownership is clear after launch.",
+    },
+    {
+      q: "Is a CMS the same thing as website care?",
+      a: "No. A CMS setup is project work so your team can edit content. Website Care is the optional monthly retainer for updates and small fixes after launch.",
+    },
+    {
+      q: "Who maintains an integration once it is live?",
+      a: "You do, unless Website Care or a later quote covers it. We document what syncs, what stays manual, and where the credentials live.",
+    },
+  ],
+  care: [
+    {
+      q: "Is website care an SEO retainer?",
+      a: "No. Care covers content updates, small fixes, and priority help. We do not sell ongoing SEO campaigns, ads management, or ranking promises.",
+    },
+    {
+      q: "What does the ₹999/month plan cover?",
+      a: "Content updates, small fixes, and a defined support path after launch. It is not hosting, and it is not a rebuild.",
+    },
+    {
+      q: "Does care include hosting?",
+      a: "No. Domain and hosting stay on accounts you pay. Care is help with the site after those accounts are already yours.",
+    },
+  ],
+};
+
+export function getServiceFaqs(slug: string): ServiceFaq[] {
+  return serviceFaqsBySlug[slug] ?? [];
+}
 
 export const serviceFaqs: ServiceFaq[] = [
   {

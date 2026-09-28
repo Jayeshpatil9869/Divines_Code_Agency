@@ -87,6 +87,11 @@ export function Footer() {
                 Pricing
               </Link>
             </Magnetic>
+            <Magnetic strength={0.18}>
+              <Link to="/locations/pune" className={footerLinkClass}>
+                Pune
+              </Link>
+            </Magnetic>
             <nav aria-label="All pages" className="sr-only">
               {CRAWL_NAV.map((item) => (
                 <Link key={item.href} to={item.href}>

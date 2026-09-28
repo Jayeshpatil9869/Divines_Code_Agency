@@ -7,7 +7,8 @@
     "dev": "vite --port=3000 --host=0.0.0.0",
     "server": "tsx server/index.ts",
     "dev:all": "concurrently -k -n web,api -c cyan,magenta \"npm run dev\" \"npm run server\"",
-    "build": "vite build && tsx scripts/prerender-routes.ts",
+    "build": "vite build && tsx scripts/prerender-routes.ts && tsx scripts/validate-seo.ts",
+    "seo": "tsx scripts/validate-seo.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
@@ -59,5 +60,15 @@
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.3"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "tailwind-merge": "3",
+        "lucide-react": "0.546",
+        "framer-motion": "13",
+        "three": "0.185"
+      }
+    }
   }
 }
