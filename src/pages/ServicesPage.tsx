@@ -11,6 +11,7 @@ import { ServicesProof } from "@/components/service-experience/ServicesProof";
 import { ServicesFaq } from "@/components/service-experience/ServicesFaq";
 import { ServicesRelated } from "@/components/service-experience/ServicesRelated";
 import { ServicesCta } from "@/components/service-experience/ServicesCta";
+import { WebsiteVsApp } from "@/components/service-experience/WebsiteVsApp";
 import { Contact } from "@/components/Contact";
 
 /** Full Services overview at /services */
@@ -39,6 +40,7 @@ export function ServicesPage() {
 
           <ServicesHero />
           <ServiceIndex />
+          <WebsiteVsApp />
 
           <div className="flex flex-col">
             {services.map((service, index) => (

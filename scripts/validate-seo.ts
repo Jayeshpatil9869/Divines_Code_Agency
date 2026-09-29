@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createServer } from "vite";
 import { KEYWORD_MAP } from "./seo/keyword-map.ts";
+import { AI_QUERIES } from "./seo/ai-queries.ts";
 
 const distDir = path.resolve(process.cwd(), "dist");
 const failures: string[] = [];
@@ -184,12 +185,49 @@ async function main(): Promise<void> {
       }
     }
 
-    const robots = fs.readFileSync(path.join(process.cwd(), "public", "robots.txt"), "utf8");
+    const robotsPath = path.join(process.cwd(), "public", "robots.txt");
+    const robots = fs.readFileSync(robotsPath, "utf8");
     if (!robots.includes("Sitemap: https://divinescode.com/sitemap.xml")) {
       fail("robots.txt is missing the sitemap URL");
     }
     if (/Disallow:\s*\/\s*$/m.test(robots)) {
       fail("robots.txt blocks the whole site");
+    }
+    const wildcard = agentBlock(robots, "*");
+    if (!wildcard || !/Allow:\s*\//.test(wildcard)) {
+      fail("robots.txt no longer allows all crawlers by default");
+    }
+    for (const agent of ["OAI-SearchBot", "Googlebot", "Bingbot"]) {
+      const block = agentBlock(robots, agent);
+      if (!block || !/Allow:\s*\//.test(block) || /Disallow:\s*\//.test(block)) {
+        fail(`robots.txt does not allow ${agent} at /`);
+      }
+    }
+    if (agentBlock(robots, "GPTBot")) {
+      fail("robots.txt changed the GPTBot policy; leave GPTBot unset");
+    }
+    const distRobots = path.join(distDir, "robots.txt");
+    if (fs.existsSync(distRobots) && fs.readFileSync(distRobots, "utf8") !== robots) {
+      fail("dist/robots.txt does not match public/robots.txt");
+    }
+
+    if (sitemapIncludesVerification(fs.existsSync(path.join(distDir, "sitemap.xml"))
+      ? fs.readFileSync(path.join(distDir, "sitemap.xml"), "utf8")
+      : "")) {
+      fail("Sitemap includes the Search Console verification file");
+    }
+
+    for (const query of AI_QUERIES) {
+      if (!paths.has(query.target)) {
+        fail(`AI query target is not indexable: ${query.query} -> ${query.target}`);
+      }
+    }
+    const observationsPath = path.join(process.cwd(), "scripts", "seo", "ai-observations.json");
+    const observations = JSON.parse(fs.readFileSync(observationsPath, "utf8")) as unknown;
+    if (!Array.isArray(observations)) {
+      fail("ai-observations.json must be an array");
+    } else if (observations.length === 0) {
+      console.log("AI visibility: No observations yet");
     }
   } finally {
     await vite.close();
@@ -200,6 +238,21 @@ async function main(): Promise<void> {
     process.exit(1);
   }
   console.log(`SEO validation passed for ${KEYWORD_MAP.length} mapped keywords.`);
+}
+
+function agentBlock(robots: string, agent: string): string | null {
+  const escaped = agent.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = robots.match(
+    new RegExp(
+      `(?:^|\\n)User-agent:\\s*${escaped}\\s*\\n([\\s\\S]*?)(?=\\nUser-agent:|$)`,
+      "i",
+    ),
+  );
+  return match ? match[1] : null;
+}
+
+function sitemapIncludesVerification(sitemap: string): boolean {
+  return sitemap.includes("googlee602dec2ce2f2354");
 }
 
 function escapeForHtml(value: string): string {
