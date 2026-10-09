@@ -529,12 +529,17 @@ function TeamCarousel({ members }: { members: TeamMember[] }) {
       >
         <div
           ref={trackRef}
-          className="flex w-full gap-5 will-change-transform md:grid md:grid-cols-2 lg:grid-cols-4 md:translate-x-0 md:will-change-auto"
+          className="flex w-full gap-5 will-change-transform md:grid md:grid-cols-6 md:gap-6 md:translate-x-0 md:will-change-auto"
         >
           {members.map((member, i) => (
             <TeamCard
               key={member.id}
               member={member}
+              className={cn(
+                "md:col-span-3 lg:col-span-2",
+                i === 3 && "lg:col-start-2",
+                i === 4 && "md:col-start-2 md:col-span-4 lg:col-start-auto lg:col-span-2",
+              )}
               expanded={showNav || activeId === member.id}
               isMobile={showNav}
               priority={i === 0}
@@ -581,6 +586,7 @@ function TeamCard({
   isMobile,
   priority,
   hoverPointer,
+  className,
   onOpen,
   onClose,
   onToggle,
@@ -590,6 +596,7 @@ function TeamCard({
   isMobile: boolean;
   priority: boolean;
   hoverPointer: boolean;
+  className?: string;
   onOpen: () => void;
   onClose: () => void;
   onToggle: () => void;
@@ -667,6 +674,7 @@ function TeamCard({
       className={cn(
         "team-card group relative flex h-auto w-full min-w-full shrink-0 basis-full flex-col rounded-[28px] bg-white p-3 select-none md:aspect-6/8 md:min-w-0 md:basis-auto md:w-full md:max-w-none md:shrink",
         "focus-within:ring-2 focus-within:ring-black/35 focus-within:ring-offset-4 focus-within:ring-offset-white",
+        className,
       )}
     >
       <button
@@ -688,7 +696,7 @@ function TeamCard({
           decoding="async"
           className={cn(
             "pointer-events-none absolute left-0 w-full origin-[50%_100%] object-cover will-change-transform",
-            member.id === "sanket-gangurde"
+            member.id === "sanket-gangurde" || member.id === "sumedhraj-tribhuvan"
               ? "top-0 h-full"
               : member.id === "apurv-ahire"
                 ? "top-[-22%] h-[150%]"

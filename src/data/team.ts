@@ -65,4 +65,16 @@ export const teamMembers: TeamMember[] = [
     profileUrl: "https://www.instagram.com/malegaon_travelling",
     instagramUrl: "https://www.instagram.com/malegaon_travelling",
   },
+  {
+    id: "sumedhraj-tribhuvan",
+    name: "Sumedhraj Tribhuvan",
+    role: "Business Development & Strategy",
+    description:
+      "Driving strategic partnerships, client relations, and business growth.",
+    category: "Business",
+    image: "/images/team/member-5.png",
+    imagePosition: "center 8%",
+    profileUrl: "https://www.linkedin.com/in/sumedhraj-tribhuvan-573536285",
+    linkedinUrl: "https://www.linkedin.com/in/sumedhraj-tribhuvan-573536285",
+  },
 ];
