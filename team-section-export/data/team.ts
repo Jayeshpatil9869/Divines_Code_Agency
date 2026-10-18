@@ -41,19 +41,6 @@ export const teamMembers: TeamMember[] = [
     githubUrl: "https://github.com/ApurvAhire03",
   },
   {
-    id: "jayesh-patil",
-    name: "Jayesh Patil",
-    role: "Full Stack Developer (Frontend UI/UX)",
-    description:
-      "Crafting modern frontend interfaces, smooth motion, and UX craft.",
-    category: "Frontend",
-    image: "/images/team/member-2.png",
-    imagePosition: "center 10%",
-    profileUrl: "https://jayeshbpatil.com/",
-    linkedinUrl: "https://www.linkedin.com/in/jayeshpatilfs",
-    githubUrl: "https://github.com/Jayeshpatil9869",
-  },
-  {
     id: "sanket-gangurde",
     name: "Sanket Gangurde",
     role: "Influencer",

@@ -26,7 +26,7 @@ const metrics = [
     value: 2,
     suffix: "",
     label: "Founders",
-    detail: "Jayesh Patil and Mahendra Nagpure",
+    detail: "Mahendra Nagpure and Apurv Ahire",
   },
 ];
 
