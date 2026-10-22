@@ -142,7 +142,7 @@ export function PunePage() {
                 <p className="text-[10px] font-mono tracking-[0.2em] text-primary mb-2">02</p>
                 <h3 className="text-base font-medium mb-2">Build with the founders</h3>
                 <p className="text-[14px] font-light text-muted-foreground leading-relaxed">
-                  Mahendra Nagpure and Apurv Ahire stay on the work. Calls and WhatsApp replace a local front desk.
+                  Jayesh Patil and Mahendra Nagpure stay on the work. Calls and WhatsApp replace a local front desk.
                 </p>
               </li>
               <li>

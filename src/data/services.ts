@@ -494,7 +494,7 @@ export const proofProjects: ProofProject[] = [
     label: "Motion · Brand",
     blurb: "Design studio presence with motion-led layout.",
     image: "/images/projects/outpost.png",
-    url: "https://divinescode.com/showcase",
+    url: "https://jayeshpatil9869.github.io/Outpost-Project/",
     focus: "Motion · Brand presence",
   },
 ];

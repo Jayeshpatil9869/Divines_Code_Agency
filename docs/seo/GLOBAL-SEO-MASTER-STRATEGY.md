@@ -579,7 +579,7 @@ Divine Code Studio, The Divine Code (Bangalore), Divine Pixel & Codes. Mitigate 
 | Frontend vs websites both saying “React websites” | Websites = full marketing site packages. Frontend = you already have design/product |
 | Care vs “SEO retainer” | Care = updates/fixes, not rankings |
 | `/about` 200 vs home | Delete/404 until a real about page exists |
-| Founder sites vs agency | Entity strategy: complementary, not competing service pages |
+| Founder sites vs agency for “Jayesh Patil web developer” | Entity strategy (companion doc): complementary, not competing service pages |
 
 **Actions:** merge (company/agency/services), differentiate (home vs websites), 404 (fake `/about` until built), canonicalize (self), redirect (if slug rename).
 
@@ -767,7 +767,7 @@ Nashik-area coordinates in project UI are **not** a Pune strategy. Pick one hone
 
 ## 27. First 50 Content Opportunities
 
-Country = **worldwide English** unless noted. CTA default = `/contact` or WhatsApp. Expertise = studio. Backlink potential: High / Medium / Low = likelihood a human editor would cite, not a promise.
+Country = **worldwide English** unless noted. CTA default = `/contact` or WhatsApp. Expertise = studio (Jayesh/Mahendra). Backlink potential: High / Medium / Low = likelihood a human editor would cite, not a promise.
 
 **01** Custom Website Development (service rebuild)  
 URL `/services/websites` · KW custom website development · Sec: website development company, web development services · Intent transactional · Funnel decision · Pri P0 · Outline: who it’s for, packages, stack, process, 2 projects, FAQ · Links: pricing, care, Tell Star · CTA Start a website · Backlink L
@@ -955,7 +955,7 @@ Each service → 2 related services + 1–2 resources + 1 case study + pricing o
 Each case study → parent service + 1 related case + contact
 Each resource → one service + pricing or work
 Footer: crawlable text links (not icon-only) to all indexable URLs
-Founders: keep footer links to mahendranagpure.com
+Founders: keep footer links to jayeshbpatil.com and mahendranagpure.com
 ```
 
 Anchors: descriptive (“React frontend engineering”), not stuffed “web development company Pune.” Vary exact match.

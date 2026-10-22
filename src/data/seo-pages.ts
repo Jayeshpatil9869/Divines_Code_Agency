@@ -151,7 +151,7 @@ const STATIC_PAGES: PageSeo[] = [
     path: "/about",
     title: `About Divine's Code | ${SITE_NAME}`,
     description:
-      "Divine's Code is a website design and development studio founded by Mahendra Nagpure and Apurv Ahire. Custom React sites, storefronts, and web apps.",
+      "Divine's Code is a website design and development studio founded by Jayesh Patil and Mahendra Nagpure. Custom React sites, storefronts, and web apps.",
     h1: "About Divine's Code",
     intro:
       "A small studio that designs and engineers websites and interfaces. Direct with the founders. We do not sell SEO retainers, ads, or native mobile apps.",

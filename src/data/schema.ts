@@ -1,7 +1,7 @@
 import { CONTACT_EMAIL, CONTACT_LINKEDIN, COMPANY_BLURB } from "@/data/contact";
 import { websitePackages } from "@/data/offerings";
 import {
-  FOUNDER_APURV,
+  FOUNDER_JAYESH,
   FOUNDER_MAHENDRA,
   OG_IMAGE,
   SITE_NAME,
@@ -32,18 +32,19 @@ function organizationEntities(): JsonLd[] {
       description: COMPANY_BLURB,
       email: CONTACT_EMAIL,
       founder: [
+        { "@id": `${FOUNDER_JAYESH.url}#person` },
         { "@id": `${FOUNDER_MAHENDRA.url}#person` },
-        { "@id": `${FOUNDER_APURV.url}#person` },
       ],
       member: [
+        { "@id": `${FOUNDER_JAYESH.url}#person` },
         { "@id": `${FOUNDER_MAHENDRA.url}#person` },
-        { "@id": `${FOUNDER_APURV.url}#person` },
       ],
       areaServed: { "@type": "Place", name: "Worldwide" },
       sameAs: [
         CONTACT_LINKEDIN,
+        "https://github.com/Jayeshpatil9869/divines_code_website",
+        FOUNDER_JAYESH.url,
         FOUNDER_MAHENDRA.url,
-        FOUNDER_APURV.url,
       ],
     },
     {
@@ -57,24 +58,24 @@ function organizationEntities(): JsonLd[] {
     },
     {
       "@type": "Person",
+      "@id": `${FOUNDER_JAYESH.url}#person`,
+      name: FOUNDER_JAYESH.name,
+      url: FOUNDER_JAYESH.url,
+      jobTitle: FOUNDER_JAYESH.jobTitle,
+      worksFor: { "@id": `${SITE_URL}/#organization` },
+      colleague: { "@id": `${FOUNDER_MAHENDRA.url}#person` },
+      sameAs: [...FOUNDER_JAYESH.sameAs],
+    },
+    {
+      "@type": "Person",
       "@id": `${FOUNDER_MAHENDRA.url}#person`,
       name: FOUNDER_MAHENDRA.name,
       alternateName: FOUNDER_MAHENDRA.alternateName,
       url: FOUNDER_MAHENDRA.url,
       jobTitle: FOUNDER_MAHENDRA.jobTitle,
       worksFor: { "@id": `${SITE_URL}/#organization` },
-      colleague: { "@id": `${FOUNDER_APURV.url}#person` },
+      colleague: { "@id": `${FOUNDER_JAYESH.url}#person` },
       sameAs: [...FOUNDER_MAHENDRA.sameAs],
-    },
-    {
-      "@type": "Person",
-      "@id": `${FOUNDER_APURV.url}#person`,
-      name: FOUNDER_APURV.name,
-      url: FOUNDER_APURV.url,
-      jobTitle: FOUNDER_APURV.jobTitle,
-      worksFor: { "@id": `${SITE_URL}/#organization` },
-      colleague: { "@id": `${FOUNDER_MAHENDRA.url}#person` },
-      sameAs: [...FOUNDER_APURV.sameAs],
     },
   ];
 }

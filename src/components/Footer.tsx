@@ -188,6 +188,15 @@ export function Footer() {
             <span>
               Crafted by{" "}
               <a
+                href="https://jayeshbpatil.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+              >
+                Jayesh Patil
+              </a>
+              {", "}
+              <a
                 href="https://mahendranagpure.com/"
                 target="_blank"
                 rel="noopener noreferrer"

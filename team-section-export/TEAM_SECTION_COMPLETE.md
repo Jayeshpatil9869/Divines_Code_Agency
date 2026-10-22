@@ -4,7 +4,7 @@ Portable reference for recreating the Divines Code Agency **Team** section: layo
 
 **Source files:** `src/components/Team.tsx`, `src/animations/team.ts`, `src/data/team.ts`, `src/animations/sectionTheme.ts`, related hooks/utils, `text-shimmer`, and team CSS in `src/index.css`.
 
-**Images:** `public/images/team/member-1.png`, `member-3.png` (also copied under `team-section-export/public/images/team/`).
+**Images:** `public/images/team/member-1.png`, `member-2.png`, `member-3.png` (also copied under `team-section-export/public/images/team/`).
 
 ---
 
@@ -1071,6 +1071,19 @@ export const teamMembers: TeamMember[] = [
     githubUrl: "https://github.com/Mahendra111111",
   },
   {
+    id: "jayesh-patil",
+    name: "Jayesh Patil",
+    role: "Full Stack Developer (Frontend UI/UX)",
+    description:
+      "Full Stack Developer (Frontend UI/UX) â€” interfaces, motion, and product craft.",
+    category: "Frontend",
+    image: "/images/team/member-2.png",
+    imagePosition: "center 10%",
+    profileUrl: "https://jayeshbpatil.com/",
+    linkedinUrl: "https://www.linkedin.com/in/jayeshpatilfs",
+    githubUrl: "https://github.com/Jayeshpatil9869",
+  },
+  {
     id: "sanket-gangurde",
     name: "Sanket Gangurde",
     role: "Influencer",
@@ -1683,6 +1696,7 @@ export function cn(...inputs: ClassValue[]) {
 Copy from `team-section-export/public/images/team/` or original `public/images/team/`:
 
 - `member-1.png` — Mahendra Nagpure
+- `member-2.png` — Jayesh Patil
 - `member-3.png` — Sanket Gangurde
 
 Per-member `imagePosition` / crop overrides live in `data/team.ts` and `Team.tsx` (Sanket uses full-bleed `top-0 h-full`; others `top-[-11%] h-[120%]`).

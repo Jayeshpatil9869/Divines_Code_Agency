@@ -15,7 +15,7 @@ export const PUNE_DESCRIPTION =
 export const puneFaqs: ServiceFaq[] = [
   {
     q: "Do you have an office in Pune?",
-    a: "No street address is published. Pune work is scoped with Mahendra Nagpure and Apurv Ahire by the contact form, phone, or WhatsApp, the same way as other India projects.",
+    a: "No street address is published. Pune work is scoped with Jayesh Patil and Mahendra Nagpure by the contact form, phone, or WhatsApp, the same way as other India projects.",
   },
   {
     q: "What have you shipped for a Pune business?",
